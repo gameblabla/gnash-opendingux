@@ -92,7 +92,7 @@ MediaHandlerGst::createVideoDecoder(const VideoInfo& info)
             return std::unique_ptr<VideoDecoder>();
         }
         return std::unique_ptr<VideoDecoder>(
-            new VideoDecoderGst(extrainfo->caps));
+	     new VideoDecoderGst(extrainfo->caps, _eventHandler));
     }
     videoCodecType format = static_cast<videoCodecType>(info.codec);
     int width = info.width;
@@ -107,7 +107,7 @@ MediaHandlerGst::createVideoDecoder(const VideoInfo& info)
         datasize = extrainfo->size;
     }
 
-    std::unique_ptr<VideoDecoder> ret( new VideoDecoderGst(format, width, height, extradata, datasize) );
+    std::unique_ptr<VideoDecoder> ret( new VideoDecoderGst(format, width, height, extradata, datasize, _eventHandler) );
     return ret;
 }
 
@@ -124,7 +124,7 @@ MediaHandlerGst::createAudioDecoder(const AudioInfo& info)
 #endif
     {
         try {
-            ret.reset(new AudioDecoderGst(info));
+	     ret.reset(new AudioDecoderGst(info, _eventHandler));
         }
         catch (const MediaException& ex) {
 

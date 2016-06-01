@@ -27,10 +27,11 @@ namespace gst {
 
 // TODO: implement proper seeking.
 
-VideoDecoderGst::VideoDecoderGst(GstCaps* caps)
+VideoDecoderGst::VideoDecoderGst(GstCaps* caps, std::shared_ptr<HostInterface> eventHandler)
     :
     _width(0),
-    _height(0)
+    _height(0),
+    _eventHandler(eventHandler)
 {
     // init GStreamer. TODO: what about doing this in MediaHandlerGst ctor?
     gst_init (nullptr, nullptr);
@@ -53,10 +54,12 @@ VideoDecoderGst::height() const
 // TODO: either use width and height or remove them!
 VideoDecoderGst::VideoDecoderGst(videoCodecType codec_type,
         int /*width*/, int /*height*/,
-        const std::uint8_t* extradata, size_t extradatasize)
+				 const std::uint8_t* extradata, size_t extradatasize,
+				 std::shared_ptr<HostInterface> eventHandler)
     :
     _width(0),
-    _height(0)
+    _height(0),
+    _eventHandler(eventHandler)
 {
     // init GStreamer. TODO: what about doing this in MediaHandlerGst ctor?
     gst_init (nullptr, nullptr);
@@ -123,7 +126,7 @@ VideoDecoderGst::setup(GstCaps* srccaps)
                     "(caps creation failed)"));      
     }
 
-    bool success = GstUtil::check_missing_plugins(srccaps);
+    bool success = GstUtil::check_missing_plugins(srccaps, _eventHandler.get());
     if (!success) {
         GstStructure* sct = gst_caps_get_structure(srccaps, 0);
         std::string type(gst_structure_get_name(sct));

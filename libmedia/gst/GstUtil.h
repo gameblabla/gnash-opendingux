@@ -22,6 +22,10 @@
 
 #include <gst/gst.h>
 #include "dsodefs.h" // DSOEXPORT
+#include "HostInterface.h"
+
+// Needed for declaration of the thread functions to install plugins
+#include <gst/pbutils/install-plugins.h>
 
 // GST_TIME_AS_MSECONDS not defined as of gst 0.10.9
 // is defined as of gst 0.10.19
@@ -73,12 +77,28 @@ public:
     /// @return if there is a decoder available to decode the passed type,
     ///         or if we succeeded in installing one, returns true. Otherwise,
     ///         returns false.
-    static bool check_missing_plugins(GstCaps* caps);
+    static bool check_missing_plugins(GstCaps* caps, HostInterface* eventHandler);
         
 private:
 
+
   GstUtil();
   ~GstUtil();
+
+#ifdef HAVE_GST_PBUTILS_INSTALL_PLUGINS_H
+    // Initially false, set to true if the user does not want to retry plugin installation
+    static bool no_plugin_install;
+
+    // Callback function for the gst plugin installer
+    static void plugin_installer_return(GstInstallPluginsReturn, gpointer);
+    // Helper for the callback. Displays dialog in case of installation success
+    static void plugin_success_dialog(const char* success_msg,
+				      const char* fail_msg,
+				      HostInterface* eventHandler);
+    // Helper for the callback. Displays dialog in case of installation failure
+    static void plugin_fail_dialog(const char* fail_msg,
+				   HostInterface* eventHandler);
+#endif  // end of HAVE_GST_PBUTILS_INSTALL_PLUGINS_H
 };
 
 } // gnash.media.gst namespace

@@ -118,7 +118,15 @@ MediaHandler::createFlashAudioDecoder(const AudioInfo& info)
             throw MediaException(err.str());
         }
     }
+
 }
+
+// Called from Player.cpp
+void
+MediaHandler::setCallbackHandler(std::shared_ptr<HostInterface> eventHandler){
+    _eventHandler = eventHandler;
+}
+
 
 } // namespace media 
 } // namespace gnash

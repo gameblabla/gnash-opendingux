@@ -63,6 +63,7 @@ public:
     virtual AudioInput* getAudioInput(size_t index);
 
     virtual void cameraNames(std::vector<std::string>& names) const;
+
 };
 
 

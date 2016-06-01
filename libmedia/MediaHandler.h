@@ -29,6 +29,7 @@
 #include <string>
 
 #include "GnashFactory.h"
+#include "HostInterface.h"
 
 // Forward declarations
 namespace gnash {
@@ -140,6 +141,11 @@ public:
     /// and this should be used to allocate a large enough input buffer.
     virtual size_t getInputPaddingSize() const { return 0; }
 
+
+    // Sets the event handler.
+    // Used by GstUtil.cpp to trigger gui events after plugin installation
+    void setCallbackHandler(std::shared_ptr<HostInterface> handler);
+
 protected:
 
     /// Base constructor
@@ -166,6 +172,10 @@ protected:
     //
     /// If this cannot read the necessary 3 bytes, it throws an IOException.
     bool isFLV(IOChannel& stream);
+
+    // Set by Player.cpp during init
+    // Used by GstUtil.cpp for gui events during plugin installation
+    std::shared_ptr<HostInterface> _eventHandler;
 
 };
 

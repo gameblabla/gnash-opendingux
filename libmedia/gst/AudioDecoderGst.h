@@ -22,6 +22,7 @@
 
 #include "log.h"
 #include "AudioDecoder.h"
+#include "HostInterface.h"
 
 #include <gst/gst.h>
 #include "GnashImage.h"
@@ -44,8 +45,8 @@ namespace gst {
 class DSOEXPORT AudioDecoderGst : public AudioDecoder {
 	
 public:
-    AudioDecoderGst(const AudioInfo& info);
-    AudioDecoderGst(SoundInfo& info);
+    AudioDecoderGst(const AudioInfo& info, std::shared_ptr<HostInterface> handler);
+    AudioDecoderGst(SoundInfo& info, std::shared_ptr<HostInterface> handler);
 
     ~AudioDecoderGst();
 
@@ -54,6 +55,8 @@ public:
     std::uint8_t* decode(const EncodedAudioFrame& ef, std::uint32_t& outputSize);
 
 private:
+
+    std::shared_ptr<HostInterface> _eventHandler;
 
     std::uint8_t* pullBuffers(std::uint32_t&  outputSize);
 

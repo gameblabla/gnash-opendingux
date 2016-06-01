@@ -26,6 +26,7 @@
 
 #include <vector>
 #include <algorithm> 
+#include <iostream>
 
 #include "MovieClip.h"
 #include "Renderer.h"

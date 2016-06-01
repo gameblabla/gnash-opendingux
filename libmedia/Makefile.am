@@ -126,6 +126,10 @@ endif
 
 libgnashmedia_la_CPPFLAGS = \
 	-I$(top_srcdir)/libbase	\
+	-I$(top_srcdir)/libcore	\
+	-I$(top_srcdir)/libcore/swf	\
+	-I$(top_srcdir)/libcore/parser	\
+	-I$(top_srcdir)/libcore/vm	\
 	$(PTHREAD_CFLAGS) \
 	$(BOOST_CFLAGS) \
 	$(NULL)

@@ -68,6 +68,7 @@ noinst_HEADERS = \
 libgnashsound_la_CPPFLAGS = \
 	-I$(top_srcdir)/libbase	\
 	-I$(top_srcdir)/libmedia \
+	-I$(top_srcdir)/libcore \
 	$(PTHREAD_CFLAGS) \
 	$(BOOST_CFLAGS) \
 	$(SDL_CFLAGS) \

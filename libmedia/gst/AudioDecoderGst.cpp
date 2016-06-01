@@ -29,7 +29,9 @@ namespace media {
 namespace gst {
 
 
-AudioDecoderGst::AudioDecoderGst(SoundInfo& info)
+AudioDecoderGst::AudioDecoderGst(SoundInfo& info, std::shared_ptr<HostInterface> eventHandler)
+    :
+    _eventHandler(eventHandler)
 {
     // init GStreamer. TODO: what about doing this in MediaHandlerGst ctor?
     gst_init (nullptr, nullptr);
@@ -45,7 +47,9 @@ AudioDecoderGst::AudioDecoderGst(SoundInfo& info)
     // FIXME: should we handle other types?
 }
 
-AudioDecoderGst::AudioDecoderGst(const AudioInfo& info)
+AudioDecoderGst::AudioDecoderGst(const AudioInfo& info, std::shared_ptr<HostInterface> eventHandler)
+    :
+    _eventHandler(eventHandler)
 {
     // init GStreamer. TODO: what about doing this in MediaHandlerGst ctor?
     gst_init (nullptr, nullptr);
@@ -168,7 +172,7 @@ void AudioDecoderGst::setup(GstCaps* srccaps)
         throw MediaException(_("AudioDecoderGst: internal error (caps creation failed)"));      
     }
 
-    bool success = GstUtil::check_missing_plugins(srccaps);
+    bool success = GstUtil::check_missing_plugins(srccaps, _eventHandler.get());
     if (!success) {
         GstStructure* sct = gst_caps_get_structure(srccaps, 0);
         std::string type(gst_structure_get_name(sct));

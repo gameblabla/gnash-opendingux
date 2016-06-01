@@ -518,6 +518,11 @@ Player::run(int argc, char* argv[], const std::string& infile,
     // Register Player to receive FsCommand events from the core.
     root.registerFSCommandCallback(_callbacksHandler.get());
 
+    // Register Player to receive commands from  the media (gstreamer plugin installation etc.)
+#ifdef USE_MEDIA
+    _mediaHandler->setCallbackHandler(_callbacksHandler);
+#endif
+
     // log_debug("Player Host FD #%d, Player Control FD #%d", _hostfd, _controlfd);
     
     // Set host requests fd (if any)

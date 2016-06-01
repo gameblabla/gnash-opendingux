@@ -25,6 +25,7 @@
 #include "VideoDecoder.h"
 #include "dsodefs.h"
 #include "MediaParser.h" // for videoCodecType enum
+#include "HostInterface.h"
 
 #include <gst/gst.h>
 
@@ -74,8 +75,9 @@ class DSOEXPORT VideoDecoderGst : public VideoDecoder
 {
 public:
     VideoDecoderGst(videoCodecType codec_type, int width, int height,
-                    const std::uint8_t* extradata, size_t extradatasize);
-    VideoDecoderGst(GstCaps* caps);
+                    const std::uint8_t* extradata, size_t extradatasize,
+		    std::shared_ptr<HostInterface> eventhandler);
+    VideoDecoderGst(GstCaps* caps, std::shared_ptr<HostInterface> eventhandler);
     ~VideoDecoderGst();
 
     void push(const EncodedVideoFrame& buffer);
@@ -98,6 +100,8 @@ private:
 
     int _width;
     int _height;
+
+    std::shared_ptr<HostInterface> _eventHandler;
 
     void setup(GstCaps* caps);
 
