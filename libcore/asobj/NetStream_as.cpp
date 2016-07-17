@@ -502,7 +502,7 @@ NetStream_as::startPlayback()
             "parse NetStream input")) );
         return false;
     }
-    _parser = std::move(_mediaHandler->createMediaParser(std::move(_inputStream)));
+    _parser = _mediaHandler->createMediaParser(std::move(_inputStream));
     assert(!_inputStream.get());
 
     if (!_parser.get()) {
