@@ -79,6 +79,10 @@ public:
         boost::any_cast<T&>(value_store) += _interval;
     }
 
+    virtual bool adjacent_tokens_only() const {
+        return true;
+    }
+
     /// If the option doesn't appear, this is the default value.
     virtual bool apply_default(boost::any& value_store) const {
         value_store = _default;
