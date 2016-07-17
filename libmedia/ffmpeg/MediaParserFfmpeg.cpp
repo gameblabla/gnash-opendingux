@@ -330,7 +330,6 @@ MediaParserFfmpeg::MediaParserFfmpeg(std::unique_ptr<IOChannel> stream)
 	_videoStream(nullptr),
 	_audioStreamIndex(-1),
 	_audioStream(nullptr),
-        _avIOCxt(nullptr),
 	_lastParsedPosition(0)
 {
 	initializeParser();
@@ -358,28 +357,37 @@ MediaParserFfmpeg::initializeParser()
         throw MediaException("MediaParserFfmpeg couldn't figure out input "
                      "format");
     }
+
+    std::unique_ptr<std::uint8_t, decltype(av_free)*> cxtBuf(
+        static_cast<std::uint8_t*>(av_malloc(byteIOBufferSize)), av_free
+    );
+    if (!cxtBuf) {
+        throw MediaException("MediaParserFfmpeg: av_malloc failed");
+    }
     
     // Setup the filereader/seeker mechanism.
     // 7th argument (NULL) is the writer function,
     // which isn't needed.
-    _byteIOBuffer.reset(new unsigned char[byteIOBufferSize]);
-
-    _avIOCxt = avio_alloc_context(
-		  _byteIOBuffer.get(), // buffer
+    _avIOCxt.reset(avio_alloc_context(
+		  cxtBuf.get(), // buffer
 		  byteIOBufferSize, // buffer size
 		  0, // write flags
 		  this, // opaque pointer to pass to the callbacks
 		  MediaParserFfmpeg::readPacketWrapper, // packet reader callback
 		  nullptr, // packet writer callback
 		  MediaParserFfmpeg::seekMediaWrapper // seeker callback
-		  );
-    
+		  ));
+    if (!_avIOCxt) {
+        throw MediaException("MediaParserFfmpeg: avio_alloc_context failed");
+    }
+    cxtBuf.release();
+
     _avIOCxt->seekable = 0;
 
     _formatCtx = avformat_alloc_context();
     assert(_formatCtx);
 
-    _formatCtx->pb = _avIOCxt;
+    _formatCtx->pb = _avIOCxt.get();
 
     if (avformat_open_input(&_formatCtx, "", _inputFmt, nullptr) < 0)
     {
@@ -515,8 +523,6 @@ MediaParserFfmpeg::~MediaParserFfmpeg()
 		// TODO: check if this is correct (should we create RIIA classes for ffmpeg stuff?)
 		//av_free(_inputFmt); // it seems this one blows up, could be due to av_free(_formatCtx) above
 	}
-
-        av_free(_avIOCxt);
 }
 
 // NOTE: as this function is used as a callback from FFMPEG, it should not

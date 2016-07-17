@@ -70,6 +70,18 @@ public:
 	size_t dataSize;
 };
 
+struct AVIOCtxDeleter
+{
+    void
+    operator()(AVIOContext* cxt)
+    {
+        if (cxt) {
+            av_free(cxt->buffer);
+            av_free(cxt);
+        }
+    }
+};
+
 /// FFMPEG based MediaParser
 class MediaParserFfmpeg: public MediaParser
 {
@@ -139,7 +151,7 @@ private:
 	AVStream* _audioStream;
 
 	/// ?
-        AVIOContext* _avIOCxt;
+	std::unique_ptr<AVIOContext, AVIOCtxDeleter> _avIOCxt;
 
 	/// Size of the ByteIO context buffer
 	//
@@ -147,8 +159,6 @@ private:
 	/// by av_read_frame.
 	///
 	static const size_t byteIOBufferSize = 1024;
-
-	std::unique_ptr<unsigned char[]> _byteIOBuffer;
 
 	/// The last parsed position, for getBytesLoaded
 	std::uint64_t _lastParsedPosition;
