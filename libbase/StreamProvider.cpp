@@ -81,7 +81,7 @@ StreamProvider::getStream(const URL& url, bool namedCacheFile) const
 			FILE *newin = fdopen(fd, "rb");
 
 			// Close on destruction.
-			stream = std::move(makeFileChannel(newin, true));
+			stream = makeFileChannel(newin, true);
 			return stream;
 		}
 		else {
@@ -95,14 +95,14 @@ StreamProvider::getStream(const URL& url, bool namedCacheFile) const
 				return stream;
 			}
 			// Close on destruction
-			stream = std::move(makeFileChannel(newin, true));
+			stream = makeFileChannel(newin, true);
 			return stream;
 		}
 	}
 	else {
 		if (allow(url)) {
-			stream = std::move(NetworkAdapter::makeStream(url.str(), 
-                    namedCacheFile ? namingPolicy()(url) : ""));
+			stream = NetworkAdapter::makeStream(url.str(), 
+                    namedCacheFile ? namingPolicy()(url) : "");
 		}
 
         // Will return 0 unique_ptr if not allowed.

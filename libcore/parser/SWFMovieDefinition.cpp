@@ -284,7 +284,7 @@ SWFMovieDefinition::readHeader(std::unique_ptr<IOChannel> in,
         );
 
         // Uncompress the input as we read it.
-        _in = std::move(zlib_adapter::make_inflater(std::move(_in)));
+        _in = zlib_adapter::make_inflater(std::move(_in));
 #endif
     }
 
