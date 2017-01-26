@@ -136,11 +136,21 @@ WAVWriter::write_wave_header(std::ofstream& outfile)
   wav.rLen = sizeof(WAV_HDR) - 8 + sizeof(CHUNK_HDR) + chk.dLen;
 
   /* write riff/wav header */
-  outfile.write((char *)&wav, sizeof(WAV_HDR));
- 
+  outfile.write(wav.rID, 4);
+  write_uint32(outfile, wav.rLen);
+  outfile.write(wav.wID, 4);
+  outfile.write(wav.fId, 4);
+  write_uint32(outfile, wav.pcm_header_len);
+  write_uint16(outfile, wav.wFormatTag);
+  write_uint16(outfile, wav.nChannels);
+  write_uint32(outfile, wav.nSamplesPerSec);
+  write_uint32(outfile, wav.nAvgBytesPerSec);
+  write_uint16(outfile, wav.nBlockAlign);
+  write_uint16(outfile, wav.nBitsPerSample);
+
   /* write chunk header */
-  outfile.write((char *)&chk, sizeof(CHUNK_HDR));
- 
+  outfile.write(chk.dId, 4);
+  write_uint32(outfile, chk.dLen);
 }
 
 

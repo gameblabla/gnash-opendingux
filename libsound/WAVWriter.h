@@ -70,6 +70,22 @@ private:
     // write a .WAV file header
     void write_wave_header(std::ofstream& outfile);
 
+    // write an unsigned 32-bit integer in little-endian order
+    inline void write_uint32(std::ofstream& outfile, uint32_t number)
+    {
+        outfile.put(number & 0xFF);
+        outfile.put((number >> 8) & 0xFF);
+        outfile.put((number >> 16) & 0xFF);
+        outfile.put((number >> 24) & 0xFF);
+    }
+
+    // write an unsigned 16-bit integer in little-endian order
+    inline void write_uint16(std::ofstream& outfile, uint16_t number)
+    {
+        outfile.put(number & 0xFF);
+        outfile.put((number >> 8) & 0xFF);
+    }
+
 };
 
 } // gnash.sound namespace 
