@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<!--
+submoviegetvar.html - HTML-based semi-automated GetVariable()
+                      plugin function test
+
+Copyright (C) 2017 Free Software Foundation, Inc.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+
+This test runner checks Gnash (or proprietary player) for:
+ * GetVariable() slash-colon variable path issue (bug #42395)
+       <https://savannah.gnu.org/bugs/?42395>
+
+Usage:
+    Open this file under web browser with JavaScript and plug-ins enabled,
+    and wait few seconds for the test to run. Once finished, the result
+    will be shown on browser screen.
+
+    When testing with proprietary player, the test directory might need
+    to be added as player's trusted location, or tests would fail with
+    odd errors caused by sandbox violation. Alternative is putting the
+    test directory on a web server and run the test online.
+
+Note:
+    This test runner does not count checks run inside SWF file,
+    since doing so requires cooperation from Dejagnu.sc
+
+Original author: Nutchanon Wetchasit <Nutchanon.Wetchasit@gmail.com>
+-->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+	<title>GetVariable() Plug-in Function Test</title>
+</head>
+<body>
+<div id="flashstate">
+	<noscript>
+		<strong>ERROR: JavaScript is not enabled, tests will not run</strong>
+	</noscript>
+</div>
+<object id="varsource" data="submoviegetvar.swf" width="320" height="240" type="application/x-shockwave-flash">
+	<param name="movie" value="submoviegetvar.swf">
+	<param name="AllowScriptAccess" value="always">
+	<div>
+		<strong>ERROR: SWF failed to load, tests will not run correctly</strong>
+	</div>
+</object>
+<script type="text/javascript">
+<!--
+	var tested=0;
+	var passed=0;
+	var failed=0;
+	var xpassed=0;
+	var xfailed=0;
+
+	function check_equals(op1,op2,msg) {
+		var flashstatus;
+		var failureline;
+
+		flashstatus=document.getElementById("flashstate");
+		tested++;
+		if(op1==op2) {
+			passed++;
+			flashstatus.appendChild(document.createTextNode("PASSED: "+msg));
+		} else {
+			failed++;
+			failureline=document.createElement("strong");
+			failureline.appendChild(document.createTextNode("FAILED: "+msg+" (\""+op1+"\" != \""+op2+"\")"));
+			flashstatus.appendChild(failureline);
+		}
+		flashstatus.appendChild(document.createElement("br"));
+	}
+
+	function xcheck_equals(op1,op2,msg) {
+		var flashstatus;
+		var successline;
+
+		flashstatus=document.getElementById("flashstate");
+		tested++;
+		if(op1==op2) {
+			xpassed++;
+			successline=document.createElement("strong");
+			successline.appendChild(document.createTextNode("XPASSED: "+msg));
+			flashstatus.appendChild(successline);
+		} else {
+			xfailed++;
+			flashstatus.appendChild(document.createTextNode("XFAILED: "+msg+" (\""+op1+"\" != \""+op2+"\")"));
+		}
+		flashstatus.appendChild(document.createElement("br"));
+	}
+
+	function check_error(msg) {
+		var flashstatus;
+		var errorline;
+
+		flashstatus=document.getElementById("flashstate");
+		errorline=document.createElement("strong");
+		errorline.appendChild(document.createTextNode("ERROR: "+msg));
+		flashstatus.appendChild(errorline);
+		flashstatus.appendChild(document.createElement("br"));
+	}
+
+	function check_totals(total) {
+		check_equals(tested,total,"There should be "+total+" tests run");
+	}
+
+	function checkvariable(varpath,refvalue) {
+		var flashstatus;
+		var varvalue;
+
+		try {
+			varvalue=document.getElementById("varsource").GetVariable(varpath);
+			check_equals(varvalue,refvalue,"GetVariable call on \""+varpath+"\" path should return a correct value");
+		} catch(e) {
+			check_error("Failed calling Flash\'s GetVariable(\""+varpath+"\") function: "+e);
+		}
+	}
+
+	function xcheckvariable(varpath,refvalue) {
+		var flashstatus;
+		var varvalue;
+
+		try {
+			varvalue=document.getElementById("varsource").GetVariable(varpath);
+			xcheck_equals(varvalue,refvalue,"GetVariable call on \""+varpath+"\" path should return a correct value");
+		} catch(e) {
+			check_error("Failed calling Flash\'s GetVariable(\""+varpath+"\") function: "+e);
+		}
+	}
+
+	function access_flash() {
+		checkvariable("movievar","This is movievar");
+		xcheckvariable(":movievar","This is movievar");
+		checkvariable("/:movievar","This is movievar");
+
+		checkvariable("submovie:submovievar","This is submovievar");
+		checkvariable("submovie/:submovievar","This is submovievar");
+		checkvariable("submovie::submovievar","This is submovievar");
+
+		checkvariable("/submovie:submovievar","This is submovievar");
+		checkvariable("/submovie/:submovievar","This is submovievar");
+		checkvariable("/submovie::submovievar","This is submovievar");
+
+		checkvariable(":submovie:submovievar","This is submovievar");
+		checkvariable(":submovie/:submovievar","This is submovievar");
+		checkvariable(":submovie::submovievar","This is submovievar");
+
+		checkvariable("submovie/nestedmovie:nestedmovievar","This is nestedmovievar");
+		checkvariable("submovie/nestedmovie/:nestedmovievar","This is nestedmovievar");
+		checkvariable("submovie/nestedmovie::nestedmovievar","This is nestedmovievar");
+		checkvariable("submovie:nestedmovie:nestedmovievar","This is nestedmovievar");
+		checkvariable("submovie:nestedmovie/:nestedmovievar","This is nestedmovievar");
+		checkvariable("submovie:nestedmovie::nestedmovievar","This is nestedmovievar");
+
+		checkvariable("/submovie/nestedmovie:nestedmovievar","This is nestedmovievar");
+		checkvariable("/submovie/nestedmovie/:nestedmovievar","This is nestedmovievar");
+		checkvariable("/submovie/nestedmovie::nestedmovievar","This is nestedmovievar");
+		checkvariable("/submovie:nestedmovie:nestedmovievar","This is nestedmovievar");
+		checkvariable("/submovie:nestedmovie/:nestedmovievar","This is nestedmovievar");
+		checkvariable("/submovie:nestedmovie::nestedmovievar","This is nestedmovievar");
+
+		checkvariable(":submovie/nestedmovie:nestedmovievar","This is nestedmovievar");
+		checkvariable(":submovie/nestedmovie/:nestedmovievar","This is nestedmovievar");
+		checkvariable(":submovie/nestedmovie::nestedmovievar","This is nestedmovievar");
+		checkvariable(":submovie:nestedmovie:nestedmovievar","This is nestedmovievar");
+		checkvariable(":submovie:nestedmovie/:nestedmovievar","This is nestedmovievar");
+		checkvariable(":submovie:nestedmovie::nestedmovievar","This is nestedmovievar");
+
+		check_totals(30);
+	}
+
+	setTimeout("access_flash()",3000);
+//-->
+</script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 ## Process this fill with automake to generate Makefile.in
 # 
-#   Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012
+#   Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2014, 2017
 #   Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -49,10 +49,12 @@ endif
 BOGO_SCTESTS = \
 	$(NULL)
 
-# These ones are the ones for which a MovieTester-based runner exists
+# These ones are the ones tested via dedicated MovieTester-based
+# or shell-based test runners
 INTERACTIVE_SCTESTS = \
 	button_test1.sc \
 	button_test2.sc  \
+	submoviegetvar.sc \
 	$(NULL)
 
 if BUILD_LIBSOUND
@@ -110,6 +112,7 @@ TEST_DRIVERS = ../simple.exp
 TEST_CASES = \
 	sanetests-runner \
 	bogustests-runner \
+	submoviegetvartest-runner \
 	$(check_PROGRAMS)
 
 sanetests-runner: $(srcdir)/../generic-testrunner.sh $(SANE_SCTESTS_OUT) $(AUXMOVIES_OUT) Makefile
@@ -120,7 +123,11 @@ bogustests-runner: $(srcdir)/../generic-testrunner.sh $(BOGO_SCTESTS_OUT) $(AUXM
 	sh $(srcdir)/../generic-testrunner.sh -C __END_OF_TEST__ -f 50 -r 50 $(top_builddir) $(BOGO_SCTESTS_OUT) > $@
 	chmod 755 $@
 
-$(SANE_SCTESTS_OUT): Dejagnu.sc check.sc
+submoviegetvartest-runner: submoviegetvar_testrunner.sh submoviegetvar.swf Makefile
+	sh submoviegetvar_testrunner.sh $(top_builddir) $(top_srcdir) submoviegetvar.swf > $@
+	chmod 755 $@
+
+$(SANE_SCTESTS_OUT) submoviegetvar.swf: Dejagnu.sc check.sc
 
 SUFFIXES = .sc .swf
 .sc.swf:
