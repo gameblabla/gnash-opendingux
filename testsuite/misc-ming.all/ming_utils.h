@@ -23,7 +23,7 @@
 
 #include <ming.h>
 
-#if MING_VERSION_CODE >= 00040004
+#if MING_VERSION_CODE >= 40004
 # define MING_SUPPORTS_INIT_ACTIONS
 #endif
 
@@ -40,9 +40,9 @@ void SWFMovie_writeExports(SWFMovie movie);
  * A cleaner approach is likely switch to
  * using newSWFAction always and change the
  * macro to make it output compileSWFActionCode
- * when MING_VERSION_CODE < 000040004
+ * when MING_VERSION_CODE < 40004
  */
-#if MING_VERSION_CODE >= 00040004
+#if MING_VERSION_CODE >= 40004
 # define compileSWFActionCode newSWFAction
 #else
 # define newSWFAction compileSWFActionCode
@@ -53,7 +53,7 @@ void SWFMovie_writeExports(SWFMovie movie);
  * and replaced by 'call'. Before that version 'call' would
  * never be recognized as a "callframe" action
  */
-#if MING_VERSION_CODE >= 00040006
+#if MING_VERSION_CODE >= 40006
 # define CALLFRAME "call"
 #else
 # define CALLFRAME "callFrame"
