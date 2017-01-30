@@ -1,6 +1,6 @@
 dnl  
-dnl  Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2014
-dnl  Free Software Foundation, Inc.
+dnl  Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2014, 2015,
+dnl  2017 Free Software Foundation, Inc.
 dnl  
 dnl  This program is free software; you can redistribute it and/or modify
 dnl  it under the terms of the GNU General Public License as published by
@@ -2319,30 +2319,30 @@ if test x$cross_compiling = xno; then
 fi
 
 if test x"$MING_VERSION_CODE" = x; then
- MING_VERSION_CODE=00000000
+ MING_VERSION_CODE=0
 fi
 
 AM_CONDITIONAL(ENABLE_MING,
-	[ test x"$MAKESWF" != x -a $MING_VERSION_CODE -gt 00040000 ])
+	[ test x"$MAKESWF" != x -a $MING_VERSION_CODE -gt 40000 ])
 
 AM_CONDITIONAL(MING_VERSION_0_4,
-        [ test $MING_VERSION_CODE -ge 00040000  ])
+        [ test $MING_VERSION_CODE -ge 40000  ])
 AM_CONDITIONAL(MAKESWF_SUPPORTS_PREBUILT_CLIPS,
-        [ test $MING_VERSION_CODE -ge 00040002  ])
+        [ test $MING_VERSION_CODE -ge 40002  ])
 AM_CONDITIONAL(MING_SUPPORTS_INIT_ACTIONS,
-        [ test $MING_VERSION_CODE -ge 00040004  ])
+        [ test $MING_VERSION_CODE -ge 40004  ])
 AM_CONDITIONAL(MING_SUPPORTS_REPLACE_TAG,
-        [ test $MING_VERSION_CODE -ge 00040005 ])
+        [ test $MING_VERSION_CODE -ge 40005 ])
 AM_CONDITIONAL(MING_SUPPORTS_SWFBUTTON_ADD_CHARACTER,
-        [ test $MING_VERSION_CODE -ge 00040005 ])
+        [ test $MING_VERSION_CODE -ge 40005 ])
 AM_CONDITIONAL(MING_SUPPORTS_STREAMING_SOUND,
-        [ test $MING_VERSION_CODE -ge 00040006 ])
+        [ test $MING_VERSION_CODE -ge 40006 ])
 AM_CONDITIONAL(MING_SUPPORTS_SWFBUTTON_SET_DEPTH,
-        [ test $MING_VERSION_CODE -ge 00040006 ])
+        [ test $MING_VERSION_CODE -ge 40006 ])
 AM_CONDITIONAL(MING_VERSION_0_4_3,
-        [ test $MING_VERSION_CODE -ge 00040300 ])
+        [ test $MING_VERSION_CODE -ge 40300 ])
 AM_CONDITIONAL(MING_VERSION_0_4_4,
-        [ test $MING_VERSION_CODE -ge 00040400 ])
+        [ test $MING_VERSION_CODE -ge 40400 ])
 
 if test x$cross_compiling = xno; then
     AC_ARG_WITH([swfdec_testsuite],
@@ -3892,7 +3892,7 @@ if test x"$testsuite" = x"yes"; then
       RPM_ALTERNATIVE([ming-utils])
     fi
 
-    if test x"$MAKESWF" != x && test $MING_VERSION_CODE -lt 00040006; then
+    if test x"$MAKESWF" != x && test $MING_VERSION_CODE -lt 40006; then
       echo "        WARNING: You have an older version of Ming installed and will not" >&4
       echo "                 be able to run all of the tests in Gnash testsuite." >&4
       echo "                 Install the latest version from http://www.libming.org" >&4
