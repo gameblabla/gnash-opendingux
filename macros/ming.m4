@@ -17,7 +17,7 @@ dnl  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 dnl
 
 # Configure paths for Ming
-# Author: Sandro Santilli <strk@keybit.net>
+# Author: Sandro Santilli <strk@kbt.io>
 #
 # This macro uses ming-config, which was
 # not available as of Ming 0.3beta1
@@ -68,7 +68,7 @@ AC_DEFUN([AC_PATH_MING], [
         beta=`eval expr $beta + 5`
       fi
     fi
-    MING_VERSION_CODE=`printf %2.2d%2.2d%2.2d%2.2d $major $minor $micro $beta | sed 's/^0*\(.*.\)\$/\1/g'`
+    MING_VERSION_CODE=`printf %2.2d%2.2d%2.2d%2.2d $major $minor $micro $beta | sed 's/^0*//'`
     MING_CFLAGS=`$MING_CONFIG --cflags`
     MING_LIBS=`$MING_CONFIG --libs`
     MING_PATH=`$MING_CONFIG --bindir`
