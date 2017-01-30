@@ -1,5 +1,5 @@
 // 
-//   Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
+//   Copyright (C) 2007, 2009, 2010, 2011, 2017 Free Software Foundation, Inc.
 //
 // This program is free software; you can redistribute it and/or modchecky
 // it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 rcsid="targetPath.as";
 #include "check.as"
 
-#if MING_VERSION_CODE > 00040005
+#if MING_VERSION_CODE > 40005
 # define TARGETPATH targetpath
 #else
 # define TARGETPATH targetPath

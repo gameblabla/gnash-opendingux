@@ -1,5 +1,5 @@
 // 
-//   Copyright (C) 2005, 2006, 2007, 2009, 2010 Free Software
+//   Copyright (C) 2005, 2006, 2007, 2009, 2010, 2011, 2017 Free Software
 //   Foundation, Inc
 //
 // This program is free software; you can redistribute it and/or modify
@@ -20,20 +20,20 @@
 #ifndef _CHECK_AS_
 #define _CHECK_AS_
 
-#if MING_VERSION_CODE >= 00040003
+#if MING_VERSION_CODE >= 40003
 # define MING_SUPPORTS_ASM
-# if MING_VERSION_CODE >= 00040004
+# if MING_VERSION_CODE >= 40004
 #  define MING_SUPPORTS_ASM_EXTENDS
 #  define MING_SUPPORTS_ASM_GETPROPERTY
 #  define MING_SUPPORTS_ASM_SETPROPERTY
 #  define MING_SUPPORTS_ASM_TONUMBER
 #  define MING_SUPPORTS_ASM_TOSTRING
-#  if MING_VERSION_CODE >= 00040005
+#  if MING_VERSION_CODE >= 40005
 #   define MING_SUPPORTS_ASM_TARGETPATH
-#   if MING_VERSION_CODE < 00040006
+#   if MING_VERSION_CODE < 40006
 #     define MING_LOGICAL_ANDOR_BROKEN
 #   endif
-#   if MING_VERSION_CODE >= 00040006
+#   if MING_VERSION_CODE >= 40006
 #     define MING_SUPPORTS_ASM_IMPLEMENTS
 #   endif
 #  endif

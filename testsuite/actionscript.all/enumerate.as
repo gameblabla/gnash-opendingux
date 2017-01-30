@@ -1,5 +1,5 @@
  // 
-//   Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
+//   Copyright (C) 2007, 2009, 2010, 2011, 2017 Free Software Foundation, Inc.
 //
 // This program is free software; you can redistribute it and/or modchecky
 // it under the terms of the GNU General Public License as published by
@@ -208,7 +208,7 @@ extras = 0;
  check_equals(r4, undefined);
 #endif
 
-#if MING_VERSION_CODE >= 00040004 
+#if MING_VERSION_CODE >= 40004
  extras += 6;
  
  // Do the same for enum2

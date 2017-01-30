@@ -1,5 +1,5 @@
 // 
-//   Copyright (C) 2005, 2006, 2007, 2009, 2010 Free Software
+//   Copyright (C) 2005, 2006, 2007, 2009, 2010, 2011, 2017 Free Software
 //   Foundation, Inc
 //
 // This program is free software; you can redistribute it and/or modify
@@ -33,7 +33,7 @@ rcsid="Try.as";
 // Try catch
 // Try (throw) catch
 
-#if MING_VERSION_CODE >= 00040100
+#if MING_VERSION_CODE >= 40100
 
 throwfunc = function()
 {

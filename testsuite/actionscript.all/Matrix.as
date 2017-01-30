@@ -1,5 +1,5 @@
 // 
-//   Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
+//   Copyright (C) 2008, 2009, 2010, 2011, 2017 Free Software Foundation, Inc.
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -131,7 +131,7 @@ check_equals(fakematrix.ty.toString(), 405);
 m.scale(4798747e+98, 0.33874983);
 // PP: (a=-6.75183253607854e+107, b=-0.419012258900892, c=2.46844592063091e+107, d=-0.505976396967328, tx=1.597982751e+107, ty=-96119.3225379726)
 // I get one discrepancy in 'a' here.
-#if MING_VERSION_CODE > 00040005
+#if MING_VERSION_CODE > 40005
 check(m.a < -6.7518325360784e+107 && m.a > -6.7518325360786e+107)
 check_equals(m.c.toString(), "2.46844592063091e+107");
 check_equals(m.tx.toString(), "1.597982751e+107");
@@ -143,7 +143,7 @@ check_equals(m.ty.toString(), "-96119.3225379726");
 m.rotate(-1.2873874);
 // PP: (a=-1.888016310255e+107, b=6.48248694618508e+107, c=6.9025203664787e+106, d=-2.36997413255563e+107, tx=4.46844242844096e+106, ty=-1.53423567131344e+107)
 // tx is slightly different for me.
-#if MING_VERSION_CODE > 00040005
+#if MING_VERSION_CODE > 40005
 check_equals(m.a.toString(), "-1.888016310255e+107");
 check_equals(m.b.toString(), "6.48248694618508e+107");
 check_equals(m.c.toString(), "6.9025203664787e+106");
@@ -419,7 +419,7 @@ check_equals(fakematrix.ty.toString(), undefined);
 //-------------------------------------------------------------
 // END OF TEST
 //-------------------------------------------------------------
-#if MING_VERSION_CODE > 00040005
+#if MING_VERSION_CODE > 40005
 totals(162);
 #else
 totals(153);

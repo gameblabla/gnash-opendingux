@@ -78,7 +78,7 @@ check(!delete unexistent.a);
 // Check malformed delete calls. Most of these work anyway.
 // --------------------------------------------------------
 
-#if MING_VERSION_CODE >= 00040300
+#if MING_VERSION_CODE >= 40300
 
 /* Check normal deletes. The first probably uses delete, the second
    probably delete2 */

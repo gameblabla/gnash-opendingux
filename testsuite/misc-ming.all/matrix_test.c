@@ -1,5 +1,5 @@
 /* 
- *   Copyright (C) 2007, 2009, 2010, 2011 Free Software Foundation, Inc.
+ *   Copyright (C) 2007, 2009, 2010, 2011, 2017 Free Software Foundation, Inc.
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -849,7 +849,7 @@ main(int argc, char** argv)
 	check_equals(mo, "staticmc._y", "135");
 
 // Ming 0.4.2 (aka 0.4.0-rc2) omits the scales rather then set them to zero 
-#if MING_VERSION_CODE <= 00040200
+#if MING_VERSION_CODE <= 40200
 	check_equals(mo, "staticmc.transform.matrix.toString()", "'(a=1, b=-1, c=1.16796875, d=1, tx=-0.75, ty=135)'");
 	check_equals(mo, "Math.round(staticmc._xscale)", "141");
 	check_equals(mo, "Math.round(staticmc._yscale)", "154");
@@ -874,7 +874,7 @@ main(int argc, char** argv)
 	check_equals(mo, "staticmc._y", "214.80");
 
 // Ming 0.4.2 (aka 0.4.0-rc2) omits the scales rather then set them to zero 
-#if MING_VERSION_CODE <= 00040200
+#if MING_VERSION_CODE <= 40200
 	check_equals(mo, "staticmc.transform.matrix.toString()", "'(a=1, b=0.972518920898438, c=-1, d=1, tx=13.95, ty=214.8)'");
 	check_equals(mo, "Math.round(staticmc._xscale)", "139");
 	check_equals(mo, "Math.round(staticmc._yscale)", "141");
@@ -1765,7 +1765,7 @@ main(int argc, char** argv)
 	check_equals(mo, "staticmc._y", "214.80");
 
 // Ming 0.4.2 (aka 0.4.0-rc2) omits the scales rather then set them to zero 
-#if MING_VERSION_CODE <= 00040200
+#if MING_VERSION_CODE <= 40200
 	check_equals(mo, "printMatrix(staticmc.transform.matrix, 2)", "'(a=1, b=0.97, c=-1, d=1, tx=13.95, ty=214.8)'");
 	check_equals(mo, "Math.round(staticmc._xscale)", "139");
 	check_equals(mo, "Math.round(staticmc._yscale)", "141");
@@ -1785,7 +1785,7 @@ main(int argc, char** argv)
 	check_equals(mo, "staticmc._y", "214.80");
 
 // Ming 0.4.2 (aka 0.4.0-rc2) omits the scales rather then set them to zero 
-#if MING_VERSION_CODE <= 00040200
+#if MING_VERSION_CODE <= 40200
 	check_equals(mo, "printMatrix(staticmc.transform.matrix, 2)", "'(a=-1, b=-0.97, c=-1, d=1, tx=13.95, ty=214.8)'");
 	check_equals(mo, "Math.round(staticmc._xscale)", "-139");
 	check_equals(mo, "Math.round(staticmc._yscale)", "141");

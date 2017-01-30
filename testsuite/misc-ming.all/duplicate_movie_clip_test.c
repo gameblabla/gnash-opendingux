@@ -1,5 +1,6 @@
 /*
- *   Copyright (C) 2005, 2006, 2007, 2009, 2010, 2011 Free Software Foundation, Inc.
+ *   Copyright (C) 2005, 2006, 2007, 2009, 2010, 2011, 2017 Free Software
+ *   Foundation, Inc.
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +37,7 @@ main(int argc, char** argv)
   SWFShape  sh_red;
 
   /* For the button duplication test */
-#if MING_VERSION_CODE >= 00040400
+#if MING_VERSION_CODE >= 40400
   SWFButton but;
   SWFButtonRecord br;
 #endif
@@ -125,7 +126,7 @@ main(int argc, char** argv)
 
   SWFMovie_nextFrame(mo); /* 4th frame */
   
-#if MING_VERSION_CODE >= 00040400
+#if MING_VERSION_CODE >= 40400
 
   /* Create a button, add it to mc1 */
   but = newSWFButton();

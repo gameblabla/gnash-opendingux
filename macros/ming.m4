@@ -1,6 +1,6 @@
 dnl
 dnl  Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010,
-dnl  2011 Free Software Foundation, Inc.
+dnl  2011, 2017 Free Software Foundation, Inc.
 dnl
 dnl  This program is free software; you can redistribute it and/or modify
 dnl  it under the terms of the GNU General Public License as published by
@@ -28,8 +28,10 @@ dnl
 #
 # Provides:
 #	MING_VERSION	  - Ming version string (example: "0.4.1" or "0.4.0.beta2")
-#	MING_VERSION_CODE - a 8digits number encoding Major, Minor, Patch and Beta numbers.
-#	                    examples: 00040002 (0.4.0.beta2) 00040100 (0.4.1)
+#	MING_VERSION_CODE - a number encoding Major, Minor, Patch and Beta numbers,
+#	                    composed of two digits from each number,
+#	                    with leading zeros stripped out from final result.
+#	                    examples: 40002 (0.4.0.beta2) 40100 (0.4.1)
 #	MING_CFLAGS
 #	MING_LIBS
 #	MAKESWF
@@ -66,7 +68,7 @@ AC_DEFUN([AC_PATH_MING], [
         beta=`eval expr $beta + 5`
       fi
     fi
-    MING_VERSION_CODE=`printf %2.2d%2.2d%2.2d%2.2d $major $minor $micro $beta`
+    MING_VERSION_CODE=`printf %2.2d%2.2d%2.2d%2.2d $major $minor $micro $beta | sed 's/^0*\(.*.\)\$/\1/g'`
     MING_CFLAGS=`$MING_CONFIG --cflags`
     MING_LIBS=`$MING_CONFIG --libs`
     MING_PATH=`$MING_CONFIG --bindir`
