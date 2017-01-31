@@ -268,7 +268,7 @@ swfdec_gst_colorspace_init (SwfdecGstDecoder *dec, GstCaps *srccaps, GstCaps *si
   gst_pad_set_chain_function (dec->sink, swfdec_gst_chain_func);
   dec->queue = g_queue_new ();
   g_object_set_data (G_OBJECT (dec->sink), "swfdec-queue", dec->queue);
-  if (!gst_element_set_state (dec->bin, GST_STATE_PLAYING) == GST_STATE_CHANGE_SUCCESS) {
+  if (gst_element_set_state (dec->bin, GST_STATE_PLAYING) != GST_STATE_CHANGE_SUCCESS) {
     SWFDEC_ERROR ("could not change element state");
     return FALSE;
   }
@@ -326,7 +326,7 @@ swfdec_gst_decoder_init (SwfdecGstDecoder *dec, GstCaps *srccaps, GstCaps *sinkc
   gst_pad_set_chain_function (dec->sink, swfdec_gst_chain_func);
   dec->queue = g_queue_new ();
   g_object_set_data (G_OBJECT (dec->sink), "swfdec-queue", dec->queue);
-  if (!gst_element_set_state (dec->bin, GST_STATE_PLAYING) == GST_STATE_CHANGE_SUCCESS) {
+  if (gst_element_set_state (dec->bin, GST_STATE_PLAYING) != GST_STATE_CHANGE_SUCCESS) {
     SWFDEC_ERROR ("could not change element state");
     return FALSE;
   }
