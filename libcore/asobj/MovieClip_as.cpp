@@ -1,6 +1,6 @@
 // MovieClip_as.cpp:  ActionScript "MovieClip" class, for Gnash.
 //
-//   Copyright (C) 2009, 2010, 2011, 2012, 2014, 2016
+//   Copyright (C) 2009, 2010, 2011, 2012, 2014, 2016, 2017
 //   Free Software Foundation, Inc.
 //
 // This program is free software; you can redistribute it and/or modify
@@ -1129,6 +1129,15 @@ movieclip_getURL(const fn_call& fn)
              break;
     }
 
+    movie_root& m = getRoot(fn);
+
+    // If the URL uses "FSCommand:" scheme, it is a message for the player
+    // or host container.
+    StringNoCaseEqual noCaseCompare;
+    if (noCaseCompare(urlstr.substr(0, 10), "FSCommand:")) {
+        m.handleFsCommand(urlstr.substr(10), target);
+        return as_value();
+    }
 
     MovieClip::VariablesMethod method =
         static_cast<MovieClip::VariablesMethod>(toInt(val, getVM(fn)));
@@ -1139,8 +1148,6 @@ movieclip_getURL(const fn_call& fn)
         // Get encoded vars.
         vars = getURLEncodedVars(*movieclip);
     }
-
-    movie_root& m = getRoot(fn);
     
     m.getURL(urlstr, target, vars, method);
 
