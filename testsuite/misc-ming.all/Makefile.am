@@ -1,7 +1,7 @@
 ## Process this file with automake to generate Makefile.in
 # 
-#   Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012
-#   Free Software Foundation, Inc.
+#   Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014,
+#   2015, 2016, 2017 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,7 +31,11 @@ CLEANFILES =  \
 
 DISTCLEANFILES = XMLSocketTester extgetvariable_testrunner_v5 \
                  extgetvariable_testrunner_v6 extgetvariable_testrunner_v7 \
-                 extgetvariable_testrunner_v8
+                 extgetvariable_testrunner_v8 hostcmd_testrunner_v5 \
+                 hostcmd_testrunner_v6 hostcmd_testrunner_v7 \
+                 hostcmd_testrunner_v8 hostcmd_htmltest_v5.html \
+                 hostcmd_htmltest_v6.html hostcmd_htmltest_v7.html \
+                 hostcmd_htmltest_v8.html
 
 SUBDIRS = . loop loading displaylist_depths action_order register_class \
           init_action
@@ -74,7 +78,9 @@ EXTRA_DIST = \
 	SharedObjectTest.sol/sol1.sol \
 	SharedObjectTest.sol/README \
 	XMLSocketTester.sh \
-	extgetvariable_testrunner.sh
+	extgetvariable_testrunner.sh \
+	hostcmd_testrunner.sh \
+	hostcmd_htmltest.sh
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)/libbase \
@@ -232,6 +238,14 @@ check_SCRIPTS = \
 	extgetvariable_testrunner_v6 \
 	extgetvariable_testrunner_v7 \
 	extgetvariable_testrunner_v8 \
+	hostcmd_testrunner_v5 \
+	hostcmd_testrunner_v6 \
+	hostcmd_testrunner_v7 \
+	hostcmd_testrunner_v8 \
+	hostcmd_htmltest_v5.html \
+	hostcmd_htmltest_v6.html \
+	hostcmd_htmltest_v7.html \
+	hostcmd_htmltest_v8.html \
 	timeline_var_test-Runner \
 	place_object_testrunner \
 	place_object_test2runner \
@@ -1333,6 +1347,50 @@ extgetvariable_testrunner_v8: extgetvariable_testrunner.sh extgetvariable_v8.swf
 		8 extgetvariable_v8.swf > $@
 	chmod 755 $@
 
+hostcmd_v5.swf: hostcmd.as
+	$(MAKESWF) $(MAKESWF_FLAGS) -c -1 -r 1 -v 5 -o $@  $(srcdir)/hostcmd.as
+
+hostcmd_v6.swf: hostcmd.as
+	$(MAKESWF) $(MAKESWF_FLAGS) -r 1 -v 6 -o $@  $(srcdir)/hostcmd.as
+
+hostcmd_v7.swf: hostcmd.as
+	$(MAKESWF) $(MAKESWF_FLAGS) -r 1 -v 7 -o $@  $(srcdir)/hostcmd.as
+
+hostcmd_v8.swf: hostcmd.as
+	$(MAKESWF) $(MAKESWF_FLAGS) -r 1 -v 8 -o $@  $(srcdir)/hostcmd.as
+
+hostcmd_testrunner_v5: hostcmd_testrunner.sh hostcmd_v5.swf
+	sh $(srcdir)/hostcmd_testrunner.sh $(top_builddir) $(top_srcdir) \
+		5 hostcmd_v5.swf > $@
+	chmod 755 $@
+
+hostcmd_testrunner_v6: hostcmd_testrunner.sh hostcmd_v6.swf
+	sh $(srcdir)/hostcmd_testrunner.sh $(top_builddir) $(top_srcdir) \
+		6 hostcmd_v6.swf > $@
+	chmod 755 $@
+
+hostcmd_testrunner_v7: hostcmd_testrunner.sh hostcmd_v7.swf
+	sh $(srcdir)/hostcmd_testrunner.sh $(top_builddir) $(top_srcdir) \
+		7 hostcmd_v7.swf > $@
+	chmod 755 $@
+
+hostcmd_testrunner_v8: hostcmd_testrunner.sh hostcmd_v8.swf
+	sh $(srcdir)/hostcmd_testrunner.sh $(top_builddir) $(top_srcdir) \
+		8 hostcmd_v8.swf > $@
+	chmod 755 $@
+
+hostcmd_htmltest_v5.html: hostcmd_htmltest.sh hostcmd_v5.swf
+	sh $(srcdir)/hostcmd_htmltest.sh 5 hostcmd_v5.swf > $@
+
+hostcmd_htmltest_v6.html: hostcmd_htmltest.sh hostcmd_v6.swf
+	sh $(srcdir)/hostcmd_htmltest.sh 6 hostcmd_v6.swf > $@
+
+hostcmd_htmltest_v7.html: hostcmd_htmltest.sh hostcmd_v7.swf
+	sh $(srcdir)/hostcmd_htmltest.sh 7 hostcmd_v7.swf > $@
+
+hostcmd_htmltest_v8.html: hostcmd_htmltest.sh hostcmd_v8.swf
+	sh $(srcdir)/hostcmd_htmltest.sh 8 hostcmd_v8.swf > $@
+
 GradientFillTest.swf: GradientFillTest.as 
 	$(MAKESWF) $(MAKESWF_FLAGS) -v 8 -r 1 -o $@  $(srcdir)/empty.as $(srcdir)/GradientFillTest.as
 
@@ -1600,6 +1658,10 @@ TEST_CASES = \
 	extgetvariable_testrunner_v6 \
 	extgetvariable_testrunner_v7 \
 	extgetvariable_testrunner_v8 \
+	hostcmd_testrunner_v5 \
+	hostcmd_testrunner_v6 \
+	hostcmd_testrunner_v7 \
+	hostcmd_testrunner_v8 \
 	DrawingApiTestRunner \
 	TextSnapshotTest-Runner \
 	reverse_execute_PlaceObject2_test1runner \
