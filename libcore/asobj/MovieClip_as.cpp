@@ -1092,7 +1092,7 @@ movieclip_getURL(const fn_call& fn)
     as_object* movieclip = ensure<ValidThis>(fn);
 
     std::string urlstr;
-    std::string target;
+    as_value target;
 
     as_value val;
     if (fn.nargs > 2)
@@ -1123,19 +1123,23 @@ movieclip_getURL(const fn_call& fn)
         case 3:
             // This argument has already been handled.
         case 2:
-             target = fn.arg(1).to_string();
+             target = fn.arg(1);
         case 1:
              urlstr = fn.arg(0).to_string();
              break;
     }
 
     movie_root& m = getRoot(fn);
+    std::string targetstr;
+    if (!target.is_undefined()) {
+        targetstr = target.to_string();
+    }
 
     // If the URL uses "FSCommand:" scheme, it is a message for the player
     // or host container.
     StringNoCaseEqual noCaseCompare;
     if (noCaseCompare(urlstr.substr(0, 10), "FSCommand:")) {
-        m.handleFsCommand(urlstr.substr(10), target);
+        m.handleFsCommand(urlstr.substr(10), targetstr);
         return as_value();
     }
 
@@ -1149,7 +1153,7 @@ movieclip_getURL(const fn_call& fn)
         vars = getURLEncodedVars(*movieclip);
     }
     
-    m.getURL(urlstr, target, vars, method);
+    m.getURL(urlstr, targetstr, vars, method);
 
     return as_value();
 }

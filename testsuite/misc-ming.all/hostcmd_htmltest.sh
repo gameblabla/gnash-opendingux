@@ -325,7 +325,7 @@ cat << EOF
 		} else if("m_undefinedarg" == cmd) {
 			m_undefinedarg_call++;
 			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with undefined parameter should pass string-type parameter");
-			xcheck_equals(arg, "", "MovieClip-based FSCommand call should pass an empty string as a representation of undefined parameter");
+			check_equals(arg, "", "MovieClip-based FSCommand call should pass an empty string as a representation of undefined parameter");
 		} else if("m_arrayarg" == cmd) {
 			m_arrayarg_call++;
 			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with array parameter should pass string-type parameter");

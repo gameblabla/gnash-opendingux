@@ -307,7 +307,7 @@ check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><str
 
 # Read for undefined-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-xcheck_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_undefinedarg</string><string></string></arguments></invoke>' "Gnash should pass undefined parameter of MovieClip-based FSCommand call as empty string"
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_undefinedarg</string><string></string></arguments></invoke>' "Gnash should pass undefined parameter of MovieClip-based FSCommand call as empty string"
 
 # Read for array-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
