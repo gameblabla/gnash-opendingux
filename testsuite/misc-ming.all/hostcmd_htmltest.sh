@@ -187,6 +187,7 @@ cat << EOF
 	var arrayarg_call = 0;
 	var objectarg_call = 0;
 	var object_customstringarg_call = 0;
+	var functionarg_call = 0;
 	var m_noarg_call = 0;
 	var m_stringarg_call = 0;
 	var m_weirdstringarg_call = 0;
@@ -201,6 +202,7 @@ cat << EOF
 	var m_arrayarg_call = 0;
 	var m_objectarg_call = 0;
 	var m_object_customstringarg_call = 0;
+	var m_functionarg_call = 0;
 
 	function player_DoFSCommand(cmd, arg) {
 		if("" == cmd) {
@@ -283,6 +285,10 @@ cat << EOF
 			object_customstringarg_call++;
 			check_equals(typeof(arg), "string", "getURL-based FSCommand call with object parameter bearing custom toString() should pass string-type parameter");
 			check_equals(arg, "This is a custom Object.toString()", "Custom string representation of object parameter of getURL-based FSCommand call should be correctly passed");
+		} else if("functionarg" == cmd) {
+			functionarg_call++;
+			check_equals(typeof(arg), "string", "getURL-based FSCommand call with function parameter should pass string-type parameter");
+			check_equals(arg, "[type Function]", "String representation of function parameter of getURL-based FSCommand call should be correctly passed");
 		} else if("m_noarg" == cmd) {
 			m_noarg_call++;
 			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with no parameter should pass string-type parameter");
@@ -342,6 +348,10 @@ cat << EOF
 			m_object_customstringarg_call++;
 			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with object parameter bearing custom toString() should pass string-type parameter");
 			check_equals(arg, "This is a custom Object.toString()", "Custom string representation of object parameter of MovieClip-based FSCommand call should be correctly passed");
+		} else if("m_functionarg" == cmd) {
+			m_functionarg_call++;
+			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with function parameter should pass string-type parameter");
+			check_equals(arg, "[type Function]", "String representation of function parameter of MovieClip-based FSCommand call should be correctly passed");
 		} else {
 			check_error("Unknown FSCommand issued: \"" + cmd + "\" parameter \"" + arg + "\"");
 		}
@@ -364,6 +374,7 @@ cat << EOF
 		check_equals(arrayarg_call, 1, "\"arrayarg\" FSCommand should be called for 1 time");
 		check_equals(objectarg_call, 1, "\"objectarg\" FSCommand should be called for 1 time");
 		check_equals(object_customstringarg_call, 1, "\"object_customstringarg\" FSCommand should be called for 1 time");
+		check_equals(m_functionarg_call, 1, "\"functionarg\" FSCommand should be called for 1 time");
 
 		check_equals(m_noarg_call, 1, "\"m_noarg\" FSCommand should be called for 1 time");
 		check_equals(m_stringarg_call, 1, "\"m_stringarg\" FSCommand should be called for 1 time");
@@ -379,8 +390,9 @@ cat << EOF
 		check_equals(m_arrayarg_call, 1, "\"m_arrayarg\" FSCommand should be called for 1 time");
 		check_equals(m_objectarg_call, 1, "\"m_objectarg\" FSCommand should be called for 1 time");
 		check_equals(m_object_customstringarg_call, 1, "\"m_object_customstringarg\" FSCommand should be called for 1 time");
+		check_equals(m_functionarg_call, 1, "\"m_functionarg\" FSCommand should be called for 1 time");
 
-		xcheck_totals(93);
+		xcheck_totals(99);
 	}
 
 	setTimeout("verify_flash()",3000);

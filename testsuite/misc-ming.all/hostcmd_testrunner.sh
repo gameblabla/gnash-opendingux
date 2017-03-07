@@ -260,6 +260,10 @@ check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><str
 read_timeout LINE \$READTIMEOUT <&3
 check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>object_customstringarg</string><string>This is a custom Object.toString()</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with object parameter bearing custom toString()"
 
+# Read for function-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>functionarg</string><string>[type Function]</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with function parameter"
+
 #
 # MovieClip-based FSCommand tests
 #
@@ -328,6 +332,10 @@ check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><str
 read_timeout LINE \$READTIMEOUT <&3
 check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_object_customstringarg</string><string>This is a custom Object.toString()</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with object parameter bearing custom toString()"
 
+# Read for function-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_functionarg</string><string>[type Function]</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with function parameter"
+
 # Close pipes
 exec 3<&-
 exec 4<&-
@@ -337,7 +345,7 @@ kill \$GNASHPID
 wait \$GNASHPID
 
 # Check for total number of test run
-check_totals "33" "There should be 33 tests run"
+check_totals "35" "There should be 35 tests run"
 
 # Remove temporary files
 rm "\$LOGFILE"

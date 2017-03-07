@@ -36,6 +36,7 @@
 var arrayarg;
 var objectarg;
 var object_customstringarg;
+var functionarg;
 
 trace("STARTOFTEST");
 getURL("FSCommand:");
@@ -60,6 +61,10 @@ object_customstringarg.toString = function():String {
 	return "This is a custom Object.toString()";
 };
 getURL("FSCommand:object_customstringarg", object_customstringarg);
+functionarg = function() {
+	trace("This code should not run!");
+};
+getURL("FSCommand:functionarg", functionarg);
 
 this.getURL("FSCommand:");
 this.getURL("FSCommand:", "This is a string for empty call");
@@ -77,4 +82,5 @@ this.getURL("FSCommand:m_undefinedarg", undefined);
 this.getURL("FSCommand:m_arrayarg", arrayarg);
 this.getURL("FSCommand:m_objectarg", objectarg);
 this.getURL("FSCommand:m_object_customstringarg", object_customstringarg);
+this.getURL("FSCommand:m_functionarg", functionarg);
 trace("ENDOFTEST");
