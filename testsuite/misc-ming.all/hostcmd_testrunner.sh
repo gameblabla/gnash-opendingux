@@ -344,6 +344,11 @@ exec 4<&-
 kill \$GNASHPID
 wait \$GNASHPID
 
+# Show player-side output
+exec 5< "\$LOGFILE"
+cat <&5
+exec 5<&-
+
 # Check for total number of test run
 check_totals "35" "There should be 35 tests run"
 
