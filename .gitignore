@@ -138,6 +138,7 @@ testsuite/misc-ming.all/*.swf
 testsuite/misc-ming.all/extgetvariable_testrunner_v*
 testsuite/misc-ming.all/hostcmd_testrunner_v*
 testsuite/misc-ming.all/hostcmd_htmltest_v*.html
+testsuite/misc-ming.all/hostcmd-geturl_testrunner_v*
 testsuite/misc-ming.all/XMLSocketTester
 testsuite/misc-ming.all/sound/*.swf
 testsuite/misc-mtasc.all/pp_*.as

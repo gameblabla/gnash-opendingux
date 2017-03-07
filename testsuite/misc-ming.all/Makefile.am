@@ -35,7 +35,9 @@ DISTCLEANFILES = XMLSocketTester extgetvariable_testrunner_v5 \
                  hostcmd_testrunner_v6 hostcmd_testrunner_v7 \
                  hostcmd_testrunner_v8 hostcmd_htmltest_v5.html \
                  hostcmd_htmltest_v6.html hostcmd_htmltest_v7.html \
-                 hostcmd_htmltest_v8.html
+                 hostcmd_htmltest_v8.html hostcmd-geturl_testrunner_v4 \
+                 hostcmd-geturl_testrunner_v5 \ hostcmd-geturl_testrunner_v6 \
+                 hostcmd-geturl_testrunner_v7 \ hostcmd-geturl_testrunner_v8
 
 SUBDIRS = . loop loading displaylist_depths action_order register_class \
           init_action
@@ -80,7 +82,8 @@ EXTRA_DIST = \
 	XMLSocketTester.sh \
 	extgetvariable_testrunner.sh \
 	hostcmd_testrunner.sh \
-	hostcmd_htmltest.sh
+	hostcmd_htmltest.sh \
+	hostcmd-geturl_testrunner.sh
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)/libbase \
@@ -246,6 +249,11 @@ check_SCRIPTS = \
 	hostcmd_htmltest_v6.html \
 	hostcmd_htmltest_v7.html \
 	hostcmd_htmltest_v8.html \
+	hostcmd-geturl_testrunner_v4 \
+	hostcmd-geturl_testrunner_v5 \
+	hostcmd-geturl_testrunner_v6 \
+	hostcmd-geturl_testrunner_v7 \
+	hostcmd-geturl_testrunner_v8 \
 	timeline_var_test-Runner \
 	place_object_testrunner \
 	place_object_test2runner \
@@ -1391,6 +1399,51 @@ hostcmd_htmltest_v7.html: hostcmd_htmltest.sh hostcmd_v7.swf
 hostcmd_htmltest_v8.html: hostcmd_htmltest.sh hostcmd_v8.swf
 	sh $(srcdir)/hostcmd_htmltest.sh 8 hostcmd_v8.swf > $@
 
+hostcmd-geturl_v4.swf: hostcmd-geturl.as
+	$(MAKESWF) $(MAKESWF_FLAGS) -c -1 -r 1 -v 4 -DOUTPUT_VERSION=4 -o $@ \
+		$(srcdir)/hostcmd-geturl.as
+
+hostcmd-geturl_v5.swf: hostcmd-geturl.as
+	$(MAKESWF) $(MAKESWF_FLAGS) -c -1 -r 1 -v 5 -DOUTPUT_VERSION=5 -o $@ \
+		$(srcdir)/hostcmd-geturl.as
+
+hostcmd-geturl_v6.swf: hostcmd-geturl.as
+	$(MAKESWF) $(MAKESWF_FLAGS) -r 1 -v 6 -DOUTPUT_VERSION=6 -o $@ \
+		$(srcdir)/hostcmd-geturl.as
+
+hostcmd-geturl_v7.swf: hostcmd-geturl.as
+	$(MAKESWF) $(MAKESWF_FLAGS) -r 1 -v 7 -DOUTPUT_VERSION=7 -o $@ \
+		$(srcdir)/hostcmd-geturl.as
+
+hostcmd-geturl_v8.swf: hostcmd-geturl.as
+	$(MAKESWF) $(MAKESWF_FLAGS) -r 1 -v 8 -DOUTPUT_VERSION=8 -o $@ \
+		$(srcdir)/hostcmd-geturl.as
+
+hostcmd-geturl_testrunner_v4: hostcmd-geturl_testrunner.sh hostcmd-geturl_v4.swf
+	sh $(srcdir)/hostcmd-geturl_testrunner.sh $(top_builddir) \
+		$(top_srcdir) 4 hostcmd-geturl_v4.swf > $@
+	chmod 755 $@
+
+hostcmd-geturl_testrunner_v5: hostcmd-geturl_testrunner.sh hostcmd-geturl_v5.swf
+	sh $(srcdir)/hostcmd-geturl_testrunner.sh $(top_builddir) \
+		$(top_srcdir) 5 hostcmd-geturl_v5.swf > $@
+	chmod 755 $@
+
+hostcmd-geturl_testrunner_v6: hostcmd-geturl_testrunner.sh hostcmd-geturl_v6.swf
+	sh $(srcdir)/hostcmd-geturl_testrunner.sh $(top_builddir) \
+		$(top_srcdir) 6 hostcmd-geturl_v6.swf > $@
+	chmod 755 $@
+
+hostcmd-geturl_testrunner_v7: hostcmd-geturl_testrunner.sh hostcmd-geturl_v7.swf
+	sh $(srcdir)/hostcmd-geturl_testrunner.sh $(top_builddir) \
+		$(top_srcdir) 7 hostcmd-geturl_v7.swf > $@
+	chmod 755 $@
+
+hostcmd-geturl_testrunner_v8: hostcmd-geturl_testrunner.sh hostcmd-geturl_v8.swf
+	sh $(srcdir)/hostcmd-geturl_testrunner.sh $(top_builddir) \
+		$(top_srcdir) 8 hostcmd-geturl_v8.swf > $@
+	chmod 755 $@
+
 GradientFillTest.swf: GradientFillTest.as 
 	$(MAKESWF) $(MAKESWF_FLAGS) -v 8 -r 1 -o $@  $(srcdir)/empty.as $(srcdir)/GradientFillTest.as
 
@@ -1662,6 +1715,11 @@ TEST_CASES = \
 	hostcmd_testrunner_v6 \
 	hostcmd_testrunner_v7 \
 	hostcmd_testrunner_v8 \
+	hostcmd-geturl_testrunner_v4 \
+	hostcmd-geturl_testrunner_v5 \
+	hostcmd-geturl_testrunner_v6 \
+	hostcmd-geturl_testrunner_v7 \
+	hostcmd-geturl_testrunner_v8 \
 	DrawingApiTestRunner \
 	TextSnapshotTest-Runner \
 	reverse_execute_PlaceObject2_test1runner \
