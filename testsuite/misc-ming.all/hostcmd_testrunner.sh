@@ -235,11 +235,18 @@ check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><str
 
 # Read for null-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-xcheck_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>nullarg</string><string>null</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with null parameter"
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>nullarg</string><string>null</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with null parameter"
 
-# Read for undefined-parameter FSCommand statement
-read_timeout LINE \$READTIMEOUT <&3
-xcheck_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>undefinedarg</string><string>undefined</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with undefined parameter"
+if [ $swfversion -ge 7 ]
+then
+	# Read for undefined-parameter FSCommand statement (SWF7-above form)
+	read_timeout LINE \$READTIMEOUT <&3
+	check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>undefinedarg</string><string>undefined</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with undefined parameter"
+else
+	# Read for undefined-parameter FSCommand statement (SWF6-below form)
+	read_timeout LINE \$READTIMEOUT <&3
+	check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>undefinedarg</string><string></string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with undefined parameter"
+fi
 
 # Read for array-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3

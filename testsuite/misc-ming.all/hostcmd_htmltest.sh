@@ -262,11 +262,15 @@ cat << EOF
 		} else if("nullarg" == cmd) {
 			nullarg_call++;
 			check_equals(typeof(arg), "string", "getURL-based FSCommand call with null parameter should pass string-type parameter");
-			xcheck_equals(arg, "null", "getURL-based FSCommand call should pass a correct string representation of null parameter");
+			check_equals(arg, "null", "getURL-based FSCommand call should pass a correct string representation of null parameter");
 		} else if("undefinedarg" == cmd) {
 			undefinedarg_call++;
 			check_equals(typeof(arg), "string", "getURL-based FSCommand call with undefined parameter should pass string-type parameter");
-			xcheck_equals(arg, "undefined", "getURL-based FSCommand call should pass a correct string representation of undefined parameter");
+			if($swfversion >= 7) {
+				check_equals(arg, "undefined", "getURL-based FSCommand call should pass a correct string representation of undefined parameter");
+			} else {
+				check_equals(arg, "", "getURL-based FSCommand call should pass a correct string representation of undefined parameter");
+			}
 		} else if("arrayarg" == cmd) {
 			arrayarg_call++;
 			check_equals(typeof(arg), "string", "getURL-based FSCommand call with array parameter should pass string-type parameter");

@@ -1,7 +1,7 @@
 // ASHandlers.cpp:  ActionScript handlers, for Gnash.
 //
-//   Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012
-//   Free Software Foundation, Inc
+//   Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014,
+//   2015, 2017 Free Software Foundation, Inc
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -3520,14 +3520,10 @@ commonGetURL(as_environment& env, as_value target,
         sendVarsMethod = static_cast<MovieClip::VariablesMethod>(method & 3);
     }
 
-    std::string target_string;
-    if (!target.is_undefined() && !target.is_null()) {
-        target_string = target.to_string();
-    }
-
     VM& vm = getVM(env);
     movie_root& m = vm.getRoot();
- 
+    std::string target_string = target.to_string(vm.getSWFVersion());
+
     // If the url starts with "FSCommand:", then this is
     // a message for the host app.
     StringNoCaseEqual noCaseCompare;
