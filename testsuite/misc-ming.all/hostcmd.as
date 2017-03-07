@@ -33,27 +33,48 @@
 // in JavaScript (where "*" is the value of `name` attribute on `<object>`
 // or `<embed>` tag which the SWF is playing).
 
+var arrayarg;
+var objectarg;
 var object_customstringarg;
 
 trace("STARTOFTEST");
-this.getURL("FSCommand:");
-this.getURL("FSCommand:", "This is a string for empty call");
-this.getURL("FSCommand:noarg");
-this.getURL("FSCommand:stringarg", "This is a string");
-this.getURL("FSCommand:weirdstringarg", "!@#$%^&*()_+-={}|[]\\:\";\'<>?,./~`");
-this.getURL("FSCommand:integerarg", 9876);
-this.getURL("FSCommand:floatarg", 9876.5432);
-this.getURL("FSCommand:infinitearg", Infinity);
-this.getURL("FSCommand:neginfinitearg", -Infinity);
-this.getURL("FSCommand:nanarg", NaN);
-this.getURL("FSCommand:booleanarg", true);
-this.getURL("FSCommand:nullarg", null);
-this.getURL("FSCommand:undefinedarg", undefined);
-this.getURL("FSCommand:arrayarg", new Array("The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"));
-this.getURL("FSCommand:objectarg", new Object());
+getURL("FSCommand:");
+getURL("FSCommand:", "This is a string for empty call");
+getURL("FSCommand:noarg");
+getURL("FSCommand:stringarg", "This is a string");
+getURL("FSCommand:weirdstringarg", "!@#$%^&*()_+-={}|[]\\:\";\'<>?,./~`");
+getURL("FSCommand:integerarg", 9876);
+getURL("FSCommand:floatarg", 9876.5432);
+getURL("FSCommand:infinitearg", Infinity);
+getURL("FSCommand:neginfinitearg", -Infinity);
+getURL("FSCommand:nanarg", NaN);
+getURL("FSCommand:booleanarg", true);
+getURL("FSCommand:nullarg", null);
+getURL("FSCommand:undefinedarg",undefined);
+arrayarg = new Array("The", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog");
+getURL("FSCommand:arrayarg", arrayarg);
+objectarg = new Object();
+getURL("FSCommand:objectarg", objectarg);
 object_customstringarg = new Object();
 object_customstringarg.toString = function():String {
 	return "This is a custom Object.toString()";
 };
-this.getURL("FSCommand:object_customstringarg", object_customstringarg);
+getURL("FSCommand:object_customstringarg", object_customstringarg);
+
+this.getURL("FSCommand:");
+this.getURL("FSCommand:", "This is a string for empty call");
+this.getURL("FSCommand:m_noarg");
+this.getURL("FSCommand:m_stringarg", "This is a string");
+this.getURL("FSCommand:m_weirdstringarg", "!@#$%^&*()_+-={}|[]\\:\";\'<>?,./~`");
+this.getURL("FSCommand:m_integerarg", 9876);
+this.getURL("FSCommand:m_floatarg", 9876.5432);
+this.getURL("FSCommand:m_infinitearg", Infinity);
+this.getURL("FSCommand:m_neginfinitearg", -Infinity);
+this.getURL("FSCommand:m_nanarg", NaN);
+this.getURL("FSCommand:m_booleanarg", true);
+this.getURL("FSCommand:m_nullarg", null);
+this.getURL("FSCommand:m_undefinedarg", undefined);
+this.getURL("FSCommand:m_arrayarg", arrayarg);
+this.getURL("FSCommand:m_objectarg", objectarg);
+this.getURL("FSCommand:m_object_customstringarg", object_customstringarg);
 trace("ENDOFTEST");

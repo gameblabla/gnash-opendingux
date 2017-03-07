@@ -26,6 +26,8 @@
 # The generated test runner checks Gnash (or proprietary player) for:
 #  * Support of FSCommand call via MovieClip.getURL() (bug #46944)
 #        <https://savannah.gnu.org/bugs/?46944>
+#  * Undefined FSCommand parameter passing via MovieClip.getURL() (bug #50393)
+#        <https://savannah.gnu.org/bugs/?50393>
 #
 # Usage:
 #     ./hostcmd_htmltest.sh <swfversion> <swf>
@@ -185,14 +187,34 @@ cat << EOF
 	var arrayarg_call = 0;
 	var objectarg_call = 0;
 	var object_customstringarg_call = 0;
+	var m_noarg_call = 0;
+	var m_stringarg_call = 0;
+	var m_weirdstringarg_call = 0;
+	var m_integerarg_call = 0;
+	var m_floatarg_call = 0;
+	var m_infinitearg_call = 0;
+	var m_neginfinitearg_call = 0;
+	var m_nanarg_call = 0;
+	var m_booleanarg_call = 0;
+	var m_nullarg_call = 0;
+	var m_undefinedarg_call = 0;
+	var m_arrayarg_call = 0;
+	var m_objectarg_call = 0;
+	var m_object_customstringarg_call = 0;
 
 	function player_DoFSCommand(cmd, arg) {
 		if("" == cmd) {
 			noname_call++;
 			if (noname_call == 1) {
+				check_equals(typeof(arg), "string", "getURL-based no-name FSCommand call with no parameter should pass string-type parameter");
+				check_equals(arg, "", "getURL-based no-name FSCommand call with no-parameter should pass an empty string parameter");
+			} else if(noname_call == 2) {
+				check_equals(typeof(arg), "string", "getURL-based no-name FSCommand call with string parameter should pass string-type parameter");
+				check_equals(arg, "This is a string for empty call", "getURL-based no-name FSCommand call with string parameter should pass a correct string parameter value");
+			} else if(noname_call == 3) {
 				check_equals(typeof(arg), "string", "MovieClip-based no-name FSCommand call with no parameter should pass string-type parameter");
 				check_equals(arg, "", "MovieClip-based no-name FSCommand call with no-parameter should pass an empty string parameter");
-			} else if(noname_call == 2) {
+			} else if(noname_call == 4) {
 				check_equals(typeof(arg), "string", "MovieClip-based no-name FSCommand call with string parameter should pass string-type parameter");
 				check_equals(arg, "This is a string for empty call", "MovieClip-based no-name FSCommand call with string parameter should pass a correct string parameter value");
 			} else {
@@ -200,61 +222,120 @@ cat << EOF
 			}
 		} else if("noarg" == cmd) {
 			noarg_call++;
-			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with no parameter should pass string-type parameter");
-			check_equals(arg, "", "MovieClip-based FSCommand call with no parameter should pass an empty string parameter value");
+			check_equals(typeof(arg), "string", "getURL-based FSCommand call with no parameter should pass string-type parameter");
+			check_equals(arg, "", "getURL-based FSCommand call with no parameter should pass an empty string parameter value");
 		} else if("stringarg" == cmd) {
 			stringarg_call++;
-			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with string parameter should pass string-type parameter");
-			check_equals(arg, "This is a string", "MovieClip-based FSCommand call with string parameter should pass a correct string parameter value");
+			check_equals(typeof(arg), "string", "getURL-based FSCommand call with string parameter should pass string-type parameter");
+			check_equals(arg, "This is a string", "getURL-based FSCommand call with string parameter should pass a correct string parameter value");
 		} else if("weirdstringarg" == cmd) {
 			// Currently, this FSCommand won't run under libgnashplugin,
 			// due to its internal parameter parsing issue.
 
 			weirdstringarg_call++;
-			xcheck_equals(typeof(arg),"string", "MovieClip-based FSCommand call with string parameter full of symbols should pass string-type parameter");
-			xcheck_equals(arg,"!@#\$%^&*()_+-={}|[]\\\\:\";\'<>?,./~\`", "Full-of-symbols string parameter value of MovieClip-based FSCommand call should be passed correctly");
+			xcheck_equals(typeof(arg),"string", "getURL-based FSCommand call with string parameter full of symbols should pass string-type parameter");
+			xcheck_equals(arg,"!@#\$%^&*()_+-={}|[]\\\\:\";\'<>?,./~\`", "Full-of-symbols string parameter value of getURL-based FSCommand call should be passed correctly");
 		} else if("integerarg" == cmd) {
 			integerarg_call++;
-			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with integer parameter should pass string-type parameter");
-			check_equals(arg, "9876", "MovieClip-based FSCommand call should pass a correct string representation of integer parameter value");
+			check_equals(typeof(arg), "string", "getURL-based FSCommand call with integer parameter should pass string-type parameter");
+			check_equals(arg, "9876", "getURL-based FSCommand call should pass a correct string representation of integer parameter value");
 		} else if("floatarg" == cmd) {
 			floatarg_call++;
-			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with floating point parameter should pass string-type parameter");
-			check_equals(arg, "9876.5432", "MovieClip-based FSCommand call should pass a correct string representation of floating point parameter value");
+			check_equals(typeof(arg), "string", "getURL-based FSCommand call with floating point parameter should pass string-type parameter");
+			check_equals(arg, "9876.5432", "getURL-based FSCommand call should pass a correct string representation of floating point parameter value");
 		} else if("infinitearg" == cmd) {
 			infinitearg_call++;
-			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with infinity parameter should pass string-type parameter");
-			check_equals(arg, "Infinity", "MovieClip-based FSCommand call should pass a correct string representation of infinity parameter");
+			check_equals(typeof(arg), "string", "getURL-based FSCommand call with infinity parameter should pass string-type parameter");
+			check_equals(arg, "Infinity", "getURL-based FSCommand call should pass a correct string representation of infinity parameter");
 		} else if("neginfinitearg" == cmd) {
 			neginfinitearg_call++;
-			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with negative infinity parameter should pass string-type parameter");
-			check_equals(arg, "-Infinity", "MovieClip-based FSCommand call should pass a correct string representation of negative infinity parameter value");
+			check_equals(typeof(arg), "string", "getURL-based FSCommand call with negative infinity parameter should pass string-type parameter");
+			check_equals(arg, "-Infinity", "getURL-based FSCommand call should pass a correct string representation of negative infinity parameter value");
 		} else if("nanarg" == cmd) {
 			nanarg_call++;
-			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with not-a-number parameter should pass string-type parameter");
-			check_equals(arg, "NaN", "MovieClip-based FSCommand call should pass a correct string representation of not-a-number parameter value");
+			check_equals(typeof(arg), "string", "getURL-based FSCommand call with not-a-number parameter should pass string-type parameter");
+			check_equals(arg, "NaN", "getURL-based FSCommand call should pass a correct string representation of not-a-number parameter value");
 		} else if("booleanarg" == cmd) {
 			booleanarg_call++;
-			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with boolean parameter should pass string-type parameter");
-			check_equals(arg, "true", "MovieClip-based FSCommand call should pass a correct string representation of boolean parameter value");
+			check_equals(typeof(arg), "string", "getURL-based FSCommand call with boolean parameter should pass string-type parameter");
+			check_equals(arg, "true", "getURL-based FSCommand call should pass a correct string representation of boolean parameter value");
 		} else if("nullarg" == cmd) {
 			nullarg_call++;
-			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with null parameter should pass string-type parameter");
-			check_equals(arg, "null", "MovieClip-based FSCommand call should pass a correct string representation of null parameter");
+			check_equals(typeof(arg), "string", "getURL-based FSCommand call with null parameter should pass string-type parameter");
+			xcheck_equals(arg, "null", "getURL-based FSCommand call should pass a correct string representation of null parameter");
 		} else if("undefinedarg" == cmd) {
 			undefinedarg_call++;
-			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with undefined parameter should pass string-type parameter");
-			xcheck_equals(arg, "", "MovieClip-based FSCommand call should pass an empty string as a representation of undefined parameter");
+			check_equals(typeof(arg), "string", "getURL-based FSCommand call with undefined parameter should pass string-type parameter");
+			xcheck_equals(arg, "undefined", "getURL-based FSCommand call should pass a correct string representation of undefined parameter");
 		} else if("arrayarg" == cmd) {
 			arrayarg_call++;
-			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with array parameter should pass string-type parameter");
-			check_equals(arg, "The,quick,brown,fox,jumps,over,the,lazy,dog", "Array parameter value of MovieClip-based FSCommand call should be passed correctly as CSV string");
+			check_equals(typeof(arg), "string", "getURL-based FSCommand call with array parameter should pass string-type parameter");
+			check_equals(arg, "The,quick,brown,fox,jumps,over,the,lazy,dog", "Array parameter value of getURL-based FSCommand call should be passed correctly as CSV string");
 		} else if("objectarg" == cmd) {
 			objectarg_call++;
-			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with object parameter should pass string-type parameter");
-			check_equals(arg, "[object Object]", "String representation of Object parameter of MovieClip-based FSCommand call should be correctly passed");
+			check_equals(typeof(arg), "string", "getURL-based FSCommand call with object parameter should pass string-type parameter");
+			check_equals(arg, "[object Object]", "String representation of object parameter of getURL-based FSCommand call should be correctly passed");
 		} else if("object_customstringarg" == cmd) {
 			object_customstringarg_call++;
+			check_equals(typeof(arg), "string", "getURL-based FSCommand call with object parameter bearing custom toString() should pass string-type parameter");
+			check_equals(arg, "This is a custom Object.toString()", "Custom string representation of object parameter of getURL-based FSCommand call should be correctly passed");
+		} else if("m_noarg" == cmd) {
+			m_noarg_call++;
+			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with no parameter should pass string-type parameter");
+			check_equals(arg, "", "MovieClip-based FSCommand call with no parameter should pass an empty string parameter value");
+		} else if("m_stringarg" == cmd) {
+			m_stringarg_call++;
+			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with string parameter should pass string-type parameter");
+			check_equals(arg, "This is a string", "MovieClip-based FSCommand call with string parameter should pass a correct string parameter value");
+		} else if("m_weirdstringarg" == cmd) {
+			// Currently, this FSCommand won't run under libgnashplugin,
+			// due to its internal parameter parsing issue.
+
+			m_weirdstringarg_call++;
+			xcheck_equals(typeof(arg),"string", "MovieClip-based FSCommand call with string parameter full of symbols should pass string-type parameter");
+			xcheck_equals(arg,"!@#\$%^&*()_+-={}|[]\\\\:\";\'<>?,./~\`", "Full-of-symbols string parameter value of MovieClip-based FSCommand call should be passed correctly");
+		} else if("m_integerarg" == cmd) {
+			m_integerarg_call++;
+			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with integer parameter should pass string-type parameter");
+			check_equals(arg, "9876", "MovieClip-based FSCommand call should pass a correct string representation of integer parameter value");
+		} else if("m_floatarg" == cmd) {
+			m_floatarg_call++;
+			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with floating point parameter should pass string-type parameter");
+			check_equals(arg, "9876.5432", "MovieClip-based FSCommand call should pass a correct string representation of floating point parameter value");
+		} else if("m_infinitearg" == cmd) {
+			m_infinitearg_call++;
+			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with infinity parameter should pass string-type parameter");
+			check_equals(arg, "Infinity", "MovieClip-based FSCommand call should pass a correct string representation of infinity parameter");
+		} else if("m_neginfinitearg" == cmd) {
+			m_neginfinitearg_call++;
+			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with negative infinity parameter should pass string-type parameter");
+			check_equals(arg, "-Infinity", "MovieClip-based FSCommand call should pass a correct string representation of negative infinity parameter value");
+		} else if("m_nanarg" == cmd) {
+			m_nanarg_call++;
+			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with not-a-number parameter should pass string-type parameter");
+			check_equals(arg, "NaN", "MovieClip-based FSCommand call should pass a correct string representation of not-a-number parameter value");
+		} else if("m_booleanarg" == cmd) {
+			m_booleanarg_call++;
+			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with boolean parameter should pass string-type parameter");
+			check_equals(arg, "true", "MovieClip-based FSCommand call should pass a correct string representation of boolean parameter value");
+		} else if("m_nullarg" == cmd) {
+			m_nullarg_call++;
+			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with null parameter should pass string-type parameter");
+			check_equals(arg, "null", "MovieClip-based FSCommand call should pass a correct string representation of null parameter");
+		} else if("m_undefinedarg" == cmd) {
+			m_undefinedarg_call++;
+			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with undefined parameter should pass string-type parameter");
+			xcheck_equals(arg, "", "MovieClip-based FSCommand call should pass an empty string as a representation of undefined parameter");
+		} else if("m_arrayarg" == cmd) {
+			m_arrayarg_call++;
+			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with array parameter should pass string-type parameter");
+			check_equals(arg, "The,quick,brown,fox,jumps,over,the,lazy,dog", "Array parameter value of MovieClip-based FSCommand call should be passed correctly as CSV string");
+		} else if("m_objectarg" == cmd) {
+			m_objectarg_call++;
+			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with object parameter should pass string-type parameter");
+			check_equals(arg, "[object Object]", "String representation of object parameter of MovieClip-based FSCommand call should be correctly passed");
+		} else if("m_object_customstringarg" == cmd) {
+			m_object_customstringarg_call++;
 			check_equals(typeof(arg), "string", "MovieClip-based FSCommand call with object parameter bearing custom toString() should pass string-type parameter");
 			check_equals(arg, "This is a custom Object.toString()", "Custom string representation of object parameter of MovieClip-based FSCommand call should be correctly passed");
 		} else {
@@ -263,7 +344,8 @@ cat << EOF
 	}
 
 	function verify_flash() {
-		check_equals(noname_call, 2, "No-name FSCommand should be called for 2 times");
+		check_equals(noname_call, 4, "No-name FSCommand should be called for 4 times");
+
 		check_equals(noarg_call, 1, "\"noarg\" FSCommand should be called for 1 time");
 		check_equals(stringarg_call, 1, "\"stringarg\" FSCommand should be called for 1 time");
 		xcheck_equals(weirdstringarg_call, 1, "\"weirdstringarg\" FSCommand should be called for 1 time");
@@ -279,7 +361,22 @@ cat << EOF
 		check_equals(objectarg_call, 1, "\"objectarg\" FSCommand should be called for 1 time");
 		check_equals(object_customstringarg_call, 1, "\"object_customstringarg\" FSCommand should be called for 1 time");
 
-		xcheck_totals(47);
+		check_equals(m_noarg_call, 1, "\"m_noarg\" FSCommand should be called for 1 time");
+		check_equals(m_stringarg_call, 1, "\"m_stringarg\" FSCommand should be called for 1 time");
+		xcheck_equals(m_weirdstringarg_call, 1, "\"m_weirdstringarg\" FSCommand should be called for 1 time");
+		check_equals(m_integerarg_call, 1, "\"m_integerarg\" FSCommand should be called for 1 time");
+		check_equals(m_floatarg_call, 1, "\"m_floatarg\" FSCommand should be called for 1 time");
+		check_equals(m_infinitearg_call, 1, "\"m_infinitearg\" FSCommand should be called for 1 time");
+		check_equals(m_neginfinitearg_call, 1, "\"m_neginfinitearg\" FSCommand should be called for 1 time");
+		check_equals(m_nanarg_call, 1, "\"m_nanarg\" FSCommand should be called for 1 time");
+		check_equals(m_booleanarg_call, 1, "\"m_booleanarg\" FSCommand should be called for 1 time");
+		check_equals(m_nullarg_call, 1, "\"m_nullarg\" FSCommand should be called for 1 time");
+		check_equals(m_undefinedarg_call, 1, "\"m_undefinedarg\" FSCommand should be called for 1 time");
+		check_equals(m_arrayarg_call, 1, "\"m_arrayarg\" FSCommand should be called for 1 time");
+		check_equals(m_objectarg_call, 1, "\"m_objectarg\" FSCommand should be called for 1 time");
+		check_equals(m_object_customstringarg_call, 1, "\"m_object_customstringarg\" FSCommand should be called for 1 time");
+
+		xcheck_totals(93);
 	}
 
 	setTimeout("verify_flash()",3000);

@@ -26,6 +26,8 @@
 # The generated test runner checks Gnash for:
 #  * Support of FSCommand call via MovieClip.getURL() (bug #46944)
 #        <https://savannah.gnu.org/bugs/?46944>
+#  * Undefined FSCommand parameter passing via MovieClip.getURL() (bug #50393)
+#        <https://savannah.gnu.org/bugs/?50393>
 #
 # Usage:
 #     ./hostcmd_testrunner.sh <builddir> <srcdir> <swfversion> <swf>
@@ -79,6 +81,7 @@ cat << EOF
 LOGFILE=${top_builddir}/testoutlog.\$\$
 PIPE2CONTAINER=${top_builddir}/tocontainer.\$\$
 PIPE2PLAYER=${top_builddir}/toplayer.\$\$
+STARTTIMEOUT=10
 READTIMEOUT=5
 
 # Test counts
@@ -168,7 +171,7 @@ check_error \$? "Failed to open a named pipe: \$PIPE2PLAYER"
 GNASHPID=\$!
 
 # Wait until the SWF code start running, by loop-checking logfile
-STARTCOUNTDOWN=\$READTIMEOUT
+STARTCOUNTDOWN=\$STARTTIMEOUT
 while [ \$STARTCOUNTDOWN -gt 0 ]
 do
 	if grep "TRACE: STARTOFTEST" "\$LOGFILE" 2>&1 > /dev/null
@@ -182,6 +185,78 @@ done
 [ \$STARTCOUNTDOWN -ne 0 ]
 check_equals \$? 0 "Gnash-side ActionScript code should be successfully started"
 
+#
+# getURL-based FSCommand tests
+#
+
+# Read for no-name no-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string></string><string></string></arguments></invoke>' "Gnash should correctly pass getURL-based no-name FSCommand call with no parameter"
+
+# Read for no-name string-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string></string><string>This is a string for empty call</string></arguments></invoke>' "Gnash should correctly pass getURL-based no-name FSCommand call with string parameter"
+
+# Read for no-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>noarg</string><string></string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with no parameter"
+
+# Read for string-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>stringarg</string><string>This is a string</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with string parameter"
+
+# Read for full-of-symbols-string-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+xcheck_equals "\$LINE" "<invoke name=\"fsCommand\" returntype=\"xml\"><arguments><string>weirdstringarg</string><string>!@#\\\$%^&amp;*()_+-={}|[]:\";'&lt;&gt;?,./~\\\`</string></arguments></invoke>" "Gnash should correctly pass getURL-based FSCommand call with full-of-symbols string parameter"
+
+# Read for integer-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>integerarg</string><string>9876</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with integer parameter"
+
+# Read for floating-point-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>floatarg</string><string>9876.5432</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with floating point parameter"
+
+# Read for infinity-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>infinitearg</string><string>Infinity</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with infinity parameter"
+
+# Read for negative-infinity-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>neginfinitearg</string><string>-Infinity</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with negative infinity parameter"
+
+# Read for not-a-number-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>nanarg</string><string>NaN</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with not-a-number parameter"
+
+# Read for boolean-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>booleanarg</string><string>true</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with boolean parameter"
+
+# Read for null-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+xcheck_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>nullarg</string><string>null</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with null parameter"
+
+# Read for undefined-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+xcheck_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>undefinedarg</string><string>undefined</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with undefined parameter"
+
+# Read for array-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>arrayarg</string><string>The,quick,brown,fox,jumps,over,the,lazy,dog</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with array parameter"
+
+# Read for object-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>objectarg</string><string>[object Object]</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with object parameter"
+
+# Read for object-with-custom-string-parameter FSCommand statement
+read_timeout LINE \$READTIMEOUT <&3
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>object_customstringarg</string><string>This is a custom Object.toString()</string></arguments></invoke>' "Gnash should correctly pass getURL-based FSCommand call with object parameter bearing custom toString()"
+
+#
+# MovieClip-based FSCommand tests
+#
+
 # Read for no-name no-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
 check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string></string><string></string></arguments></invoke>' "Gnash should correctly pass MovieClip-based no-name FSCommand call with no parameter"
@@ -192,59 +267,59 @@ check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><str
 
 # Read for no-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>noarg</string><string></string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with no parameter"
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_noarg</string><string></string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with no parameter"
 
 # Read for string-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>stringarg</string><string>This is a string</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with string parameter"
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_stringarg</string><string>This is a string</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with string parameter"
 
 # Read for full-of-symbols-string-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-xcheck_equals "\$LINE" "<invoke name=\"fsCommand\" returntype=\"xml\"><arguments><string>weirdstringarg</string><string>!@#\\\$%^&amp;*()_+-={}|[]:\";'&lt;&gt;?,./~\\\`</string></arguments></invoke>" "Gnash should correctly pass MovieClip-based FSCommand call with full-of-symbols string parameter"
+xcheck_equals "\$LINE" "<invoke name=\"fsCommand\" returntype=\"xml\"><arguments><string>m_weirdstringarg</string><string>!@#\\\$%^&amp;*()_+-={}|[]:\";'&lt;&gt;?,./~\\\`</string></arguments></invoke>" "Gnash should correctly pass MovieClip-based FSCommand call with full-of-symbols string parameter"
 
 # Read for integer-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>integerarg</string><string>9876</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with integer parameter"
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_integerarg</string><string>9876</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with integer parameter"
 
 # Read for floating-point-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>floatarg</string><string>9876.5432</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with floating point parameter"
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_floatarg</string><string>9876.5432</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with floating point parameter"
 
 # Read for infinity-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>infinitearg</string><string>Infinity</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with infinity parameter"
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_infinitearg</string><string>Infinity</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with infinity parameter"
 
 # Read for negative-infinity-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>neginfinitearg</string><string>-Infinity</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with negative infinity parameter"
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_neginfinitearg</string><string>-Infinity</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with negative infinity parameter"
 
 # Read for not-a-number-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>nanarg</string><string>NaN</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with not-a-number parameter"
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_nanarg</string><string>NaN</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with not-a-number parameter"
 
 # Read for boolean-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>booleanarg</string><string>true</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with boolean parameter"
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_booleanarg</string><string>true</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with boolean parameter"
 
 # Read for null-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>nullarg</string><string>null</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with null parameter"
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_nullarg</string><string>null</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with null parameter"
 
 # Read for undefined-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-xcheck_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>undefinedarg</string><string></string></arguments></invoke>' "Gnash should pass undefined parameter of MovieClip-based FSCommand call as empty string"
+xcheck_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_undefinedarg</string><string></string></arguments></invoke>' "Gnash should pass undefined parameter of MovieClip-based FSCommand call as empty string"
 
 # Read for array-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>arrayarg</string><string>The,quick,brown,fox,jumps,over,the,lazy,dog</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with array parameter"
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_arrayarg</string><string>The,quick,brown,fox,jumps,over,the,lazy,dog</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with array parameter"
 
 # Read for object-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>objectarg</string><string>[object Object]</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with object parameter"
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_objectarg</string><string>[object Object]</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with object parameter"
 
 # Read for object-with-custom-string-parameter FSCommand statement
 read_timeout LINE \$READTIMEOUT <&3
-check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>object_customstringarg</string><string>This is a custom Object.toString()</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with object parameter bearing custom toString()"
+check_equals "\$LINE" '<invoke name="fsCommand" returntype="xml"><arguments><string>m_object_customstringarg</string><string>This is a custom Object.toString()</string></arguments></invoke>' "Gnash should correctly pass MovieClip-based FSCommand call with object parameter bearing custom toString()"
 
 # Close pipes
 exec 3<&-
@@ -255,7 +330,7 @@ kill \$GNASHPID
 wait \$GNASHPID
 
 # Check for total number of test run
-check_totals "17" "There should be 17 tests run"
+check_totals "33" "There should be 33 tests run"
 
 # Remove temporary files
 rm "\$LOGFILE"
