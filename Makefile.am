@@ -1,6 +1,6 @@
 # 
-#   Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012
-#   Free Software Foundation, Inc.
+#   Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014,
+#   2015, 2017 Free Software Foundation, Inc.
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -158,7 +158,11 @@ revno.h:
             echo "Getting build info for revno.h"; \
             revno="`cd $(top_srcdir) ; $(GIT) rev-list HEAD | wc -l`"; \
             comm_id="`cd $(top_srcdir) ; $(GIT) rev-parse --short HEAD`"; \
-            nick="`cd $(top_srcdir) ; $(GIT) branch | grep '^\*' | cut -d ' ' -f 2`"; \
+            nick="`cd $(top_srcdir) ; $(GIT) symbolic-ref -q HEAD`"; \
+            nick="`basename "$${nick}"`"; \
+            if test -z "$${nick}"; then \
+                  nick="none"; \
+            fi; \
 	  fi \
         else \
           if test \! -f revno.h; then \
