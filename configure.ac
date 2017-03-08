@@ -4085,7 +4085,8 @@ if test x"$npapi" = xyes; then
     PKG_ERR([No xulrunner development package is installed!])
     PKG_SUGGEST([Install it from http://releases.mozilla.org/pub/mozilla.org/xulrunner])
     DEB_INSTALL([xulrunner-dev])
-    DEB_ALTERNATIVE([firefox-dev])
+    DEB_ALTERNATIVE([npapi-sdk-dev])
+    DEB_ALTERNATIVE([firefox-dev]) dnl deprecated, see https://bugs.launchpad.net/ubuntu/+source/firefox/+bug/1671032/
     RPM_INSTALL([xulrunner-devel])
     PKG_ALTERNATIVE([or specify --disable-npapi])
   fi
