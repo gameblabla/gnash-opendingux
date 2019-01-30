@@ -6,7 +6,13 @@ Gnash is a player for animated "movies" in the Macromedia Shockwave Flash
 plugin, or as a library used by other programs.  It is not yet complete;
 it does not correctly handle every SWF file.
 
-This is the README file for the Gnash-0.8.8 release (or snapshot).
+Gnash is currently not being actively maintained, as most of the internet
+has moved to using HTML5. There are literally millions of flash files
+that Gnash can play, as well as YouTube videos. As Adobe is letting their
+flash player die on most platforms, Gnash will be critical in the future
+for anyone wanting to play flash files for historical reasons. Gnash's code
+is very portable, and should be compilable for many years, long after
+Adobe flash is dead.
 
 Gnash is originally based on the code of GameSWF, by Thatcher Ulrich.
 GameSWF was the most advanced among free SWF players; it implemented a
