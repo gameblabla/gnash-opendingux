@@ -29,6 +29,10 @@
 #include "Renderer.h" // for setInvalidatedRegions
 #include "RunResources.h"
 
+extern int internal_width, internal_height, hw_width, hw_height;
+int mouse_mode = 0;
+int mouse_x = 0, mouse_y = 0;
+
 using namespace std;
 
 namespace gnash 
@@ -45,14 +49,18 @@ SDLGui::~SDLGui()
 {
 }
 
+
 bool
 SDLGui::run()
 {
     int x_old = -1;
     int y_old = -1;
     int button_state_old = -1;
-
     Uint32 movie_time = 0;// SDL_GetTicks(); // what time it should be in the movie
+    Uint8 *keystate;
+
+
+
 
     SDL_Event   event;
     while (true)
@@ -62,16 +70,41 @@ SDLGui::run()
             break;
         }
 
+	keystate = SDL_GetKeyState(NULL);
+		
+	if (mouse_mode == 1)
+	{
+		if (keystate[SDLK_UP]) mouse_y = mouse_y - 4;
+		else if (keystate[SDLK_DOWN]) mouse_y = mouse_y + 4;
+		if (keystate[SDLK_LEFT])  mouse_x = mouse_x - 4;
+		else if (keystate[SDLK_RIGHT]) mouse_x = mouse_x + 4;
+			
+		if (mouse_x > hw_width) mouse_x = hw_width;
+		if (mouse_y > hw_height) mouse_y = hw_height;
+		if (mouse_x < 0) mouse_x = 0;
+		if (mouse_y < 0) mouse_y = 0;
+
+		x_old = mouse_x * ((float)internal_width / (float)hw_width);
+		y_old = mouse_y * ((float)internal_height / (float)hw_height);
+		notifyMouseMove(x_old, y_old);
+		_glue.render(0,0,0,0);
+	}
+
         while (SDL_PollEvent(&event))
         {
             switch (event.type)
             {
             case SDL_MOUSEMOTION:
-                // SDL can generate MOUSEMOTION events even without mouse movement
-                if (event.motion.x == x_old && event.motion.y == y_old) { break; }
-                x_old = event.motion.x;
-                y_old = event.motion.y;
-                notifyMouseMove(x_old, y_old);
+				if (mouse_mode == 0)
+				{
+					mouse_x = event.motion.x * ((float)internal_width / (float)hw_width);
+					mouse_y = event.motion.y * ((float)internal_height / (float)hw_height);
+					// SDL can generate MOUSEMOTION events even without mouse movement
+					if (mouse_x == x_old && mouse_y == y_old) { break; }
+					x_old = mouse_x;
+					y_old = mouse_y;
+					notifyMouseMove(x_old, y_old);
+				}
                 break;
 
             case SDL_MOUSEBUTTONDOWN:
@@ -91,15 +124,43 @@ SDLGui::run()
             }
             case SDL_KEYDOWN:
             {
-                if (event.key.keysym.sym == SDLK_ESCAPE)
-                {
-                    return true;
-                }
-                key_event(&event.key, true);
+				if (mouse_mode == 0)
+				{
+					if (event.key.keysym.sym == SDLK_TAB)
+					{
+						mouse_mode = 1;
+						mouse_x = hw_width/2;
+						mouse_y = hw_height/2;
+					}
+					else if (event.key.keysym.sym == SDLK_END)
+					{
+						return true;
+					}
+					else
+						key_event(&event.key, true);
+				}
+				else
+				{
+					if (event.key.keysym.sym == SDLK_TAB)
+					{
+						mouse_mode = 0;
+					}
+					else if (event.key.keysym.sym == SDLK_LCTRL || event.key.keysym.sym == SDLK_BACKSPACE)
+					{
+						notifyMouseClick(true);
+					}
+				}
                 break;
             }
             case SDL_KEYUP:
             {
+				if (mouse_mode == 1)
+				{
+					if (event.key.keysym.sym == SDLK_LCTRL || event.key.keysym.sym == SDLK_BACKSPACE)
+					{
+						notifyMouseClick(false);
+					}
+				}
                 key_event(&event.key, false);       
                 break;
             }
@@ -233,6 +294,8 @@ SDLGui::setupEvents()
     return false;
 }
 
+#define RS97 1
+
 key::code
 SDLGui::sdl_to_gnash_key(SDL_KeyboardEvent * key)
 {
@@ -242,15 +305,21 @@ SDLGui::sdl_to_gnash_key(SDL_KeyboardEvent * key)
   // int mod = key->keysym.mod;
   int code = key->keysym.sym;
 
-  if(code>= 32 && code <= 127) {
-    c = (gnash::key::code)(code);
-  }else if(code >= SDLK_KP0 && code <= SDLK_KP9) {
-    c = (gnash::key::code)(code - SDLK_KP0 + gnash::key::KP_0);
-  }else if(code >= SDLK_F1 && code <= SDLK_F15) {
-    c = (gnash::key::code)(code - SDLK_F1 + gnash::key::F1);
-  }else 
-  {
     switch(code) {
+#ifdef RS97
+		case SDLK_UP:       c = gnash::key::UP;       break;
+		case SDLK_DOWN:     c = gnash::key::DOWN;     break;
+		case SDLK_RIGHT:    c = gnash::key::RIGHT;    break;
+		case SDLK_LEFT:     c = gnash::key::LEFT;     break;
+		case SDLK_LCTRL:   c = gnash::key::A;   break;
+		case SDLK_LALT:   c = gnash::key::S;   break;
+		case SDLK_SPACE:   c = gnash::key::SPACE;   break;
+		case SDLK_LSHIFT:   c = gnash::key::SHIFT;   break;
+		case SDLK_TAB:   c = gnash::key::X;   break;
+		case SDLK_BACKSPACE:   c = gnash::key::ENTER;   break;
+		case SDLK_RETURN:   c = gnash::key::ENTER;   break;
+		case SDLK_ESCAPE:   c = gnash::key::END;   break;
+#else
       case SDLK_UP:       c = gnash::key::UP;       break;
       case SDLK_DOWN:     c = gnash::key::DOWN;     break;
       case SDLK_RIGHT:    c = gnash::key::RIGHT;    break;
@@ -266,9 +335,27 @@ SDLGui::sdl_to_gnash_key(SDL_KeyboardEvent * key)
       case SDLK_LCTRL:    c = gnash::key::CONTROL;  break;
       case SDLK_RALT:
       case SDLK_LALT:     c = gnash::key::ALT;      break;
+#endif
       default: c = gnash::key::INVALID; break;
     }
-  }
+	/*if(code>= 32 && code <= 127) 
+	{
+		c = (gnash::key::code)(code);
+	}
+	else
+	if(code >= SDLK_KP0 && code <= SDLK_KP9) 
+	{
+		c = (gnash::key::code)(code - SDLK_KP0 + gnash::key::KP_0);
+	}
+	else if(code >= SDLK_F1 && code <= SDLK_F15)
+	{
+		c = (gnash::key::code)(code - SDLK_F1 + gnash::key::F1);
+	}
+	else
+	{
+		c = gnash::key::INVALID;
+	}*/
+  
 
   return c;
 }

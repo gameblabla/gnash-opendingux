@@ -108,13 +108,13 @@ AC_DEFUN([GNASH_PATH_GLIB],
 	  GLIB_CFLAGS="${ac_cv_path_glib_incl} $GLIB_CFLAGS"
 	  AC_DEFINE([HAVE_GLIB], [1], [Has GLIB library installed])
   else
-	  GLIB_CFLAGS=""
+	  GLIB_CFLAGS="pkg-config --cflags glib-2.0 -I/usr/lib/glib-2.0/include"
   fi
 
   if test x"${ac_cv_path_glib_lib}" != x ; then
 	  GLIB_LIBS="${ac_cv_path_glib_lib}"
   else
-  	GLIB_LIBS=""
+  	GLIB_LIBS="pkg-config --libs glib-2.0"
   fi
 
   AC_SUBST(GLIB_CFLAGS)

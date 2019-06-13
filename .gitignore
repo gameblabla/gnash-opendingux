@@ -11,6 +11,8 @@ TAGS
 *.bak
 *.deb
 *.dsc
+*.gcda
+*.a
 *.changes
 *.tar.gz
 *-attempt-install-dependencies.sh

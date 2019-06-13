@@ -27,6 +27,38 @@
 
 using namespace std;
 
+static SDL_Surface* rl_screen, *cursor_sdl;
+SDL_RWops *rw;
+int internal_width = 0, internal_height = 0, hw_width = 0, hw_height = 0;
+extern int mouse_mode;
+extern int mouse_x, mouse_y;
+
+
+/* alekmaul's scaler taken from mame4all */
+static void bitmap_scale(uint32_t startx, uint32_t starty, uint32_t viswidth, uint32_t visheight, uint32_t newwidth, uint32_t newheight,uint32_t pitchsrc,uint32_t pitchdest, uint16_t* src, uint16_t* dst)
+{
+    uint32_t W,H,ix,iy,x,y;
+    x=startx<<16;
+    y=starty<<16;
+    W=newwidth;
+    H=newheight;
+    ix=(viswidth<<16)/W;
+    iy=(visheight<<16)/H;
+
+    do 
+    {
+        uint16_t* buffer_mem=&src[(y>>16)*pitchsrc];
+        W=newwidth; x=startx<<16;
+        do 
+        {
+            *dst++=buffer_mem[x>>16];
+            x+=ix;
+        } while (--W);
+        dst+=pitchdest;
+        y+=iy;
+    } while (--H);
+}
+
 namespace gnash
 {
 
@@ -44,7 +76,7 @@ SdlAggGlue::~SdlAggGlue()
 {
 //    GNASH_REPORT_FUNCTION;
     SDL_FreeSurface(_sdl_surface);
-    SDL_FreeSurface(_screen);
+   // SDL_FreeSurface(_screen);
     delete [] _offscreenbuf;
 }
 
@@ -62,7 +94,7 @@ SdlAggGlue::createRenderHandler(int bpp)
 {
 //    GNASH_REPORT_FUNCTION;
 
-    _bpp = bpp;
+    _bpp = 16;
 
     switch (_bpp) {
       case 32:
@@ -88,13 +120,30 @@ SdlAggGlue::prepDrawingArea(int width, int height, std::uint32_t sdl_flags)
     int depth_bytes = _bpp / 8;  // TODO: <Udo> is this correct? Gives 1 for 15 bit modes!
 
     assert(_bpp % 8 == 0);
+    
+    printf("Internal width, height %d %d\n", width, height);
 
-    _screen = SDL_SetVideoMode(width, height, _bpp, sdl_flags | SDL_SWSURFACE);
+    //_screen = SDL_SetVideoMode(width, height, _bpp, sdl_flags | SDL_SWSURFACE);
+    rl_screen = SDL_SetVideoMode(320, 240, _bpp, SDL_HWSURFACE);
 
-    if (!_screen) {
+	SDL_Surface* tmp = SDL_LoadBMP("cursor.bmp"); /* Automatically frees the RWops struct for us */
+	SDL_SetColorKey(tmp, (SDL_SRCCOLORKEY | SDL_RLEACCEL), SDL_MapRGB(tmp->format, 255, 0, 255));
+	cursor_sdl = SDL_DisplayFormat(tmp);
+	SDL_FreeSurface(tmp);
+
+    internal_width = width;
+    internal_height = height;
+    
+    hw_width = rl_screen->w;
+    hw_height = rl_screen->h;
+
+    
+    //_screen = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, _bpp, 0,0,0,0);
+
+   /* if (!_screen) {
         log_error (_("SDL_SetVideoMode() failed for SdlAggGlue."));
         exit(EXIT_FAILURE);
-    }
+    }*/
 
     int stride = width * depth_bytes;
 
@@ -186,13 +235,29 @@ void
 SdlAggGlue::render(int minx, int miny, int maxx, int maxy)
 {
     // Update only the invalidated rectangle
-    SDL_Rect clip = { static_cast<Sint16>(minx),
+    /*SDL_Rect clip = { static_cast<Sint16>(minx),
         static_cast<Sint16>(miny),
         static_cast<Uint16>(maxx - minx),
         static_cast<Uint16>(maxy - miny)};
-    SDL_SetClipRect(_screen, &clip);
-    SDL_BlitSurface(_sdl_surface, nullptr, _screen, nullptr);
-    SDL_UpdateRect(_screen, clip.x, clip.y, clip.w, clip.h);
+    SDL_SetClipRect(_screen, &clip);*/
+   // SDL_BlitSurface(_sdl_surface, nullptr, _screen, nullptr);
+   bitmap_scale(0, 0, _sdl_surface->w, _sdl_surface->h, rl_screen->w, rl_screen->h, _sdl_surface->w,0, (uint16_t*)_sdl_surface->pixels, (uint16_t*)rl_screen->pixels);
+   if (mouse_mode == 1)
+   {
+		SDL_Rect position;
+		position.x = mouse_x;
+		position.y = mouse_y;
+		if (cursor_sdl)
+		SDL_BlitSurface(cursor_sdl, nullptr, rl_screen, &position);
+		else
+		{
+			position.w = 4;
+			position.h = 4;
+			SDL_FillRect(rl_screen, &position, 512);
+		}
+	}
+	SDL_Flip(rl_screen);
+    //SDL_UpdateRect(_screen, clip.x, clip.y, clip.w, clip.h);
 }
 
 } // namespace gnash
