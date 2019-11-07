@@ -124,7 +124,7 @@ SdlAggGlue::prepDrawingArea(int width, int height, std::uint32_t sdl_flags)
     printf("Internal width, height %d %d\n", width, height);
 
     //_screen = SDL_SetVideoMode(width, height, _bpp, sdl_flags | SDL_SWSURFACE);
-    rl_screen = SDL_SetVideoMode(320, 240, _bpp, SDL_HWSURFACE);
+    rl_screen = SDL_SetVideoMode(0, 0, _bpp, SDL_HWSURFACE);
 
 	SDL_Surface* tmp = SDL_LoadBMP("cursor.bmp"); /* Automatically frees the RWops struct for us */
 	SDL_SetColorKey(tmp, (SDL_SRCCOLORKEY | SDL_RLEACCEL), SDL_MapRGB(tmp->format, 255, 0, 255));
