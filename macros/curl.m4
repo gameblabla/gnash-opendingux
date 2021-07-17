@@ -130,16 +130,16 @@ AC_DEFUN([GNASH_PATH_CURL],
     CURL_LIBS=""
   fi
 
-  AM_CONDITIONAL(CURL, [test -n "$CURL_LIBS"])
+  #AM_CONDITIONAL(CURL, [test -n "$CURL_LIBS"])
 
-  if test -n "$CURL_LIBS"; then
-    AC_DEFINE(USE_CURL, [1], [Define this if you want to enable curl usage])
-    if test x"${curlconfig}" != "x"; then
-      if test x"`${curlconfig} --protocols|grep RTMP`" != x; then
-        curl_rtmp_support=yes
-      fi
-    fi
-  fi
+ # if test -n "$CURL_LIBS"; then
+  #  AC_DEFINE(USE_CURL, [1], [Define this if you want to enable curl usage])
+   # if test x"${curlconfig}" != "x"; then
+    #  if test x"`${curlconfig} --protocols|grep RTMP`" != x; then
+     #  curl_rtmp_support=yes
+     # fi
+    #fi
+  #fi
 
   AC_SUBST(CURL_CFLAGS)
   AC_SUBST(CURL_LIBS)

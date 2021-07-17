@@ -374,27 +374,27 @@ AC_ARG_WITH(statistics,
     fi
   done
 )
-if test x${buffers} = xyes; then
-  statistics_list="${statistics_list} buffers"
-  AC_DEFINE(USE_STATS_BUFFERS, [1], [Support statistics collecting for the queue buffers])
-  AC_MSG_WARN([This option will effect your performance])
-fi
+#if test x${buffers} = xyes; then
+#  statistics_list="${statistics_list} buffers"
+#  AC_DEFINE(USE_STATS_BUFFERS, [1], [Support statistics collecting for the queue buffers])
+#  AC_MSG_WARN([This option will effect your performance])
+#fi
 
-if test x${memory} = xyes; then
-  statistics_list="${statistics_list} memory"
-  AC_DEFINE(USE_STATS_MEMORY, [1], [Support statistics collecting for all memory profiling])
-  AC_MSG_WARN([This option will effect your performance])
-fi
+#if test x${memory} = xyes; then
+#  statistics_list="${statistics_list} memory"
+#  AC_DEFINE(USE_STATS_MEMORY, [1], [Support statistics collecting for all memory profiling])
+#  AC_MSG_WARN([This option will effect your performance])
+#fi
 
-if test x${que} = xyes; then
-  statistics_list="${statistics_list} queues"
-  AC_DEFINE(USE_STATS_QUEUE, [1], [Support statistics collecting for the queues])
-fi
+#if test x${que} = xyes; then
+  #statistics_list="${statistics_list} queues"
+  #AC_DEFINE(USE_STATS_QUEUE, [1], [Support statistics collecting for the queues])
+#fi
 
-if test x${cache} = xyes; then
-  statistics_list="${statistics_list} cache"
-  AC_DEFINE(USE_STATS_CACHE, [1], [Support statistics collecting for the cache])
-fi
+#if test x${cache} = xyes; then
+  #statistics_list="${statistics_list} cache"
+  #AC_DEFINE(USE_STATS_CACHE, [1], [Support statistics collecting for the cache])
+#fi
 
 if test x${stat_proplookup} = xyes; then
   statistics_list="${statistics_list} proplookup"
@@ -1467,9 +1467,9 @@ AC_SUBST(DLPREOPEN)
 
 GNASH_PKG_FIND([ltdl], [ltdl.h], [libltdl library], [lt_dlinit])
 
-if test x"$has_ltdl" = x"yes";then
-  AC_DEFINE(HAVE_LTDL, [1], [Libtool 2.x defines this, but libtool 1.5 does not])
-fi
+#if test x"$has_ltdl" = x"yes";then
+#  AC_DEFINE(HAVE_LTDL, [1], [Libtool 2.x defines this, but libtool 1.5 does not])
+#fi
 
 dnl --------------------------------------------------------
 dnl SOL dir
@@ -1544,9 +1544,9 @@ AC_ARG_ENABLE(log,
   *)   AC_MSG_ERROR([bad value ${enableval} for --enable-log option]) ;;
 esac],debuglog=yes)
 
-if test x"${debuglog}" = x"yes"; then
-  AC_DEFINE([DEBUG_LOGGING], [1], [Enable debug logging])
-fi
+#if test x"${debuglog}" = x"yes"; then
+#  AC_DEFINE([DEBUG_LOGGING], [1], [Enable debug logging])
+#fi
 
 # Maybe use jemalloc, which handles memory fragmentation for
 # ECAMscript languages better than the regular system malloc.
@@ -1708,9 +1708,9 @@ AC_ARG_ENABLE(cgibins,
   *)   AC_MSG_ERROR([bad value ${enableval} for enable-cgibins option]) ;;
 esac],cgibin=yes)
 AM_CONDITIONAL(USE_CGI, test x$cgibin = xyes)
-if test x"${cgibin}" = x"yes"; then
-  AC_DEFINE([USE_CGIBIN], [1], [Enable cgi-bin processes for Cygnal])
-fi
+#if test x"${cgibin}" = x"yes"; then
+#  AC_DEFINE([USE_CGIBIN], [1], [Enable cgi-bin processes for Cygnal])
+#fi
 
 dnl --------------------------------------------------------
 dnl  Double buffer
@@ -2120,9 +2120,9 @@ dnl AC_CHECK_LIB(gmp, _gmp_get_memory_functions)
 GNASH_PATH_X11
 dnl fi
 AM_CONDITIONAL(HAVE_X11, [test x${has_x11} = xyes])
-if test x${build_x11_device} = xyes -a  x${has_x11} = xyes; then
-  AC_DEFINE(BUILD_X11_DEVICE, [1], [Build the X11 device])
-fi
+#if test x${build_x11_device} = xyes -a  x${has_x11} = xyes; then
+#  AC_DEFINE(BUILD_X11_DEVICE, [1], [Build the X11 device])
+#fi
 
 dnl See if ipc_perm structure has the ipc_perm.key field, and if so,
 dnl which variant of the name is used.
@@ -2299,14 +2299,14 @@ fi
 
 GNASH_PKG_FIND(speex, [speex/speex.h], [speex audio codec], speex_decode_int)
 AM_CONDITIONAL(HAVE_SPEEX, [ test x$has_speex = xyes ])
-if test x$has_speex = xyes ; then
-  AC_DEFINE([DECODING_SPEEX], [1], [Speex codec available])
-fi
+#if test x$has_speex = xyes ; then
+  #AC_DEFINE([DECODING_SPEEX], [1], [Speex codec available])
+#fi
 
 GNASH_PKG_FIND(speexdsp, [speex/speex_resampler.h], [speex DSP utilities], speex_resampler_process_int)
-if test x$has_speexdsp = xyes ; then
-  AC_DEFINE([RESAMPLING_SPEEX], [1], [Speex resampler available])
-fi
+#if test x$has_speexdsp = xyes ; then
+  #AC_DEFINE([RESAMPLING_SPEEX], [1], [Speex resampler available])
+#fi
 
 dnl Find freetype and fontconfig
 GNASH_PATH_FREETYPE2
