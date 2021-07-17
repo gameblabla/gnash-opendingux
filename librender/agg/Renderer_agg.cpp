@@ -583,7 +583,8 @@ public:
     void render(agg::path_storage& path, Renderer& rbase,
             const AlphaMasks& masks)
     {
-        switch (_quality)
+		renderFrame<LowQualityFilter>(path, rbase, masks);
+        /*switch (_quality)
         {
             case QUALITY_BEST:
             case QUALITY_HIGH:
@@ -597,7 +598,7 @@ public:
                 // FIXME: Should this be still lower quality?
                 renderFrame<LowQualityFilter>(path, rbase, masks);
                 break;
-        }
+        }*/
     }
     
 private:
