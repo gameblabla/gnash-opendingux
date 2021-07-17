@@ -129,117 +129,117 @@ processLog_trace(const boost::format& fmt)
 void
 processLog_debug(const boost::format& fmt)
 {
-    if (dbglogfile.getVerbosity() < LogFile::LOG_DEBUG) return;
+ /*   if (dbglogfile.getVerbosity() < LogFile::LOG_DEBUG) return;
     dbglogfile.log(N_("DEBUG"), fmt.str());
     // Print messages to the Android log, where they can be retrieved with
     // logcat.    
 #ifdef __ANDROID__
     __android_log_print(ANDROID_LOG_DEBUG, "Gnash", fmt.str().c_str());
-#endif    
+#endif   */ 
 }
 
 void
 processLog_abc(const boost::format& fmt)
 {
-    if (dbglogfile.getVerbosity() < LogFile::LOG_EXTRA) return;
+ /*   if (dbglogfile.getVerbosity() < LogFile::LOG_EXTRA) return;
     dbglogfile.log(N_("ABC"), fmt.str());
     // Print messages to the Android log, where they can be retrieved with
     // logcat.    
 #ifdef __ANDROID__
     __android_log_print(ANDROID_LOG_VERBOSE, "Gnash", fmt.str().c_str());
-#endif    
+#endif    */
 }
 
 void
 processLog_parse(const boost::format& fmt)
 {
-    dbglogfile.log(fmt.str());
+  /*  dbglogfile.log(fmt.str());
     // Print messages to the Android log, where they can be retrieved with
     // logcat.    
 #ifdef __ANDROID__
     __android_log_print(ANDROID_LOG_VERBOSE, "Gnash", fmt.str().c_str());
-#endif    
+#endif  */  
 }
 
 void
 processLog_network(const boost::format& fmt)
 {
-    dbglogfile.log(N_("NETWORK"), fmt.str());
+   /* dbglogfile.log(N_("NETWORK"), fmt.str());
     // Print messages to the Android log, where they can be retrieved with
     // logcat.    
 #ifdef __ANDROID__
     __android_log_print(ANDROID_LOG_DEBUG, "Gnash", fmt.str().c_str());
-#endif    
+#endif */   
 }
 
 void
 processLog_error(const boost::format& fmt)
 {
-    dbglogfile.log(N_("ERROR"), fmt.str());
+   /* dbglogfile.log(N_("ERROR"), fmt.str());
     // Print messages to the Android log, where they can be retrieved with
     // logcat.    
 #ifdef __ANDROID__
     __android_log_print(ANDROID_LOG_ERROR, "Gnash", fmt.str().c_str());
-#endif    
+#endif  */ 
 }
 
 void
 processLog_unimpl(const boost::format& fmt)
 {
-    dbglogfile.log(N_("UNIMPLEMENTED"), fmt.str());
+    /*dbglogfile.log(N_("UNIMPLEMENTED"), fmt.str());
     // Print messages to the Android log, where they can be retrieved with
     // logcat.    
 #ifdef __ANDROID__
     __android_log_print(ANDROID_LOG_WARN, "Gnash", fmt.str().c_str());
-#endif    
+#endif  */  
 }
 
 void
 processLog_security(const boost::format& fmt)
 {
-    dbglogfile.log(N_("SECURITY"), fmt.str());
+   /* dbglogfile.log(N_("SECURITY"), fmt.str());
     // Print messages to the Android log, where they can be retrieved with
     // logcat.    
 #ifdef __ANDROID__
     __android_log_print(ANDROID_LOG_WARN, "Gnash", fmt.str().c_str());
-#endif    
+#endif*/    
 }
 
 void
 processLog_swferror(const boost::format& fmt)
 {
-    dbglogfile.log(N_("MALFORMED SWF"), fmt.str());
+    /*dbglogfile.log(N_("MALFORMED SWF"), fmt.str());
     // Print messages to the Android log, where they can be retrieved with
     // logcat.    
 #ifdef __ANDROID__
     __android_log_print(ANDROID_LOG_WARN, "Gnash", fmt.str().c_str());
-#endif    
+#endif */   
 }
 
 void
 processLog_aserror(const boost::format& fmt)
 {
-    dbglogfile.log(N_("ACTIONSCRIPT ERROR"), fmt.str());
+   /* dbglogfile.log(N_("ACTIONSCRIPT ERROR"), fmt.str());
     // Print messages to the Android log, where they can be retrieved with
     // logcat.    
 #ifdef __ANDROID__
     __android_log_print(ANDROID_LOG_WARN, "Gnash", fmt.str().c_str());
-#endif    
+#endif */   
 }
 
 void
 processLog_action(const boost::format& fmt)
 {
-    bool stamp = dbglogfile.getStamp();
+   /* bool stamp = dbglogfile.getStamp();
     dbglogfile.setStamp(false);
     dbglogfile.log(fmt.str());
-    dbglogfile.setStamp(stamp);
+    dbglogfile.setStamp(stamp);*/
 }
 
 void
 LogFile::log(const std::string& msg)
 {
-    std::lock_guard<std::mutex> lock(_ioMutex);
+   /* std::lock_guard<std::mutex> lock(_ioMutex);
 
     if ( !_verbose ) return; // nothing to do if not verbose
 
@@ -261,27 +261,27 @@ LogFile::log(const std::string& msg)
     
     if (_listener) {
         (*_listener)(msg);
-    }
+    }*/
 }
 
 inline void
 LogFile::log(const std::string& label, const std::string& msg)
 {
-    log(label + ": " + msg);
+    //log(label + ": " + msg);
 }
 
 void
 LogFile::setLogFilename(const std::string& fname)
 {
-    closeLog();
-    _logFilename = fname;
+   /* closeLog();
+    _logFilename = fname;*/
 }
 
 void
 LogFile::setWriteDisk(bool use)
 {
-    if (!use) closeLog();
-    _write = use;
+  /*  if (!use) closeLog();
+    _write = use;*/
 }
 
 // Default constructor
@@ -306,21 +306,22 @@ LogFile::~LogFile()
 bool
 LogFile::openLogIfNeeded()
 {
-    if (_state != CLOSED) return true;
+   /* if (_state != CLOSED) return true;
     if (!_write) return false;
 
     if (_logFilename.empty()) _logFilename = DEFAULT_LOGFILE;
 
     // TODO: expand ~ to getenv("HOME") !!
 
-    return openLog(_logFilename);
+    return openLog(_logFilename);*/
+    return false;
 }
 
 bool
 LogFile::openLog(const std::string& filespec)
 {
 
-    // NOTE:
+   /* // NOTE:
     // don't need to lock the mutex here, as this method
     // is intended to be called only by openLogIfNeeded,
     // which in turn is called by operator<< which is called
@@ -342,7 +343,7 @@ LogFile::openLog(const std::string& filespec)
     }       
 
     _filespec = filespec;
-    _state = OPEN;
+    _state = OPEN;*/
 
     return true;
 }
@@ -350,13 +351,13 @@ LogFile::openLog(const std::string& filespec)
 bool
 LogFile::closeLog()
 {
-    std::lock_guard<std::mutex> lock(_ioMutex);
+   /* std::lock_guard<std::mutex> lock(_ioMutex);
 
     if (_state == OPEN) {
         _outstream.flush();
         _outstream.close();
     }
-    _state = CLOSED;
+    _state = CLOSED;*/
 
     return true;
 }
@@ -364,13 +365,13 @@ LogFile::closeLog()
 bool
 LogFile::removeLog()
 {
-    if (_state == OPEN) {
+    /*if (_state == OPEN) {
         _outstream.close();
     }
 
     // Ignore the error, we don't care
     unlink(_filespec.c_str());
-    _filespec.clear();
+    _filespec.clear();*/
 
     return true;
 }

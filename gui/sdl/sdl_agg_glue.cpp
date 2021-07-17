@@ -241,7 +241,9 @@ SdlAggGlue::render(int minx, int miny, int maxx, int maxy)
         static_cast<Uint16>(maxy - miny)};
     SDL_SetClipRect(_screen, &clip);*/
    // SDL_BlitSurface(_sdl_surface, nullptr, _screen, nullptr);
+   
    bitmap_scale(0, 0, _sdl_surface->w, _sdl_surface->h, rl_screen->w, rl_screen->h, _sdl_surface->w,0, (uint16_t*)_sdl_surface->pixels, (uint16_t*)rl_screen->pixels);
+   //SDL_SoftStretch(_sdl_surface, NULL, rl_screen, NULL);
    if (mouse_mode == 1)
    {
 		SDL_Rect position;

@@ -132,7 +132,7 @@ SDLGui::run()
 						mouse_x = hw_width/2;
 						mouse_y = hw_height/2;
 					}
-					else if (event.key.keysym.sym == SDLK_END)
+					else if (event.key.keysym.sym == SDLK_END || event.key.keysym.sym == SDLK_HOME)
 					{
 						return true;
 					}
@@ -319,6 +319,7 @@ SDLGui::sdl_to_gnash_key(SDL_KeyboardEvent * key)
 		case SDLK_BACKSPACE:   c = gnash::key::ENTER;   break;
 		case SDLK_RETURN:   c = gnash::key::ENTER;   break;
 		case SDLK_ESCAPE:   c = gnash::key::END;   break;
+		case SDLK_HOME:   c = gnash::key::END;   break;
 #else
       case SDLK_UP:       c = gnash::key::UP;       break;
       case SDLK_DOWN:     c = gnash::key::DOWN;     break;
