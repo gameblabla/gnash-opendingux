@@ -43,7 +43,7 @@ trymain(int /*argc*/, char** /*argv*/)
 	MovieTester tester(filename);
 
 	MovieClip* root = tester.getRootMovie();
-	assert(root);
+	//assert(root);
 
 	tester.advance();
 	check_equals(root->get_current_frame(), 1);

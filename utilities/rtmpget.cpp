@@ -541,7 +541,7 @@ bool
 handleInvoke(rtmp::RTMP& r, FakeNC& nc, const std::uint8_t* payload,
         const std::uint8_t* end)
 {
-    assert(payload != end);
+    //assert(payload != end);
 
     // make sure it is a string method name we start with
     if (payload[0] != 0x02) {

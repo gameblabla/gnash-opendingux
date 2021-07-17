@@ -86,7 +86,7 @@ public:
     /// This will abort if there is no current object.
     Property* getProperty(as_object** owner = nullptr) const {
 
-        assert(_object);
+        //assert(_object);
         Property* prop = _object->_members.getProperty(_uri);
         
         if (prop && _condition(*prop)) {
@@ -163,7 +163,7 @@ public:
         args.swap(argsIn);
 
         fn_call fn2(fn.this_ptr, fn.env(), args, fn.super, true);
-        assert(fn2.isInstantiation());
+        //assert(fn2.isInstantiation());
         as_function* ctor = constructor();
         if (ctor) return ctor->call(fn2);
         log_debug("Super has no associated constructor");
@@ -223,7 +223,7 @@ as_super::get_super(const ObjectURI& fname)
     // super.myName() from C.prototype.myName()
     
     // well, since we found the property, it must be somewhere!
-    assert(tmp); 
+    //assert(tmp); 
 
     if (tmp != proto) { return new as_super(getGlobal(*this), tmp); }
     return new as_super(getGlobal(*this), owner);
@@ -377,7 +377,7 @@ as_object::add_property(const std::string& name, as_function& getter,
 bool
 as_object::get_member(const ObjectURI& uri, as_value* val)
 {
-    assert(val);
+    //assert(val);
 
     const int version = getSWFVersion(*this);
 
@@ -737,7 +737,7 @@ as_object::init_readonly_property(const std::string& name, as_function& getter,
     const ObjectURI& uri = getURI(vm(), name);
 
     init_property(uri, getter, getter, initflags | PropFlags::readOnly);
-    assert(_members.getProperty(uri));
+    //assert(_members.getProperty(uri));
 }
 
 void
@@ -746,7 +746,7 @@ as_object::init_readonly_property(const std::string& name,
 {
     const ObjectURI& uri = getURI(vm(), name);
     init_property(uri, getter, getter, initflags | PropFlags::readOnly);
-    assert(_members.getProperty(uri));
+    //assert(_members.getProperty(uri));
 }
 
 void
@@ -758,7 +758,7 @@ as_object::set_member_flags(const ObjectURI& uri, int setTrue, int setFalse)
 void
 as_object::addInterface(as_object* obj)
 {
-    assert(obj);
+    //assert(obj);
     if (std::find(_interfaces.begin(), _interfaces.end(), obj) ==
         _interfaces.end()) {
         _interfaces.push_back(obj);
@@ -1039,7 +1039,7 @@ as_value
 Trigger::call(const as_value& oldval, const as_value& newval,
         as_object& this_obj)
 {
-    assert(!_dead);
+    //assert(!_dead);
     
     if (_executing) return newval;
     

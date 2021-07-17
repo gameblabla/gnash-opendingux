@@ -75,7 +75,7 @@ unsigned SWFStream::read(char *buf, unsigned count)
         TagBoundaries& tb = _tagBoundsStack.back();
         unsigned long endPos = tb.second;
         unsigned long cur_pos = tell();
-        assert(endPos >= cur_pos);
+        //assert(endPos >= cur_pos);
         unsigned long left = endPos - cur_pos;
         if ( left < count ) count = left;
     }
@@ -143,7 +143,7 @@ unsigned SWFStream::read_uint(unsigned short bitcount)
             value |= cache[i] << bitcount; 
         }
 
-        //assert(bitcount == spareBits);
+        ////assert(bitcount == spareBits);
         if ( bitcount )
         {
             m_current_byte = cache[bytesToRead];
@@ -177,7 +177,7 @@ unsigned SWFStream::read_uint(unsigned short bitcount)
     }
     else
     {
-        assert(bitcount < m_unused_bits);
+        //assert(bitcount < m_unused_bits);
         // Consume some of the unused bits.
 
         m_unused_bits -= bitcount;
@@ -190,7 +190,7 @@ unsigned SWFStream::read_uint(unsigned short bitcount)
 int
 SWFStream::read_sint(unsigned short bitcount)
 {
-    assert(bitcount > 0);
+    //assert(bitcount > 0);
 
     std::int32_t value = std::int32_t(read_uint(bitcount));
 
@@ -304,7 +304,7 @@ double SWFStream::read_d64()
     const unsigned short dataLength = 8;
     double d = 0;
 
-    static_assert(sizeof(double) == dataLength, "double must be 8 bytes");
+    //static_assert(sizeof(double) == dataLength, "double must be 8 bytes");
 
     // Should align:
     if (read(reinterpret_cast<char*>(&d), dataLength) < dataLength)
@@ -496,7 +496,7 @@ SWFStream::seek(unsigned long pos)
 unsigned long
 SWFStream::get_tag_end_position()
 {
-    assert(!_tagBoundsStack.empty());
+    //assert(!_tagBoundsStack.empty());
     return _tagBoundsStack.back().second;
 }
 
@@ -513,7 +513,7 @@ SWFStream::open_tag()
     int tagHeader = read_u16();
     int tagType = tagHeader >> 6;
     int tagLength = tagHeader & 0x3F;
-    assert(m_unused_bits == 0);
+    //assert(m_unused_bits == 0);
         
     if (tagLength == 0x3F)
     {
@@ -581,7 +581,7 @@ SWFStream::open_tag()
 void
 SWFStream::close_tag()
 {
-    assert(!_tagBoundsStack.empty());
+    //assert(!_tagBoundsStack.empty());
     std::streampos endPos = _tagBoundsStack.back().second;
     _tagBoundsStack.pop_back();
 

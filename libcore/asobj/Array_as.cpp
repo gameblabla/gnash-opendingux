@@ -590,8 +590,8 @@ get_basic_cmp(std::uint8_t flags, const fn_call& fn)
     as_cmp_fn f;
 
     // SORT_UNIQUE and SORT_RETURN_INDEX must be stripped by caller
-    assert(flags^SORT_UNIQUE);
-    assert(flags^SORT_RETURN_INDEX);
+    //assert(flags^SORT_UNIQUE);
+    //assert(flags^SORT_RETURN_INDEX);
 
     switch ( flags )
     {
@@ -723,8 +723,8 @@ public:
         as_object* ao = toObject(a, getVM(_obj));
         as_object* bo = toObject(b, getVM(_obj));
 
-        assert(ao);
-        assert(bo);
+        //assert(ao);
+        //assert(bo);
         
         const as_value& av = getOwnProperty(*ao, _prop);
         const as_value& bv = getOwnProperty(*bo, _prop);
@@ -1130,7 +1130,7 @@ array_sort(const fn_call& fn)
         // Get comparison function
         as_function* as_func = fn.arg(0).to_function();
 
-        assert(as_func);
+        //assert(as_func);
 
         bool (*icmp)(int);
     
@@ -1224,7 +1224,7 @@ array_sortOn(const fn_call& fn)
     if (fn.arg(0).is_object()) 
     {
         as_object* props = toObject(fn.arg(0), getVM(fn));
-        assert(props);
+        //assert(props);
 
         std::vector<ObjectURI> prp;
         GetKeys gk(prp, vm, version);
@@ -1587,9 +1587,9 @@ void foreachArray(as_object& array, int start, int end, T& pred)
     end = std::max(start, end);
     end = std::min<size_t>(end, size);
 
-    assert(start >= 0);
-    assert(end >= start);
-    assert(size >= end);
+    //assert(start >= 0);
+    //assert(end >= start);
+    //assert(size >= end);
 
     VM& vm = getVM(array);
 

@@ -115,7 +115,7 @@ Subshape::computeBounds(int swfVersion) const
                 // This is either a Glyph, for which m_line==1 is valid
                 // or a bug in the parser, which we have no way to
                 // check at this time
-                assert(p.m_line == 1);
+                //assert(p.m_line == 1);
             }
             else
             {
@@ -263,7 +263,7 @@ ShapeRecord::read(SWFStream& in, SWF::TagType tag, movie_definition& m,
     }
 
     if (tag == SWF::DEFINEFONT || tag == SWF::DEFINEFONT2 ) {
-        assert(!styleInfo);
+        //assert(!styleInfo);
     }
     
     // Use read_u8 to force alignment.

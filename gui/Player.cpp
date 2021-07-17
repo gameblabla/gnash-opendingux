@@ -326,7 +326,7 @@ Player::load_movie()
 {
     /// The RunResources must be initialized by this point to provide resources
     /// for parsing.
-    assert(_runResources.get());
+    //assert(_runResources.get());
 
     boost::intrusive_ptr<gnash::movie_definition> md;
 

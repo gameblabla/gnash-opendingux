@@ -75,7 +75,7 @@ KdeAggGlue::initBuffer(int width, int height)
     int _bpp = 32;
     int depth_bytes = _bpp / 8;  // TODO: <Udo> is this correct? Gives 1 for 15 bit modes!
 
-    assert(_bpp % 8 == 0);
+    //assert(_bpp % 8 == 0);
 
 #define CHUNK_SIZE (100 * 100 * depth_bytes)
 
@@ -139,7 +139,7 @@ KdeAggGlue::setInvalidatedRegions(const InvalidatedRanges& ranges)
       // will lead to bounds==null. 
       if (bounds.isNull()) continue;
 
-      assert(bounds.isFinite());
+      //assert(bounds.isFinite());
 
       _drawbounds.push_back(bounds);
 

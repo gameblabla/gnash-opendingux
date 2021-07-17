@@ -705,9 +705,9 @@ textfield_setTextFormat(const fn_call& fn)
 
             // NOTE: should query movie-private font lib, not global-shared one
             Movie* mi = text->get_root();
-            assert(mi);
+            //assert(mi);
             const movie_definition* md = mi->definition();
-            assert(md);
+            //assert(md);
             Font* f = md->get_font(fontName, bold, italic);
             if ( ! f ) f = fontlib::get_font(fontName, bold, italic);
             text->setFont( f );

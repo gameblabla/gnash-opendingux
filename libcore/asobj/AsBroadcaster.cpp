@@ -265,7 +265,7 @@ asbroadcaster_addListener(const fn_call& fn)
 
     as_object* obj = ensure<ValidThis>(fn);
 
-    as_value newListener; assert(newListener.is_undefined());
+    as_value newListener; //assert(newListener.is_undefined());
     if ( fn.nargs ) newListener = fn.arg(0);
 
     callMethod(obj, NSV::PROP_REMOVE_LISTENER, newListener);
@@ -301,7 +301,7 @@ asbroadcaster_addListener(const fn_call& fn)
     as_object* listeners = toObject(listenersValue, getVM(fn));
 
     // We checked is_object() above.
-    assert(listeners); 
+    //assert(listeners); 
 
     callMethod(listeners, NSV::PROP_PUSH, newListener);
 
@@ -343,7 +343,7 @@ asbroadcaster_removeListener(const fn_call& fn)
     }
 
     as_object* listeners = toObject(listenersValue, getVM(fn));
-    assert(listeners);
+    //assert(listeners);
 
     as_value listenerToRemove; 
     if (fn.nargs) listenerToRemove = fn.arg(0);

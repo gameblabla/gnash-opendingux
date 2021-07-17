@@ -331,7 +331,7 @@ VideoDecoderFfmpeg::frameToImage(AVCodecContext* srcCtx,
 
     // Is it possible for the context to be reset
     // to NULL once it's been created?
-    assert(_swsContext->getContext());
+    //assert(_swsContext->getContext());
 
     int rv = sws_scale(_swsContext->getContext(), 
             const_cast<uint8_t**>(srcFrame->data),
@@ -355,7 +355,7 @@ VideoDecoderFfmpeg::decode(const std::uint8_t* input,
 {
     // This object shouldn't exist if there's no codec, as it can'
     // do anything anyway.
-    assert(_videoCodecCtx.get());
+    //assert(_videoCodecCtx.get());
 
     std::unique_ptr<image::GnashImage> ret;
 

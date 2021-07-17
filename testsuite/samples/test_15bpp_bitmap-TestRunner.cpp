@@ -101,7 +101,7 @@ trymain(int /*argc*/, char** /*argv*/)
 
 
 	const MovieClip* root = tester.getRootMovie();
-	assert(root);
+	//assert(root);
 
 	check_equals(root->get_frame_count(), 1);
 

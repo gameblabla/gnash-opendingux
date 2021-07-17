@@ -60,7 +60,7 @@ event_id::functionName() const
     };
 
     EventFunctionNameMap::const_iterator it = e.find(_id);
-    assert(it != e.end());
+    //assert(it != e.end());
     return it->second;
 }
 
@@ -96,7 +96,7 @@ event_id::functionURI() const
     };
 
     EventFunctionMap::const_iterator it = e.find(_id);
-    assert(it != e.end());
+    //assert(it != e.end());
     return it->second;
 }
 

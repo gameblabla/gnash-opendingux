@@ -41,7 +41,7 @@ void
 DefineFontTag::loader(SWFStream& in, TagType tag, movie_definition& m,
             const RunResources& r)
 {
-    assert(tag == DEFINEFONT || tag == DEFINEFONT2 || tag == DEFINEFONT3);
+    //assert(tag == DEFINEFONT || tag == DEFINEFONT2 || tag == DEFINEFONT3);
 
     in.ensureBytes(2);
     const std::uint16_t fontID = in.read_u16();
@@ -62,7 +62,7 @@ DefineFontTag::readCodeTable(SWFStream& in, Font::CodeTable& table,
     );
 
     // Good. We can only do this once.
-    assert(table.empty());
+    //assert(table.empty());
 
     if (wideCodes) {
         in.ensureBytes(2 * glyphCount);
@@ -332,7 +332,7 @@ void
 DefineFontInfoTag::loader(SWFStream& in, TagType tag, movie_definition& m,
             const RunResources& /*r*/)
 {
-    assert(tag == DEFINEFONTINFO || tag == DEFINEFONTINFO2); 
+    //assert(tag == DEFINEFONTINFO || tag == DEFINEFONTINFO2); 
 
     in.ensureBytes(2);
     const std::uint16_t fontID = in.read_u16();

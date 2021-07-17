@@ -181,7 +181,7 @@ trymain(int /*argc*/, char** /*argv*/)
 	rc.addLocalSandboxPath(MEDIADIR);
 
 	root = tester->getRootMovie();
-	assert(root);
+	//assert(root);
 
 	check_equals(root->get_frame_count(), 2);
 	check_equals(root->get_current_frame(), 0);

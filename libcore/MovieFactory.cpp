@@ -65,7 +65,7 @@ MovieFactory::makeMovie(std::unique_ptr<IOChannel> in, const std::string& url,
 {
     boost::intrusive_ptr<movie_definition> ret;
 
-    assert(in.get());
+    //assert(in.get());
 
     // see if it's a jpeg or an swf
     FileType type = getFileType(*in);

@@ -69,7 +69,7 @@ Qt4AggGlue::initBuffer(int width, int height)
     int _bpp = 32;
     int depth_bytes = _bpp / 8;
 
-    assert(_bpp % 8 == 0);
+    //assert(_bpp % 8 == 0);
 
 #define CHUNK_SIZE (100 * 100 * depth_bytes)
 

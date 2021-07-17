@@ -133,7 +133,7 @@ AudioDecoderGst::AudioDecoderGst(const AudioInfo& info, std::shared_ptr<HostInte
 
 AudioDecoderGst::~AudioDecoderGst()
 {
-    assert(g_queue_is_empty (_decoder.queue));
+    //assert(g_queue_is_empty (_decoder.queue));
     swfdec_gst_decoder_push_eos(&_decoder);
     swfdec_gst_decoder_finish(&_decoder);
 }

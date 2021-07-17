@@ -106,7 +106,7 @@ GnashTextureFormat::GnashTextureFormat(image::ImageType type)
             _format = GL_BGRA;
             break;
         default:
-            assert(0);
+            //assert(0);
             break;
     }
 }
@@ -142,8 +142,8 @@ bool GnashTexture::init()
     if (!check_extension("GL_ARB_texture_non_power_of_two", gl_extensions))
         return false;
 
-    assert(_width > 0);
-    assert(_height > 0);
+    //assert(_width > 0);
+    //assert(_height > 0);
     if (_width == 0 || _height == 0)
         return false;
 

@@ -353,8 +353,8 @@ Sound_as::probeAudio()
 #ifdef USE_SOUND
     if ( ! externalSound ) {
         // Only probe for sound complete
-        assert(_soundHandler);
-        assert(!_soundCompleted.load());
+        //assert(_soundHandler);
+        //assert(!_soundCompleted.load());
         if (!_soundHandler->isSoundPlaying(soundId)) {
             stopProbeTimer();
             // dispatch onSoundComplete 
@@ -422,8 +422,8 @@ Sound_as::probeAudio()
             _inputStream = attachAuxStreamerIfNeeded();
         } 
         catch (const MediaException& e) {
-            assert(!_inputStream);
-            assert(!_audioDecoder.get());
+            //assert(!_inputStream);
+            //assert(!_audioDecoder.get());
             log_error(_("Could not create audio decoder: %s"), e.what());
             _mediaParser.reset(); // no use for this anymore...
             stopProbeTimer();
@@ -440,7 +440,7 @@ Sound_as::probeAudio()
             }
         } else {
             // An audio decoder was constructed, good!
-            assert(_audioDecoder.get());
+            //assert(_audioDecoder.get());
         }
     }
 #endif  // USE_MEDIA
@@ -880,7 +880,7 @@ Sound_as::getAudio(std::int16_t* samples, unsigned int nSamples, bool& atEOF)
             //log_debug(" decoded %d bytes of audio", _leftOverSize);
         }
 
-        assert( !(_leftOverSize%2) );
+        //assert( !(_leftOverSize%2) );
 
         int n = std::min<int>(_leftOverSize, len);
         //log_debug(" consuming %d bytes of decoded audio", n);
@@ -1043,7 +1043,7 @@ sound_stop(const fn_call& fn)
 
         // check the import.
         const movie_definition* def = fn.callerDef;
-        assert(def);
+        //assert(def);
 
         const std::uint16_t id = def->exportID(name);
         if (!id) {
@@ -1097,7 +1097,7 @@ sound_attachsound(const fn_call& fn)
     // NOTE: we should be checking in the SWF containing the calling code
     // (see 'winter bell' from orisinal morning sunshine for a testcase)
     const movie_definition* def = fn.callerDef;
-    assert(def);
+    //assert(def);
 
 
     const std::uint16_t id = def->exportID(name);
@@ -1120,7 +1120,7 @@ sound_attachsound(const fn_call& fn)
     const int si = ss->m_sound_handler_id;
 
     // sanity check
-    assert(si >= 0);
+    //assert(si >= 0);
     so->attachSound(si, name);
 
     return as_value();

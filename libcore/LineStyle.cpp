@@ -81,7 +81,7 @@ LineStyle::read_morph(SWFStream& in, SWF::TagType t, movie_definition& md,
         return;
     }
 
-    assert(t == SWF::DEFINEMORPHSHAPE2 || t == SWF::DEFINEMORPHSHAPE2_);
+    //assert(t == SWF::DEFINEMORPHSHAPE2 || t == SWF::DEFINEMORPHSHAPE2_);
 
     // MorphShape 2 from here down.
     in.ensureBytes(4 + 2);

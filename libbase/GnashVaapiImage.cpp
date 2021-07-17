@@ -74,9 +74,9 @@ void GnashVaapiImage::update(std::uint8_t* data)
 
 void GnashVaapiImage::update(const image::GnashImage& from)
 {
-    assert(stride() == from.stride());
-    assert(size() <= from.size());
-    assert(type() == from.type());
+    //assert(stride() == from.stride());
+    //assert(size() <= from.size());
+    //assert(type() == from.type());
 
     switch (from.location()) {
         case image::GNASH_IMAGE_CPU:
@@ -86,7 +86,7 @@ void GnashVaapiImage::update(const image::GnashImage& from)
             this->update(static_cast<const GnashVaapiImage&>(from).surface());
             break;
         default:
-            assert(0);
+            //assert(0);
             break;
     }
 }
@@ -99,7 +99,7 @@ bool GnashVaapiImage::transfer()
     //       Mark this usage scenario as a fatal error and fix the code
     //       instead.
     log_error(_("GnashVaapiImage: VA surface to SW pixels are not supported\n"));
-    assert(0);
+    //assert(0);
 
     _data.reset();
     return _data.get() != NULL;

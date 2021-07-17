@@ -444,7 +444,7 @@ void
 ActionEnd(ActionExec& thread)
 {
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_END));
+    //assert(thread.atActionTag(SWF::ACTION_END));
 #endif
     log_error (_("%s: CHECKME: was broken"), __PRETTY_FUNCTION__);
     thread.skipRemainingBuffer();
@@ -457,7 +457,7 @@ ActionNextFrame(ActionExec& thread)
     as_environment& env = thread.env;
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_NEXTFRAME));
+    //assert(thread.atActionTag(SWF::ACTION_NEXTFRAME));
 #endif
 
     DisplayObject* tgtch = env.target();
@@ -475,7 +475,7 @@ ActionPrevFrame(ActionExec& thread)
     as_environment& env = thread.env;
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_PREVFRAME));
+    //assert(thread.atActionTag(SWF::ACTION_PREVFRAME));
 #endif
 
     DisplayObject* tgtch = env.target();
@@ -490,7 +490,7 @@ ActionPlay(ActionExec& thread)
     as_environment& env = thread.env;
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_PLAY));
+    //assert(thread.atActionTag(SWF::ACTION_PLAY));
 #endif
 
     DisplayObject* tgtch = env.target();
@@ -505,7 +505,7 @@ ActionStop(ActionExec& thread)
     as_environment& env = thread.env;
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_STOP));
+    //assert(thread.atActionTag(SWF::ACTION_STOP));
 #endif
 
     DisplayObject* tgtch = env.target();
@@ -529,7 +529,7 @@ void
 ActionStopSounds(ActionExec& thread)
 {
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_STOPSOUNDS));
+    //assert(thread.atActionTag(SWF::ACTION_STOPSOUNDS));
 #endif
 
     VM& vm = getVM(thread.env);
@@ -546,7 +546,7 @@ ActionGotoFrame(ActionExec& thread)
     const action_buffer& code = thread.code;
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_GOTOFRAME));
+    //assert(thread.atActionTag(SWF::ACTION_GOTOFRAME));
 #endif
 
     size_t frame = code.read_int16(thread.getCurrentPC() + 3);
@@ -569,7 +569,7 @@ ActionGetUrl(ActionExec& thread)
     const action_buffer& code = thread.code;
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_GETURL));
+    //assert(thread.atActionTag(SWF::ACTION_GETURL));
 #endif
 
     size_t pc = thread.getCurrentPC();
@@ -604,7 +604,7 @@ ActionWaitForFrame(ActionExec& thread)
     const action_buffer& code = thread.code;
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_WAITFORFRAME));
+    //assert(thread.atActionTag(SWF::ACTION_WAITFORFRAME));
 #endif
 
     // SWF integrity check
@@ -656,7 +656,7 @@ ActionSetTarget(ActionExec& thread)
     size_t pc = thread.getCurrentPC();
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_SETTARGET)); // 0x8B
+    //assert(thread.atActionTag(SWF::ACTION_SETTARGET)); // 0x8B
 #endif
 
     // Change the movie we're working on.
@@ -756,7 +756,7 @@ ActionEqual(ActionExec& thread)
     as_environment& env = thread.env;
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_EQUAL)); // 0x0E
+    //assert(thread.atActionTag(SWF::ACTION_EQUAL)); // 0x0E
 #endif
 
     const double op1 = toNumber(env.top(0), getVM(env));
@@ -919,9 +919,9 @@ ActionSubString(ActionExec& thread)
     }
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(start >= 0);
-    assert(static_cast<unsigned int>(start) < wstr.length() );
-    assert(size >= 0);
+    //assert(start >= 0);
+    //assert(static_cast<unsigned int>(start) < wstr.length() );
+    //assert(size >= 0);
 #endif
 
     env.drop(2);
@@ -1191,7 +1191,7 @@ ActionStartDragMovie(ActionExec& thread)
     as_environment& env = thread.env;
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_STARTDRAGMOVIE));
+    //assert(thread.atActionTag(SWF::ACTION_STARTDRAGMOVIE));
 #endif
 
     DisplayObject* tgt = findTarget(env, env.top(0).to_string());
@@ -1402,7 +1402,7 @@ void
 ActionFscommand2(ActionExec& thread)
 {
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_FSCOMMAND2)); // 0x0E
+    //assert(thread.atActionTag(SWF::ACTION_FSCOMMAND2)); // 0x0E
 #endif
 
     as_environment& env = thread.env;
@@ -1906,7 +1906,7 @@ ActionGetUrl2(ActionExec& thread)
     const action_buffer& code = thread.code;
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_GETURL2));
+    //assert(thread.atActionTag(SWF::ACTION_GETURL2));
 #endif
 
     const std::uint8_t method = code[thread.getCurrentPC() + 3];
@@ -1933,7 +1933,7 @@ ActionBranchIfTrue(ActionExec& thread)
     size_t stopPC = thread.getStopPC();
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_BRANCHIFTRUE));
+    //assert(thread.atActionTag(SWF::ACTION_BRANCHIFTRUE));
 #endif
 
     std::int16_t offset = code.read_int16(pc+3);
@@ -2056,7 +2056,7 @@ ActionDelete(ActionExec& thread)
     as_environment& env = thread.env;
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_DELETE)); // 0x3A
+    //assert(thread.atActionTag(SWF::ACTION_DELETE)); // 0x3A
 #endif
 
     // Stack                    Result
@@ -2143,7 +2143,7 @@ ActionDelete2(ActionExec& thread)
     as_environment& env = thread.env;
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_DELETE2)); // 0x3B
+    //assert(thread.atActionTag(SWF::ACTION_DELETE2)); // 0x3B
 #endif
 
     const std::string& propertyname = env.top(0).to_string();
@@ -2361,7 +2361,7 @@ ActionInitArray(ActionExec& thread)
     as_environment& env = thread.env;
 
     const int array_size = toInt(env.pop(), getVM(env));
-    assert(array_size >= 0); // TODO: trigger this !!
+    //assert(array_size >= 0); // TODO: trigger this !!
     
     Global_as& gl = getGlobal(env);
 
@@ -2449,7 +2449,7 @@ ActionTargetPath(ActionExec& thread)
 static void
 enumerateObject(as_environment& env, const as_object& obj)
 {
-    assert(env.top(0).is_undefined());
+    //assert(env.top(0).is_undefined());
     Enumerator en(env);
     obj.visitKeys(en);
 }
@@ -2507,7 +2507,7 @@ ActionNewEquals(ActionExec& thread)
     as_environment& env = thread.env;
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_NEWEQUALS));
+    //assert(thread.atActionTag(SWF::ACTION_NEWEQUALS));
 #endif
 
     VM& vm = getVM(env);
@@ -2778,7 +2778,7 @@ ActionCallMethod(ActionExec& thread)
         this_ptr = obj;
     }
 
-    assert(method_obj); // or we would should have returned already by now
+    //assert(method_obj); // or we would should have returned already by now
 
     // If we are calling a method of a super object, the 'this' pointer
     // for the call is always the this pointer of the function that called
@@ -2829,7 +2829,7 @@ ActionNewMethod(ActionExec& thread)
     as_environment& env = thread.env;
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_NEWMETHOD));
+    //assert(thread.atActionTag(SWF::ACTION_NEWMETHOD));
 #endif
 
     const as_value method_name = env.pop();
@@ -3236,7 +3236,7 @@ ActionTry(ActionExec& thread)
     const action_buffer& code = thread.code;
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_TRY));
+    //assert(thread.atActionTag(SWF::ACTION_TRY));
 #endif
 
     size_t i = thread.getCurrentPC() + 3; // skip tag id and length
@@ -3292,7 +3292,7 @@ ActionWith(ActionExec& thread)
     size_t pc = thread.getCurrentPC();
 
 #if GNASH_PARANOIA_LEVEL > 1
-    assert(thread.atActionTag(SWF::ACTION_WITH));
+    //assert(thread.atActionTag(SWF::ACTION_WITH));
 #endif
 
     const as_value& val = env.pop();
@@ -3321,7 +3321,7 @@ ActionWith(ActionExec& thread)
     pc += 2; // skip with body size
 
     // now we should be on the first action of the 'with' body
-    assert(thread.getNextPC() == pc);
+    //assert(thread.getNextPC() == pc);
 
     if (!with_obj) {
         IF_VERBOSE_ASCODING_ERRORS(
@@ -3352,7 +3352,7 @@ ActionDefineFunction(ActionExec& thread)
 #ifndef NDEBUG
     // TODO: check effects of the following 'length' 
     std::int16_t length = code.read_int16(thread.getCurrentPC()+1);
-    assert( length >= 0 );
+    //assert( length >= 0 );
 #endif
 
     // Create a new Function
@@ -3463,7 +3463,7 @@ as_object*
 construct_object(as_function* ctor_as_func, as_environment& env,
         unsigned int nargs)
 {
-    assert(ctor_as_func);
+    //assert(ctor_as_func);
     fn_call::Args args;
     for (size_t i = 0; i < nargs; ++i) {
         args += env.pop();

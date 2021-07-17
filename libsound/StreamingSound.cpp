@@ -70,7 +70,7 @@ StreamingSound::moreData()
 void
 StreamingSound::decodeNextBlock()
 {
-    assert(!decodingCompleted());
+    //assert(!decodingCompleted());
 
     // Get the current block of sound data.
     const SimpleBuffer& block = _soundDef.getBlock(_currentBlock);
@@ -88,7 +88,7 @@ StreamingSound::decodeNextBlock()
         std::uint8_t* decodedData = decoder().decode(input, inputSize,
                 decodedDataSize, consumed);
 
-        assert(!(decodedDataSize % 2));
+        //assert(!(decodedDataSize % 2));
 
         std::int16_t* samples =
             reinterpret_cast<std::int16_t*>(decodedData);

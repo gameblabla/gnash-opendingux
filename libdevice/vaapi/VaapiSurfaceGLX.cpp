@@ -101,7 +101,7 @@ static bool bind_texture(TextureState *ts, GLenum target, GLuint texture)
         texture_binding = GL_TEXTURE_BINDING_RECTANGLE_ARB;
         break;
     default:
-        assert(!target);
+        //assert(!target);
         return false;
     }
 

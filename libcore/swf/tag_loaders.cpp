@@ -58,7 +58,7 @@ void
 frame_label_loader(SWFStream& in, TagType tag, movie_definition& m,
 		const RunResources& /*r*/)
 {
-    assert(tag == SWF::FRAMELABEL); // 43
+    //assert(tag == SWF::FRAMELABEL); // 43
 
     std::string name;
     in.read_string(name);
@@ -99,7 +99,7 @@ void
 sprite_loader(SWFStream& in, TagType tag, movie_definition& m,
 		const RunResources& r)
 {
-    assert(tag == SWF::DEFINESPRITE); // 39 - DefineSprite
+    //assert(tag == SWF::DEFINESPRITE); // 39 - DefineSprite
 
     in.ensureBytes(2);
     const std::uint16_t id = in.read_u16();
@@ -151,7 +151,7 @@ void
 define_sound_loader(SWFStream& in, TagType tag, movie_definition& m,
 		const RunResources& r)
 {
-    assert(tag == SWF::DEFINESOUND); // 14
+    //assert(tag == SWF::DEFINESOUND); // 14
 
     sound::sound_handler* handler = r.soundHandler();
 
@@ -247,7 +247,7 @@ void
 file_attributes_loader(SWFStream& in, TagType tag, movie_definition& m,
         const RunResources& /*r*/)
 {
-    assert(tag == SWF::FILEATTRIBUTES); // 69
+    //assert(tag == SWF::FILEATTRIBUTES); // 69
 
     struct file_attrs_flags {
         unsigned reserved1;
@@ -301,7 +301,7 @@ void
 metadata_loader(SWFStream& in, TagType tag, movie_definition& m,
 		const RunResources& /*r*/)
 {
-    assert(tag == SWF::METADATA); 
+    //assert(tag == SWF::METADATA); 
 
     // this is supposed to be an XML string
     std::string metadata;
@@ -343,7 +343,7 @@ void
 serialnumber_loader(SWFStream& in, TagType tag, movie_definition& /*m*/, 
         const RunResources& /*r*/)
 {
-    assert(tag == SWF::SERIALNUMBER); // 41
+    //assert(tag == SWF::SERIALNUMBER); // 41
 
     in.ensureBytes(26);
 
@@ -378,7 +378,7 @@ void
 reflex_loader(SWFStream& in, TagType tag, movie_definition& /*m*/,
         const RunResources& /*r*/)
 {
-    assert(tag == SWF::REFLEX); // 777
+    //assert(tag == SWF::REFLEX); // 777
 
     in.ensureBytes(3);
     const std::uint8_t first = in.read_u8();

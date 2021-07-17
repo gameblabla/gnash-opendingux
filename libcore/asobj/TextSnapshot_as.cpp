@@ -243,7 +243,7 @@ TextSnapshot_as::getTextRunInfo(size_t start, size_t end, as_object& ri) const
 
         for (const SWF::TextRecord* tr : rec) {
         
-            assert(tr);
+            //assert(tr);
 
             const SWF::TextRecord::Glyphs& glyphs = tr->glyphs();
             const SWF::TextRecord::Glyphs::size_type numGlyphs = glyphs.size();
@@ -254,7 +254,7 @@ TextSnapshot_as::getTextRunInfo(size_t start, size_t end, as_object& ri) const
             }
 
             const Font* font = tr->getFont();
-            assert(font);
+            //assert(font);
 
             double x = tr->xOffset();
             for (const auto& glyph : glyphs) {
@@ -317,7 +317,7 @@ TextSnapshot_as::makeString(std::string& to, bool newline, bool selectedOnly,
 
         for (const SWF::TextRecord* tr : records) {
         
-            assert(tr);
+            //assert(tr);
 
             const SWF::TextRecord::Glyphs& glyphs = tr->glyphs();
             const SWF::TextRecord::Glyphs::size_type numGlyphs = glyphs.size();
@@ -328,7 +328,7 @@ TextSnapshot_as::makeString(std::string& to, bool newline, bool selectedOnly,
             }
 
             const Font* font = tr->getFont();
-            assert(font);
+            //assert(font);
 
             for (const auto& glyph : glyphs) {
                 

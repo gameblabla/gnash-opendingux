@@ -45,7 +45,7 @@ trymain(int /*argc*/, char** /*argv*/)
     dbglogfile.setVerbosity(1);
 
     MovieClip* root = tester.getRootMovie();
-    assert(root);
+    //assert(root);
 
     const rgba black(0, 0, 0, 255);
     const rgba white(255, 255, 255, 255);

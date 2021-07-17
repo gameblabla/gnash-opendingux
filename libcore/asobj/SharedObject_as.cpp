@@ -130,7 +130,7 @@ public:
     /// go on to the next property.
     virtual bool accept(const ObjectURI& uri, const as_value& val) 
     {
-        assert(!_error);
+        //assert(!_error);
 
         if (val.is_function()) {
             log_debug("SOL: skip serialization of FUNCTION property");
@@ -253,7 +253,7 @@ public:
     /// simple object property.
     void setData(as_object* data) {
 
-        assert(data);
+        //assert(data);
         _data = data;
 
         const int flags = PropFlags::dontDelete |
@@ -541,8 +541,8 @@ SharedObjectLibrary::getLocal(const std::string& objName,
 
     // Paths should start with a '/', so we shouldn't have to add another
     // one.
-    assert(requestedPath.empty() ? _basePath[0] == '/' :
-                                    requestedPath[0] == '/');
+    /*assert(requestedPath.empty() ? _basePath[0] == '/' :
+                                    requestedPath[0] == '/');*/
 
     // If no path was requested, use the SWF's path.
     solPath << (requestedPath.empty() ? _basePath : requestedPath) << "/"

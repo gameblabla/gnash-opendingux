@@ -111,7 +111,7 @@ void
 Qt4Gui::setClipboard(const std::string& copy)
 {
     QClipboard* cb = QApplication::clipboard();
-    assert(cb);
+    //assert(cb);
     cb->setText(QString::fromStdString(copy));
 }
 
@@ -262,7 +262,7 @@ Qt4Gui::renderBuffer()
         // will lead to bounds==null. 
         if (i->isNull()) continue;
         
-        assert(i->isFinite()); 
+        //assert(i->isFinite()); 
 
         _drawingWidget->update(i->getMinX(), i->getMinY(),
                                i->width(), i->height());
@@ -295,7 +295,7 @@ Qt4Gui::setInvalidatedRegions(const InvalidatedRanges& ranges)
         // will lead to bounds==null. 
         if (bounds.isNull()) continue;
 
-        assert(bounds.isFinite());
+        //assert(bounds.isFinite());
 
         _drawbounds.push_back(bounds);
 
@@ -378,7 +378,7 @@ Qt4Gui::unsetFullscreen()
 double
 Qt4Gui::getScreenDPI() const
 {
-    assert(_drawingWidget);
+    //assert(_drawingWidget);
     // Should this be logical or physical DPI?
     return _drawingWidget->logicalDpiX();
 }
@@ -387,7 +387,7 @@ std::pair<int, int>
 Qt4Gui::screenResolution() const
 {
     QDesktopWidget* d = QApplication::desktop();
-    assert(d);
+    //assert(d);
 
     const QRect c = d->screenGeometry();
     return std::make_pair(c.width(), c.height());

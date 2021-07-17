@@ -96,7 +96,7 @@ int curve_x_crossings(const T x0, const T y0, const T x1, const T y1,
                     x0 + 2 * (cx - x0) * t1 + (x1 + x0 - 2 * cx) * t1 * t1;
 
                 count++;
-                assert(count==1);
+                //assert(count==1);
                 cross1 = x_at_t1;             // order is important!
             }
         }
@@ -166,7 +166,7 @@ pointTest(const std::vector<Path>& paths,
         // If the path has a line style, check for strokes there
         if (pth.m_line != 0 )
         {
-            assert(lineStyles.size() >= pth.m_line);
+            //assert(lineStyles.size() >= pth.m_line);
             const LineStyle& ls = lineStyles[pth.m_line-1];
             double thickness = ls.getThickness();
             if (! thickness )

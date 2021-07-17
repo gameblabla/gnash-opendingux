@@ -119,7 +119,7 @@ SdlAggGlue::prepDrawingArea(int width, int height, std::uint32_t sdl_flags)
 {
     int depth_bytes = _bpp / 8;  // TODO: <Udo> is this correct? Gives 1 for 15 bit modes!
 
-    assert(_bpp % 8 == 0);
+    //assert(_bpp % 8 == 0);
     
     printf("Internal width, height %d %d\n", width, height);
 
@@ -192,7 +192,7 @@ SdlAggGlue::prepDrawingArea(int width, int height, std::uint32_t sdl_flags)
 
     _sdl_surface = SDL_CreateRGBSurfaceFrom((void *) _offscreenbuf, width, height,
                                            _bpp, stride, rmask, gmask, bmask, amask);
-    assert(_sdl_surface);
+    //assert(_sdl_surface);
     
     _validbounds.setTo(0, 0, width-1, height-1);
     

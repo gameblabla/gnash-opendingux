@@ -151,7 +151,7 @@ public:
     {
         BeApp *that =
             static_cast<BeApp*>(data);
-        assert(that != NULL);
+        //assert(that != NULL);
         int32 i = that->SendPulsesEtc();
         if (i != 0) {
             boost::format fmt(_("pulses thread returned %d"));
@@ -225,13 +225,13 @@ public:
 
     void setFullscreenEtc()
     {
-        assert(_win != NULL);
+        //assert(_win != NULL);
         static_cast<BeWin*>(_win)->setFullscreenEtc();
     }
 
     void unsetFullscreenEtc()
     {
-        assert(_win != NULL);
+        //assert(_win != NULL);
         static_cast<BeWin*>(_win)->unsetFullscreenEtc();
     }
 
@@ -330,7 +330,7 @@ public:
     CreateWindow(int width, int height, int xPosition, int yPosition,
                 const char *title)
     {
-        assert(_win == NULL);
+        //assert(_win == NULL);
         QQ(8);
         _win = new BeWin(BRect(xPosition, yPosition, xPosition+width-1, yPosition+height-1),
             title, _gui);

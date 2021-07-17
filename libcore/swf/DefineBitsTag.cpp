@@ -80,7 +80,7 @@ class StreamAdapter : public IOChannel
         endPos(std::move(maxPos)),
         currPos(startPos)
     {
-        assert(endPos >= startPos);
+        //assert(endPos >= startPos);
     }
 
     virtual ~StreamAdapter() {}
@@ -146,7 +146,7 @@ void
 jpeg_tables_loader(SWFStream& in, TagType tag, movie_definition& m,
 		const RunResources& /*r*/)
 {
-    assert(tag == SWF::JPEGTABLES);
+    //assert(tag == SWF::JPEGTABLES);
 
     IF_VERBOSE_PARSE(
         log_parse(_("  jpeg_tables_loader"));
@@ -155,7 +155,7 @@ jpeg_tables_loader(SWFStream& in, TagType tag, movie_definition& m,
     const std::streampos currPos = in.tell();
     const std::streampos endPos = in.get_tag_end_position();
 
-    assert(endPos >= currPos);
+    //assert(endPos >= currPos);
 
     const unsigned long jpegHeaderSize = endPos - currPos;
 
@@ -399,7 +399,7 @@ readDefineBitsJpeg3(SWFStream& in, TagType tag)
 std::unique_ptr<image::GnashImage>
 readLossless(SWFStream& in, TagType tag)
 {
-    assert(tag == SWF::DEFINELOSSLESS || tag == SWF::DEFINELOSSLESS2);
+    //assert(tag == SWF::DEFINELOSSLESS || tag == SWF::DEFINELOSSLESS2);
     in.ensureBytes(2 + 2 + 1); // the initial header 
 
     // 3 == 8 bit, 4 == 16 bit, 5 == 32 bit
@@ -481,7 +481,7 @@ readLossless(SWFStream& in, TagType tag)
     std::unique_ptr<std::uint8_t[]> buffer(new std::uint8_t[bufSize]);
 
     inflateWrapper(in, buffer.get(), bufSize);
-    assert(in.tell() <= in.get_tag_end_position());
+    //assert(in.tell() <= in.get_tag_end_position());
 
     switch (bitmap_format) {
 
@@ -570,7 +570,7 @@ readLossless(SWFStream& in, TagType tag)
 void
 inflateWrapper(SWFStream& in, void* buffer, size_t buffer_bytes)
 {
-    assert(buffer);
+    //assert(buffer);
 
     z_stream d_stream;
 
@@ -599,7 +599,7 @@ inflateWrapper(SWFStream& in, void* buffer, size_t buffer_bytes)
 
     for (;;) {
         unsigned int chunkSize = CHUNKSIZE;
-        assert(in.tell() <= endTagPos);
+        //assert(in.tell() <= endTagPos);
         const size_t availableBytes =  endTagPos - in.tell();
 
         if (availableBytes < chunkSize) {
@@ -614,8 +614,8 @@ inflateWrapper(SWFStream& in, void* buffer, size_t buffer_bytes)
             chunkSize = availableBytes;
         }
     
-        static_assert(sizeof(char) == sizeof(std::uint8_t),
-            "char must be 1 byte");
+        /*static_assert(sizeof(char) == sizeof(std::uint8_t),
+            "char must be 1 byte");*/
 
         // Fill the buffer    
         in.read(reinterpret_cast<char*>(buf), chunkSize);

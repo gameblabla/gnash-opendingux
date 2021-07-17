@@ -368,7 +368,7 @@ MovieLoader::processCompletedRequests()
 #endif
 
         bool checkit = processCompletedRequest(firstCompleted);
-        assert(checkit);
+        //assert(checkit);
 
 #ifdef GNASH_DEBUG_LOCKING
         log_debug("processCompletedRequests: lock on requests for removal: "

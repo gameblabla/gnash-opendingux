@@ -155,7 +155,7 @@ tu_file::~tu_file()
 std::streamsize
 tu_file::read(void* dst, std::streamsize bytes) 
 {
-    assert(dst);
+    //assert(dst);
     return std::fread(dst, 1, bytes, _data);
 }
 
@@ -163,7 +163,7 @@ tu_file::read(void* dst, std::streamsize bytes)
 std::streamsize
 tu_file::write(const void* src, std::streamsize bytes)
 {
-    assert(src);
+    //assert(src);
     return std::fwrite(src, 1, bytes, _data);
 }
 
@@ -201,7 +201,7 @@ tu_file::tell() const
     std::streampos ret = std::ftell(_data);
     if (ret < 0) throw IOException("Error getting stream position");
 
-    assert(static_cast<size_t>(ret) <= size());
+    //assert(static_cast<size_t>(ret) <= size());
     return ret;
 }
 
@@ -221,7 +221,7 @@ tu_file::bad() const
 size_t
 tu_file::size() const
 {
-    assert(_data);
+    //assert(_data);
 
     struct stat statbuf;
     if (fstat(fileno(_data), &statbuf) < 0)
@@ -236,7 +236,7 @@ tu_file::size() const
 void
 tu_file::close()
 {
-    assert(_data);
+    //assert(_data);
     std::fclose(_data);
 }
 

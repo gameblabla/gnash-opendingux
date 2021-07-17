@@ -251,7 +251,7 @@ SWFMatrix::set_rotation(double rotation)
 void
 SWFMatrix::transform(point* result, const point& p) const
 {
-    assert(result);
+    //assert(result);
 
     result->x = multiplyFixed16(_a,  p.x) + multiplyFixed16(_c, p.y) + _tx;
     result->y = multiplyFixed16(_b, p.x) + multiplyFixed16(_d,  p.y) + _ty;

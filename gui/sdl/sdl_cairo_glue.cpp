@@ -103,7 +103,7 @@ SdlCairoGlue::prepDrawingArea(int width, int height, std::uint32_t sdl_flags)
 
     _sdl_surface = SDL_CreateRGBSurfaceFrom((void *) _render_image, width, height,
                                            _bpp, stride, rmask, gmask, bmask, amask);
-    assert(_sdl_surface);
+    //assert(_sdl_surface);
 
     return true;
 }

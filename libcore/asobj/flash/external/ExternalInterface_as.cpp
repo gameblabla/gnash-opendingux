@@ -604,7 +604,7 @@ externalinterface_uToXML(const fn_call& fn)
         }
         if (val.is_object()) {
             as_object* obj = toObject(val, vm);
-            assert(obj);
+            //assert(obj);
             if (hasOwnProperty(*obj, NSV::PROP_LENGTH)) {
                 return callMethod(ei, getURI(vm, "_arrayToXML"), val);
             }

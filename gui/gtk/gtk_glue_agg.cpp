@@ -106,9 +106,9 @@ GtkAggGlue::setRenderHandlerSize(int width, int height)
 {
     GNASH_REPORT_FUNCTION;
 
-    assert(width > 0);
-    assert(height > 0);
-    assert(_agg_renderer != nullptr);
+    //assert(width > 0);
+    //assert(height > 0);
+    //assert(_agg_renderer != nullptr);
     
     if (_offscreenbuf && _offscreenbuf->width == width &&
         _offscreenbuf->height == height) {

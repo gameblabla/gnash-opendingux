@@ -371,7 +371,7 @@ void
 Machine::push_scope_stack(as_value object)
 {
     as_object* scopeObj = object.to_object(*_global);
-    assert(scopeObj);
+    //assert(scopeObj);
     log_abc("Pushing value %s onto scope stack.", object);
     _scopeStack.push(scopeObj);
     print_scope_stack();
@@ -384,7 +384,7 @@ Machine::execute()
     // This automatically switches back again when we leave this scope.
     AVM2Switcher avm2(_vm);
 
-    assert(mStream);
+    //assert(mStream);
 
 	for (;;) {
 		std::size_t opStart = mStream->tellg();
@@ -989,7 +989,7 @@ Machine::execute()
                     std::uint32_t index =
                         toNumber(_stack.top(0), getVM(fn));
                     _stack.drop(1);
-                    assert(obj);
+                    //assert(obj);
                     _stack.top(0) = obj->nextIndex(index);
                     break;
                 }
@@ -1733,7 +1733,7 @@ Machine::execute()
                     //Create the class.
                     Method* scmethod = c->getStaticConstructor();
                     // What if there isn't one?
-                    assert(scmethod);
+                    //assert(scmethod);
                     
                     as_function* ctor = c->getConstructor()->getPrototype();
                     new_class->init_member(NSV::PROP_CONSTRUCTOR, ctor, 0);
@@ -3033,7 +3033,7 @@ void
 Machine::immediateFunction(const as_function* func, as_object* thisptr,
         as_value& storage, unsigned char stack_in, short stack_out)
 {
-    assert(func);
+    //assert(func);
 
 	// TODO: Set up the fn to use the stack
     fn_call::Args args;

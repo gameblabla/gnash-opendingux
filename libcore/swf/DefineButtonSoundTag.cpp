@@ -41,7 +41,7 @@ void
 DefineButtonSoundTag::loader(SWFStream& in, TagType tag, movie_definition& m,
         const RunResources& /*r*/)
 {
-    assert(tag == SWF::DEFINEBUTTONSOUND);
+    //assert(tag == SWF::DEFINEBUTTONSOUND);
 
     in.ensureBytes(2);
     int id = in.read_u16();

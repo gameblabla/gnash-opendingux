@@ -107,8 +107,8 @@ void
 SWFRect::set_lerp(const SWFRect& a, const SWFRect& b, float t)
 // Set this to the lerp of a and b.
 {
-    assert( !a.is_null() );
-    assert( !b.is_null() );
+    //assert( !a.is_null() );
+    //assert( !b.is_null() );
     
     _xMin = lerp<float>(a.get_x_min(), b.get_x_min(), t);
     _yMin = lerp<float>(a.get_y_min(), b.get_y_min(), t);
@@ -119,7 +119,7 @@ SWFRect::set_lerp(const SWFRect& a, const SWFRect& b, float t)
 void
 SWFRect::clamp(point& p) const
 {
-    assert( !is_null() );
+    //assert( !is_null() );
     p.x = gnash::clamp<std::int32_t>(p.x, _xMin, _xMax);
     p.y = gnash::clamp<std::int32_t>(p.y, _yMin, _yMax);
 }

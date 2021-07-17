@@ -111,7 +111,7 @@ DisplayObject::DisplayObject(movie_root& mr, as_object* object,
     _invalidated(true),
     _child_invalidated(true)
 {
-    assert(m_old_invalidated_ranges.isNull());
+    //assert(m_old_invalidated_ranges.isNull());
 
     // This informs the core that the object is a DisplayObject.
     if (_object) _object->setDisplayObject(this);
@@ -133,7 +133,7 @@ DisplayObject::getLoadedMovie(Movie* extern_movie)
 ObjectURI
 DisplayObject::getNextUnnamedInstanceName()
 {
-    assert(_object);
+    //assert(_object);
     movie_root& mr = stage();
 
     std::ostringstream ss;
@@ -327,7 +327,7 @@ DisplayObject::set_visible(bool visible)
     // Remove focus from this DisplayObject if it changes from visible to
     // invisible (see Selection.as).
     if (_visible && !visible) {
-        assert(_object);
+        //assert(_object);
         movie_root& mr = stage();
         if (mr.getFocus() == this) {
             mr.setFocus(nullptr);
@@ -341,7 +341,7 @@ DisplayObject::setWidth(double newwidth)
 {
     const SWFRect& bounds = getBounds();
     const double oldwidth = bounds.width();
-    assert(oldwidth >= 0); 
+    //assert(oldwidth >= 0); 
 
     const double xscale = oldwidth ? (newwidth / oldwidth) : 0; 
     const double rotation = _rotation * PI / 180.0;
@@ -380,7 +380,7 @@ DisplayObject::setHeight(double newheight)
     const SWFRect& bounds = getBounds();
 
     const double oldheight = bounds.height();
-    assert(oldheight >= 0); 
+    //assert(oldheight >= 0); 
 
     const double yscale = oldheight ? (newheight / oldheight) : 0;
     const double rotation = _rotation * PI / 180.0;
@@ -418,7 +418,7 @@ DisplayObject::set_event_handlers(const Events& copyfrom)
         const BufferList& bufs = event.second;
         for (const action_buffer* buf : bufs) 
         {
-            assert(buf);
+            //assert(buf);
             add_event_handler(ev, *buf);
         }    
     }
@@ -592,7 +592,7 @@ DisplayObject::getTargetPath() const
         ch = parent;
     } 
 
-    assert(topLevel);
+    //assert(topLevel);
 
     if (path.empty()) {
         if (&stage().getRootMovie() == this) return "/";
@@ -687,7 +687,7 @@ DisplayObject::destroy()
 
     if (_object) _object->clearProperties();
 
-    assert(!_destroyed);
+    //assert(!_destroyed);
     _destroyed = true;
 }
 
@@ -899,7 +899,7 @@ getDisplayObjectProperty(DisplayObject& obj, const ObjectURI& uri,
 {
     
     as_object* o = getObject(&obj);
-    assert(o);
+    //assert(o);
 
     string_table& st = getStringTable(*o);
     const std::string& propname = uri.toString(st);
@@ -940,7 +940,7 @@ getDisplayObjectProperty(DisplayObject& obj, const ObjectURI& uri,
             return true;
         case NSV::PROP_uGLOBAL:
             // TODO: clean up this mess.
-            assert(getObject(&obj));
+            //assert(getObject(&obj));
             if (getSWFVersion(*o) < 6) break;
             val = &getGlobal(*o);
             return true;

@@ -193,7 +193,7 @@ movie_root::~movie_root()
     _intervalTimers.clear();
     _movieLoader.clear();
 
-    assert(testInvariant());
+    //assert(testInvariant());
 }
 
 Movie*
@@ -315,9 +315,9 @@ movie_root::cleanupAndCollect()
 void
 movie_root::setLevel(unsigned int num, Movie* movie)
 {
-    assert(movie != nullptr);
-    assert(static_cast<unsigned int>(movie->get_depth()) ==
-                            num + DisplayObject::staticDepthOffset);
+    //assert(movie != nullptr);
+    /*assert(static_cast<unsigned int>(movie->get_depth()) ==
+                            num + DisplayObject::staticDepthOffset);*/
 
 
     Levels::iterator it = _movies.find(movie->get_depth());
@@ -375,13 +375,13 @@ movie_root::setLevel(unsigned int num, Movie* movie)
     /// Notify placement 
     movie->construct();
 
-    assert(testInvariant());
+    //assert(testInvariant());
 }
 
 void
 movie_root::swapLevels(MovieClip* movie, int depth)
 {
-    assert(movie);
+    //assert(movie);
 
 //#define GNASH_DEBUG_LEVELS_SWAPPING 1
 
@@ -455,7 +455,7 @@ movie_root::swapLevels(MovieClip* movie, int depth)
     //       (does level swapping require full redraw always?)
     movie->set_invalidated();
     
-    assert(testInvariant());
+    //assert(testInvariant());
 }
 
 void
@@ -463,7 +463,7 @@ movie_root::dropLevel(int depth)
 {
     // should be checked by caller
     // TODO: don't use a magic number! See MovieClip::removeMovieClip().
-    assert(depth >= 0 && depth <= 1048575);
+    //assert(depth >= 0 && depth <= 1048575);
 
     Levels::iterator it = _movies.find(depth);
     if (it == _movies.end()) {
@@ -487,7 +487,7 @@ movie_root::dropLevel(int depth)
     mo->destroy();
     _movies.erase(it);
 
-    assert(testInvariant());
+    //assert(testInvariant());
 }
 
 void
@@ -560,7 +560,7 @@ movie_root::reset()
 void
 movie_root::setDimensions(size_t w, size_t h)
 {
-    assert(testInvariant());
+    //assert(testInvariant());
 
     _stageWidth = w;
     _stageHeight = h;
@@ -575,13 +575,13 @@ movie_root::setDimensions(size_t w, size_t h)
 
     }
 
-    assert(testInvariant());
+    //assert(testInvariant());
 }
 
 bool
 movie_root::mouseMoved(std::int32_t x, std::int32_t y)
 {
-    assert(testInvariant());
+    //assert(testInvariant());
 
     _mouseX = x;
     _mouseY = y;
@@ -677,7 +677,7 @@ movie_root::mouseWheel(int delta)
 bool
 movie_root::mouseClick(bool mouse_pressed)
 {
-    assert(testInvariant());
+    //assert(testInvariant());
 
     _mouseButtonState.isDown = mouse_pressed;
 
@@ -691,7 +691,7 @@ movie_root::mouseClick(bool mouse_pressed)
 bool
 movie_root::fire_mouse_event()
 {
-    assert(testInvariant());
+    //assert(testInvariant());
 
     std::int32_t x = pixelsToTwips(_mouseX);
     std::int32_t y = pixelsToTwips(_mouseY);
@@ -735,7 +735,7 @@ movie_root::fire_mouse_event()
 std::pair<std::int32_t, std::int32_t>
 movie_root::mousePosition() const
 {
-    assert(testInvariant());
+    //assert(testInvariant());
     return std::make_pair(_mouseX, _mouseY);
 }
 
@@ -761,7 +761,7 @@ movie_root::setDragState(const DragState& st)
 
         _dragState->setOffset(xoffset, yoffset);
     }
-    assert(testInvariant());
+    //assert(testInvariant());
 }
 
 void
@@ -812,12 +812,12 @@ movie_root::doMouseDrag()
 std::uint32_t
 movie_root::addIntervalTimer(std::unique_ptr<Timer> timer)
 {
-    assert(timer.get());
-    assert(testInvariant());
+    //assert(timer.get());
+    //assert(testInvariant());
             
     const size_t id = ++_lastTimerId;
 
-    assert(_intervalTimers.find(id) == _intervalTimers.end());
+    //assert(_intervalTimers.find(id) == _intervalTimers.end());
 
     _intervalTimers.insert(std::make_pair(id, std::move(timer)));
 
@@ -983,7 +983,7 @@ movie_root::advanceMovie()
 
     cleanupAndCollect();
 
-    assert(testInvariant());
+    //assert(testInvariant());
 }
 
 int
@@ -999,7 +999,7 @@ movie_root::display()
 {
     // GNASH_REPORT_FUNCTION;
 
-    assert(testInvariant());
+    //assert(testInvariant());
 
     clearInvalidated();
 
@@ -1071,7 +1071,7 @@ movie_root::notify_mouse_listeners(const event_id& event)
         }
     }
 
-    assert(testInvariant());
+    //assert(testInvariant());
 
     if (!copy.empty()) {
         // process actions queued in the above step
@@ -1114,14 +1114,14 @@ movie_root::setFocus(DisplayObject* to)
         from->killFocus();
 
         /// A valid focus must have an associated object.
-        assert(getObject(from));
+        //assert(getObject(from));
         callMethod(getObject(from), NSV::PROP_ON_KILL_FOCUS, getObject(to));
     }
 
     _currentFocus = to;
 
     if (to) {
-        assert(getObject(to));
+        //assert(getObject(to));
         callMethod(getObject(to), NSV::PROP_ON_SET_FOCUS, getObject(from));
     }
 
@@ -1134,7 +1134,7 @@ movie_root::setFocus(DisplayObject* to)
                 getObject(from), getObject(to));
     }
 
-    assert(testInvariant());
+    //assert(testInvariant());
 
     return true;
 }
@@ -1382,7 +1382,7 @@ movie_root::processActionQueue(size_t lvl)
 {
     ActionQueue::value_type& q = _actionQueue[lvl];
 
-    assert(minPopulatedPriorityQueue() == lvl);
+    //assert(minPopulatedPriorityQueue() == lvl);
 
 #ifdef GNASH_DEBUG
     static unsigned calls=0;
@@ -1412,7 +1412,7 @@ movie_root::processActionQueue(size_t lvl)
         }
     }
 
-    assert(q.empty());
+    //assert(q.empty());
 
 #ifdef GNASH_DEBUG
     if (actionsToProcess) {
@@ -1495,7 +1495,7 @@ movie_root::removeQueuedConstructor(MovieClip* target)
 void
 movie_root::pushAction(std::unique_ptr<ExecutableCode> code, size_t lvl)
 {
-    assert(lvl < PRIORITY_SIZE);
+    //assert(lvl < PRIORITY_SIZE);
     _actionQueue[lvl].push_back(code.release());
 }
 
@@ -1758,7 +1758,7 @@ movie_root::markReachableResources() const
 
     // Mark original top-level movie
     // This should always be in _movies, but better make sure
-    assert(_rootMovie);
+    //assert(_rootMovie);
     _rootMovie->setReachable();
 
     // Mark mouse entities 
@@ -1810,7 +1810,7 @@ movie_root::markReachableResources() const
 #ifdef ALLOW_GC_RUN_DURING_ACTIONS_EXECUTION
         (*i)->setReachable();
 #else
-        assert((*i)->isReachable());
+        //assert((*i)->isReachable());
 #endif
     }
 #endif
@@ -2148,7 +2148,7 @@ movie_root::findCharacterByTarget(const std::string& tgtstr) const
     //       (but I guess we'd also drop loadMovie requests in that
     //       case... just not tested)
     as_object* o = getObject(_movies.begin()->second);
-    assert(o);
+    //assert(o);
 
     std::string::size_type from = 0;
     while (std::string::size_type to = tgtstr.find('.', from)) {
@@ -2314,7 +2314,7 @@ movie_root::getMovieInfo(InfoTree& tr, InfoTree::iterator it)
 {
     // Stage
     const movie_definition* def = _rootMovie->definition();
-    assert(def);
+    //assert(def);
 
     it = tr.insert(it, std::make_pair("Stage Properties", ""));
 
@@ -2530,7 +2530,7 @@ movie_root::testInvariant() const
     // The _movies map can not invariantably
     // be non-empty as the stage is autonomous
     // itself
-    //assert( ! _movies.empty() );
+    ////assert( ! _movies.empty() );
 
     return true;
 }
@@ -2646,7 +2646,7 @@ const DisplayObject*
 getNearestObject(const DisplayObject* o)
 {
     while (1) {
-        assert(o);
+        //assert(o);
         if (isReferenceable(*o)) return o;
         o = o->parent();
     }

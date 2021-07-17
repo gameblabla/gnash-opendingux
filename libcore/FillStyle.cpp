@@ -91,7 +91,7 @@ GradientFill::GradientFill(Type t, const SWFMatrix& m,
     _type(t),
     _matrix(gradientMatrix(t, m))
 {
-    assert(recs.empty() || recs.size() > 1);
+    //assert(recs.empty() || recs.size() > 1);
 }
     
 void
@@ -122,7 +122,7 @@ BitmapFill::BitmapFill(SWF::FillType t, movie_definition* md,
     _md(md),
     _id(id)
 {
-    assert(md);
+    //assert(md);
 
     _smoothingPolicy = md->get_version() >= 8 ? 
         BitmapFill::SMOOTHING_ON : BitmapFill::SMOOTHING_UNSPECIFIED;
@@ -197,9 +197,9 @@ void
 GradientFill::setLerp(const GradientFill& a, const GradientFill& b,
         double ratio)
 {
-    assert(type() == a.type());
-    assert(_gradients.size() == a.recordCount());
-    assert(_gradients.size() == b.recordCount());
+    //assert(type() == a.type());
+    //assert(_gradients.size() == a.recordCount());
+    //assert(_gradients.size() == b.recordCount());
 
     for (size_t i = 0, e = _gradients.size(); i < e; ++i) {
         const GradientRecord& ra = a.record(i);
@@ -220,7 +220,7 @@ BitmapFill::setLerp(const BitmapFill& a, const BitmapFill& b, double ratio)
 void
 setLerp(FillStyle& f, const FillStyle& a, const FillStyle& b, double t)
 {
-    assert(t >= 0 && t <= 1);
+    //assert(t >= 0 && t <= 1);
     f.fill = a.fill;
     boost::apply_visitor(SetLerp(a.fill, b.fill, t), f.fill);
 }

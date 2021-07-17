@@ -447,7 +447,7 @@ NetConnection_as::validateURL() const
     URL uri(_uri, r.streamProvider().baseURL());
 
     std::string uriStr(uri.str());
-    assert(uriStr.find("://") != std::string::npos);
+    //assert(uriStr.find("://") != std::string::npos);
 
     // Check if we're allowed to open url
     if (!r.streamProvider().allow(uri)) {
@@ -509,7 +509,7 @@ NetConnection_as::connect(const std::string& uri)
 {
     // Close any current connections. 
     close();
-    assert(!_isConnected);
+    //assert(!_isConnected);
 
     // TODO: check for other kind of invalidities here...
     if (uri.empty()) {
@@ -1103,7 +1103,7 @@ void
 HTTPRequest::send(const URL& url, NetConnection_as& nc)
 {
     // We should never have a request without any calls.
-    assert(_calls);
+    //assert(_calls);
     log_debug("creating connection");
 
     // Fill in header
@@ -1126,7 +1126,7 @@ HTTPRequest::send(const URL& url, NetConnection_as& nc)
 bool
 HTTPRequest::process(NetConnection_as& nc)
 {
-    assert(_connection);
+    //assert(_connection);
 
     // Fill last chunk before reading in the next
     size_t toRead = _reply.capacity() - _reply.size();
@@ -1282,7 +1282,7 @@ RTMPConnection::handleInvoke(const std::uint8_t* payload,
 {
     // TODO: clean up the logic in this function to reduce duplication.
 
-    assert(payload != end);
+    //assert(payload != end);
 
     // make sure it is a string method name we start with
     if (payload[0] != 0x02) {

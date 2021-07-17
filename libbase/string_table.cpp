@@ -150,7 +150,7 @@ string_table::noCase(key a) const
     // Avoid checking keys known to be lowercase
     if ( a <= _highestKnownLowercase ) {
 #if GNASH_PARANOIA_LEVEL > 2
-        assert(_caseTable.find(a) == _caseTable.end());
+        //assert(_caseTable.find(a) == _caseTable.end());
 #endif
         return a;
     }

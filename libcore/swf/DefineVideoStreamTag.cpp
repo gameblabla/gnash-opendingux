@@ -54,7 +54,7 @@ void
 DefineVideoStreamTag::loader(SWFStream& in, SWF::TagType tag,
         movie_definition& m, const RunResources& /*r*/)
 {
-    assert(tag == SWF::DEFINEVIDEOSTREAM); // 60
+    //assert(tag == SWF::DEFINEVIDEOSTREAM); // 60
     
     in.ensureBytes(2);
     std::uint16_t id = in.read_u16();
@@ -69,7 +69,7 @@ void
 DefineVideoStreamTag::read(SWFStream& in)
 {
 
-	assert(!_videoInfo.get()); // allowed to be called only once
+	//assert(!_videoInfo.get()); // allowed to be called only once
 
 	// numFrames:2 width:2 height:2 flags:1
 	in.ensureBytes(8);

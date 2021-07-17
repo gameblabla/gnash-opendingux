@@ -59,7 +59,7 @@ MediaHandlerHaiku::createMediaParser(std::unique_ptr<IOChannel> stream)
     {
         log_error("Could not create Haiku media parser for "
                 "input stream: %s", ex.what());
-        assert(!parser.get());
+        //assert(!parser.get());
     }
 
 	return parser;

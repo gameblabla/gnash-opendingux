@@ -205,7 +205,7 @@ VideoDecoderGst::pop()
   
     GstCaps* caps = gst_buffer_get_caps(buffer);
 
-    assert(gst_caps_get_size(caps) == 1);
+    //assert(gst_caps_get_size(caps) == 1);
   
     GstStructure* structure = gst_caps_get_structure (caps, 0);
 

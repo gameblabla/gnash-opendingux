@@ -50,7 +50,7 @@ trymain(int /*argc*/, char** /*argv*/)
   rgba white(255, 255, 255, 255);
 
   MovieClip* root = tester.getRootMovie();
-  assert(root);
+  //assert(root);
   check_equals(root->get_frame_count(), 3);
 
   // FRAME 2

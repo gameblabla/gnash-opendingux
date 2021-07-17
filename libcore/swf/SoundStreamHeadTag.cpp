@@ -41,7 +41,7 @@ SoundStreamHeadTag::loader(SWFStream& in, TagType tag, movie_definition& m,
 #ifdef USE_SOUND
     
     // 18 || 45
-    assert(tag == SWF::SOUNDSTREAMHEAD || tag == SWF::SOUNDSTREAMHEAD2);
+    //assert(tag == SWF::SOUNDSTREAMHEAD || tag == SWF::SOUNDSTREAMHEAD2);
 
     sound::sound_handler* handler = r.soundHandler();
 

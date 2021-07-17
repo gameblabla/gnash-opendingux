@@ -37,7 +37,7 @@ SWFMovie::SWFMovie(as_object* object, const SWFMovieDefinition* def,
 	Movie(object, def, parent),
 	_def(def)
 {
-    assert(object);
+    //assert(object);
 }
 
 void

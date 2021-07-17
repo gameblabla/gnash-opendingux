@@ -54,12 +54,12 @@ FltkAggGlue::createRenderHandler()
 void
 FltkAggGlue::initBuffer(int width, int height)
 {
-    assert(_renderer);
+    //assert(_renderer);
 
     int _bpp = 24;
     int depth_bytes = _bpp / 8;  // TODO: <Udo> is this correct? Gives 1 for 15 bit modes!
 
-    assert(_bpp % 8 == 0);
+    //assert(_bpp % 8 == 0);
 
     _stride = width * depth_bytes;
 

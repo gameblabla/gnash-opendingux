@@ -333,7 +333,7 @@ FLVParser::parseNextTag(bool index_only)
 		if ( actuallyRead )
                     log_error(_("FLVParser::parseNextTag: can't read tag info "
                                 "(needed 12 bytes, only got %d)"), actuallyRead);
-		// else { assert(_stream->eof(); } ?
+		// else { //assert(_stream->eof(); } ?
 
 		completed = true;
 
@@ -467,7 +467,7 @@ FLVParser::parseNextTag(bool index_only)
 bool
 FLVParser::parseHeader()
 {
-	assert(_stream->tell() == static_cast<std::streampos>(0));
+	//assert(_stream->tell() == static_cast<std::streampos>(0));
 
 	// We only use 5 bytes of the header, because the last 4 bytes represent
     // an integer which is always 1.

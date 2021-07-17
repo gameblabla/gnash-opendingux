@@ -139,7 +139,7 @@ VideoConverterFfmpeg::convert(const ImgBuf& src)
     const int height = src.height;
 
     AVPixelFormat dst_pixFmt = fourcc_to_ffmpeg(_dst_fmt);
-    assert(dst_pixFmt != AV_PIX_FMT_NONE);
+    //assert(dst_pixFmt != AV_PIX_FMT_NONE);
     AVPixelFormat src_pixFmt = AV_PIX_FMT_RGB24;
     
 #ifdef HAVE_SWSCALE_H

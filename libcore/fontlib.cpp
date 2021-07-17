@@ -52,7 +52,7 @@ get_font(const std::string& name, bool bold, bool italic)
     // Dumb linear search.
     for (auto& font : s_fonts)
     {
-        assert(font);
+        //assert(font);
         if ( font->matches(name, bold, italic) )
         {
             return font.get();
@@ -66,12 +66,12 @@ get_font(const std::string& name, bool bold, bool italic)
 void
 add_font(Font* f)
 {
-    assert(f);
+    //assert(f);
 #ifndef NDEBUG
     // Make sure font isn't already in the list.
     for (auto& font : s_fonts)
     {
-        assert(font != f);
+        //assert(font != f);
     }
 #endif // not NDEBUG
 

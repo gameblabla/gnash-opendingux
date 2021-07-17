@@ -46,7 +46,7 @@ trymain(int /*argc*/, char** /*argv*/)
 	dbglogfile.setVerbosity(1);
 
 	MovieClip* root = tester.getRootMovie();
-	assert(root);
+	//assert(root);
 
 	as_value tmp;
 

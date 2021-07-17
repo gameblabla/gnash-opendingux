@@ -147,7 +147,7 @@ public:
         :
         _input(input.release())
     {
-        assert(_input.get());
+        //assert(_input.get());
     }
 
     /// Takes a value from 0..100

@@ -40,7 +40,7 @@ void
 DefineFontAlignZonesTag::loader(SWFStream& in, TagType tag,
         movie_definition& m, const RunResources& /*r*/)
 {
-	assert(tag == SWF::DEFINEALIGNZONES);
+	//assert(tag == SWF::DEFINEALIGNZONES);
 
 	in.ensureBytes(2);
 

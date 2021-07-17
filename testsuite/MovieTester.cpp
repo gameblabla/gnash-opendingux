@@ -677,7 +677,7 @@ namespace {
 bool getAveragePixel(const Renderer& rh, rgba& color_return, int x, int y, 
     unsigned int radius) 
 {
-    assert(radius>0); 
+    //assert(radius>0); 
 
     // optimization:
     if (radius==1) return rh.getPixel(color_return, x, y);

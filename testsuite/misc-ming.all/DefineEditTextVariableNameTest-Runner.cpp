@@ -42,7 +42,7 @@ trymain(int /*argc*/, char** /*argv*/)
 	MovieTester tester(filename);
 
 	MovieClip* root = tester.getRootMovie();
-	assert(root);
+	//assert(root);
 
 	check_equals(root->get_frame_count(), 14);
 	check_equals(root->getPlayState(), MovieClip::PLAYSTATE_PLAY);

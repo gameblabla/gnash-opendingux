@@ -184,7 +184,7 @@ FBAggGlue::createRenderHandler()
 	return nullptr;
     }
     
-    assert(agg_handler != nullptr);
+    //assert(agg_handler != nullptr);
 
     // Get the memory buffer to have AGG render into.
     std::uint8_t *mem = nullptr;

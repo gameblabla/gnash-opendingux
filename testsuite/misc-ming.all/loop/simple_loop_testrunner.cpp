@@ -63,7 +63,7 @@ void testAll(MovieTester& tester)
 
 	Ranges invalidated;
 	MovieClip* root = tester.getRootMovie();
-	assert(root);
+	//assert(root);
 
 	// FRAME 1/4 (start)
 

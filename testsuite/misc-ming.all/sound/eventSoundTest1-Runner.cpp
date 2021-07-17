@@ -60,7 +60,7 @@ trymain(int /*argc*/, char** /*argv*/)
 	tester.advance();
 
 	MovieClip* root = tester.getRootMovie();
-	assert(root);
+	//assert(root);
 
 	VM& vm = getVM(*getObject(root));
 

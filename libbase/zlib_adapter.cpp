@@ -122,10 +122,10 @@ InflaterIOChannel::rewind_unused_bytes()
     if (m_zstream.avail_in > 0) {
         const int pos = m_in->tell();
         const int rewound_pos = pos - m_zstream.avail_in;
-        assert(pos >= 0);
-        assert(pos >= m_initial_stream_pos);
-        assert(rewound_pos >= 0);
-        assert(rewound_pos >= m_initial_stream_pos);
+        //assert(pos >= 0);
+        //assert(pos >= m_initial_stream_pos);
+        //assert(rewound_pos >= 0);
+        //assert(rewound_pos >= m_initial_stream_pos);
 
         m_in->seek(rewound_pos);
     }
@@ -166,7 +166,7 @@ std::streamsize
 InflaterIOChannel::inflate_from_stream(void* dst, std::streamsize bytes)
 {
 
-    assert(bytes);
+    //assert(bytes);
 
     if (m_error) return 0;
 
@@ -273,20 +273,20 @@ InflaterIOChannel::seek(std::streampos pos)
     // Now seek forwards, by just reading data in blocks.
     while (m_logical_stream_pos < pos) {
         std::streamsize to_read = pos - m_logical_stream_pos;
-        assert(to_read > 0);
+        //assert(to_read > 0);
 
         std::streamsize readNow = std::min<std::streamsize>(to_read, ZBUF_SIZE);
-        assert(readNow > 0);
+        //assert(readNow > 0);
 
         std::streamsize bytes_read = inflate_from_stream(temp, readNow);
-        assert(bytes_read <= readNow);
+        //assert(bytes_read <= readNow);
         if (bytes_read == 0) {
 		log_error("Trouble: can't seek any further.. ");
             return false;
         }
     }
 
-    assert(m_logical_stream_pos == pos);
+    //assert(m_logical_stream_pos == pos);
 
     return true; 
 }
@@ -300,7 +300,7 @@ InflaterIOChannel::InflaterIOChannel(std::unique_ptr<IOChannel> in)
     m_at_eof(false),
     m_error(0)
 {
-    assert(m_in.get());
+    //assert(m_in.get());
 
     const int err = inflateInit(&m_zstream);
     if (err != Z_OK) {
@@ -312,7 +312,7 @@ InflaterIOChannel::InflaterIOChannel(std::unique_ptr<IOChannel> in)
 
 std::unique_ptr<IOChannel> make_inflater(std::unique_ptr<IOChannel> in)
 {
-    assert(in.get());
+    //assert(in.get());
     return std::unique_ptr<IOChannel>(new InflaterIOChannel(std::move(in)));
 }
 

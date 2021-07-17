@@ -800,7 +800,7 @@ GtkGui::makeTreeModel(const std::unique_ptr<movie_root::InfoTree>& treepointer)
     // Depth within the *GTK* tree.
     int depth = 0;    
 
-    assert(info.depth(info.begin()) == 0); // seems assumed in the code below
+    //assert(info.depth(info.begin()) == 0); // seems assumed in the code below
     for (movie_root::InfoTree::iterator i = info.begin(), e = info.end();
             i != e; ++i) {
 
@@ -812,7 +812,7 @@ GtkGui::makeTreeModel(const std::unique_ptr<movie_root::InfoTree>& treepointer)
         int newdepth = info.depth(i);
 
         if (newdepth > depth) {
-            assert(newdepth == depth+1);
+            //assert(newdepth == depth+1);
             depth++;                   
             iter=child_iter;                  
         }
@@ -856,8 +856,8 @@ GtkGui::makeTreeModel(const std::unique_ptr<movie_root::InfoTree>& treepointer)
 bool
 GtkGui::createWindow(int width, int height)
 {
-    assert(_width>0);
-    assert(_height>0);
+    //assert(_width>0);
+    //assert(_height>0);
     
     _width = width;
     _height = height;
@@ -908,7 +908,7 @@ GtkGui::setInvalidatedRegions(const InvalidatedRanges& ranges)
         // will lead to bounds==null. 
         if (bounds.isNull()) continue;
         
-        assert(bounds.isFinite()); 
+        //assert(bounds.isFinite()); 
         
         GdkRectangle rect;
         rect.x = bounds.getMinX();
@@ -2484,7 +2484,7 @@ gboolean
 mouseWheelEvent(GtkWidget *const /*widget*/, GdkEventScroll* const event,
         const gpointer data)
 {
-    assert(event->type == GDK_SCROLL);
+    //assert(event->type == GDK_SCROLL);
     GtkGui *obj = static_cast<GtkGui*>(data);
 
     obj->grabFocus();

@@ -145,7 +145,7 @@ local_check(const std::string& path, const URL& baseUrl)
 {
 //    GNASH_REPORT_FUNCTION;
 
-    assert( ! path.empty() );
+    //assert( ! path.empty() );
 
     // Don't allow local access if starting movie is a network resource.
    if (baseUrl.protocol() != "file") {
@@ -190,7 +190,7 @@ host_check(const std::string& host)
 
     //log_security(_("Checking security of host: %s"), host.c_str());
     
-    assert( ! host.empty() );
+    //assert( ! host.empty() );
 
     RcInitFile& rcfile = RcInitFile::getDefaultInstance();
     

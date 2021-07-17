@@ -372,9 +372,9 @@ DumpGui::init_dumpfile()
 void
 DumpGui::setRenderHandlerSize(int width, int height)
 {
-    assert(width > 0);
-    assert(height > 0);
-    assert(_agg_renderer);
+    //assert(width > 0);
+    //assert(height > 0);
+    //assert(_agg_renderer);
     
     if (_offscreenbuf.get() && (width == _width) && (height == _height)) {
         return;

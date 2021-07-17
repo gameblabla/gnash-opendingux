@@ -48,7 +48,7 @@ void
 action_buffer::read(SWFStream& in, unsigned long endPos)
 {
     unsigned long startPos = in.tell();
-    assert(endPos <= in.get_tag_end_position());
+    //assert(endPos <= in.get_tag_end_position());
     unsigned size = endPos-startPos;
 
     if (!size) {
@@ -100,7 +100,7 @@ action_buffer::read(SWFStream& in, unsigned long endPos)
 const ConstantPool&
 action_buffer::readConstantPool(size_t start_pc, size_t stop_pc) const
 {
-    assert(stop_pc <= m_buffer.size()); // TODO: drop, be safe instead
+    //assert(stop_pc <= m_buffer.size()); // TODO: drop, be safe instead
 
     // Return a previously parsed pool at the same position, if any
     PoolsMap::iterator pi = _pools.find(start_pc);
@@ -115,7 +115,7 @@ action_buffer::readConstantPool(size_t start_pc, size_t stop_pc) const
     const std::uint16_t count = read_uint16(i + 3);
     i += 2;
     
-    assert(start_pc + 3 + length == stop_pc);
+    //assert(start_pc + 3 + length == stop_pc);
     
     pool.resize(count);
     
@@ -176,7 +176,7 @@ disasm_instruction(const unsigned char* instruction_data,
     // Show instruction argument(s).
     if (action_id & 0x80) {
 
-        assert(maxBufferLength >= 3);
+        //assert(maxBufferLength >= 3);
         ss << " (";
         fmt = ash[action_id].getArgFormat();
         
@@ -184,7 +184,7 @@ disasm_instruction(const unsigned char* instruction_data,
         
         // Assert that length without the three initial bytes
         // is always within the buffer.
-        assert(length <= maxBufferLength - 3);
+        //assert(length <= maxBufferLength - 3);
 
         switch (fmt) {
 
@@ -573,7 +573,7 @@ convert_double_wacky(const void *p)
         } c;
     } u;
 
-    static_assert(sizeof(u) == sizeof(u.i), "u must be 8 bytes");
+    //static_assert(sizeof(u) == sizeof(u.i), "u must be 8 bytes");
 
     // Detect endianness of doubles by storing a value that is
     // exactly representable and that has different values in the

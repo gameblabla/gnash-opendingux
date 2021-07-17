@@ -299,7 +299,7 @@ JpegInput::readHeader(unsigned int maxHeaderBytes)
 void
 JpegInput::read()
 {
-    assert(!_compressorOpened);
+    //assert(!_compressorOpened);
 
     if (setjmp(_jmpBuf)) {
         std::stringstream ss;
@@ -374,7 +374,7 @@ JpegInput::finishImage()
 size_t
 JpegInput::getHeight() const
 {
-    assert(_compressorOpened);
+    //assert(_compressorOpened);
     return m_cinfo.output_height;
 }
 
@@ -383,7 +383,7 @@ JpegInput::getHeight() const
 size_t
 JpegInput::getWidth() const
 {
-    assert(_compressorOpened);
+    //assert(_compressorOpened);
     return m_cinfo.output_width;
 }
 
@@ -391,7 +391,7 @@ JpegInput::getWidth() const
 size_t
 JpegInput::getComponents() const
 {
-    assert(_compressorOpened);
+    //assert(_compressorOpened);
     return m_cinfo.output_components;
 }
 
@@ -399,8 +399,8 @@ JpegInput::getComponents() const
 void
 JpegInput::readScanline(unsigned char* rgb_data)
 {
-    assert(_compressorOpened);
-    assert(m_cinfo.output_scanline < m_cinfo.output_height);
+    //assert(_compressorOpened);
+    //assert(m_cinfo.output_scanline < m_cinfo.output_height);
 
     // C and its unsigned variables...
     const int toRead = 1;
@@ -494,7 +494,7 @@ public:
     static void init_destination(j_compress_ptr cinfo)
     {
         rw_dest_IOChannel* dest = (rw_dest_IOChannel*) cinfo->dest;
-        assert(dest);
+        //assert(dest);
 
         dest->m_pub.next_output_byte = dest->m_buffer;
         dest->m_pub.free_in_buffer = IO_BUF_SIZE;
@@ -511,7 +511,7 @@ public:
     static boolean empty_output_buffer(j_compress_ptr cinfo)
     {
         rw_dest_IOChannel* dest = (rw_dest_IOChannel*) cinfo->dest;
-        assert(dest);
+        //assert(dest);
 
         if (dest->m_out_stream.write(dest->m_buffer, IO_BUF_SIZE)
                 != IO_BUF_SIZE) {
@@ -533,7 +533,7 @@ public:
     static void term_destination(j_compress_ptr cinfo)
     {
         rw_dest_IOChannel* dest = (rw_dest_IOChannel*) cinfo->dest;
-        assert(dest);
+        //assert(dest);
 
         // Write any remaining data.
         int    datacount = IO_BUF_SIZE - dest->m_pub.free_in_buffer;

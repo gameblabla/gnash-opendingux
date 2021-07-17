@@ -188,7 +188,7 @@ bool AquaGui::createWindow(const char* title, int width, int height,
 	InstallWindowEventHandler (myWindow, handlerUPP,  // Install handler
                                  1, &eventType,
                                  NULL, NULL);
- 	assert(_glue.prepDrawingArea(_width, _height, GetWindowPort(myWindow)));
+ 	//assert(_glue.prepDrawingArea(_width, _height, GetWindowPort(myWindow)));
 
     return true;
 }

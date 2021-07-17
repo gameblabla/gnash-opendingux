@@ -157,7 +157,7 @@ SWFMovieDefinition::~SWFMovieDefinition()
 void
 SWFMovieDefinition::addDisplayObject(std::uint16_t id, SWF::DefinitionTag* c)
 {
-    assert(c);
+    //assert(c);
     std::lock_guard<std::mutex> lock(_dictionaryMutex);
     _dictionary.addDisplayObject(id, c);
     addControlTag(c);
@@ -175,7 +175,7 @@ SWFMovieDefinition::getDefinitionTag(std::uint16_t id) const
 void
 SWFMovieDefinition::add_font(int font_id, boost::intrusive_ptr<Font> f)
 {
-    assert(f);
+    //assert(f);
     m_fonts.insert(std::make_pair(font_id, f));
 }
 
@@ -186,7 +186,7 @@ SWFMovieDefinition::get_font(int font_id) const
     FontMap::const_iterator it = m_fonts.find(font_id);
     if ( it == m_fonts.end() ) return nullptr;
     boost::intrusive_ptr<Font> f = it->second;
-    assert(f->get_ref_count() > 1);
+    //assert(f->get_ref_count() > 1);
     return f.get();
 }
 
@@ -214,7 +214,7 @@ SWFMovieDefinition::getBitmap(int id) const
 void
 SWFMovieDefinition::addBitmap(int id, boost::intrusive_ptr<CachedBitmap> im)
 {
-    assert(im);
+    //assert(im);
     _bitmaps.insert(std::make_pair(id, im));
 }
 
@@ -232,7 +232,7 @@ SWFMovieDefinition::get_sound_sample(int id) const
 void
 SWFMovieDefinition::add_sound_sample(int id, sound_sample* sam)
 {
-    assert(sam);
+    //assert(sam);
     IF_VERBOSE_PARSE(
     log_parse(_("Add sound sample %d assigning id %d"),
         id, sam->m_sound_handler_id);
@@ -250,7 +250,7 @@ SWFMovieDefinition::readHeader(std::unique_ptr<IOChannel> in,
     _in = std::move(in);
 
     // we only read a movie once
-    assert(!_str.get());
+    //assert(!_str.get());
 
     _url = url.empty() ? "<anonymous>" : url;
 
@@ -288,7 +288,7 @@ SWFMovieDefinition::readHeader(std::unique_ptr<IOChannel> in,
 #endif
     }
 
-    assert(_in.get());
+    //assert(_in.get());
 
     _str.reset(new SWFStream(_in.get()));
 
@@ -329,10 +329,10 @@ SWFMovieDefinition::completeLoad()
 {
 
     // should call this only once
-    assert( ! _loader.started() );
+    //assert( ! _loader.started() );
 
     // should call readHeader before this
-    assert(_str.get());
+    //assert(_str.get());
 
 #ifdef LOAD_MOVIES_IN_A_SEPARATE_THREAD
 
@@ -434,14 +434,14 @@ CharacterDictionary::addDisplayObject(int id,
 void
 SWFMovieDefinition::read_all_swf()
 {
-    assert(_str.get());
+    //assert(_str.get());
 
 #ifdef LOAD_MOVIES_IN_A_SEPARATE_THREAD
-    assert( _loader.isSelfThread() );
-    assert( _loader.started() );
+    //assert( _loader.isSelfThread() );
+    //assert( _loader.started() );
 #else
-    assert( ! _loader.started() );
-    assert( ! _loader.isSelfThread() );
+    //assert( ! _loader.started() );
+    //assert( ! _loader.isSelfThread() );
 #endif
 
     SWFParser parser(*_str, this, _runResources);
@@ -552,7 +552,7 @@ void
 SWFMovieDefinition::registerExport(const std::string& symbol,
         std::uint16_t id)
 {
-    assert(id);
+    //assert(id);
 
     std::lock_guard<std::mutex> lock(_exportedResourcesMutex);
 #ifdef DEBUG_EXPORTS
@@ -693,7 +693,7 @@ SWFMovieDefinition::importResources(
             }
             else {
                 // eof
-                //assert(loading_frame >= m_frame_count);
+                ////assert(loading_frame >= m_frame_count);
                 log_error("No export symbol %s found in movie %s. "
                     "Frames loaded %d/%d",
                     symbolName, source->get_url(), loading_frame,

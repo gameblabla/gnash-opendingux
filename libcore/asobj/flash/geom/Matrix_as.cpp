@@ -202,7 +202,7 @@ matrix_concat(const fn_call& fn)
 
     // The object to concatenate doesn't have to be a matrix.    
     as_object* obj = toObject(arg, getVM(fn));
-    assert(obj);
+    //assert(obj);
 
     MatrixType concatMatrix;
     fillMatrix(concatMatrix, *obj);
@@ -408,7 +408,7 @@ matrix_deltaTransformPoint(const fn_call& fn)
     // It doesn't have to be a point. If it has x and y
     // properties, they will be used.    
     as_object* obj = toObject(arg, getVM(fn));
-    assert(obj);
+    //assert(obj);
 
     const PointType& point = transformPoint(*obj, *ptr);
 
@@ -720,7 +720,7 @@ matrix_transformPoint(const fn_call& fn)
     }
     
     as_object* obj = toObject(arg, getVM(fn));
-    assert(obj);
+    //assert(obj);
     if (!obj->instanceOf(getClassConstructor(fn, "flash.geom.Point"))) {
         /// Isn't a point.
         IF_VERBOSE_ASCODING_ERRORS(

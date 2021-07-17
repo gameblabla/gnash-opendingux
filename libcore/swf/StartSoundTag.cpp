@@ -39,7 +39,7 @@ void
 StartSoundTag::loader(SWFStream& in, TagType tag, movie_definition& m,
         const RunResources& r)
 {
-    assert(tag == STARTSOUND); 
+    //assert(tag == STARTSOUND); 
 
     sound::sound_handler* handler = r.soundHandler();
 
@@ -110,7 +110,7 @@ void
 StartSound2Tag::loader(SWFStream& in, TagType tag, movie_definition& /*m*/,
         const RunResources& /*r*/)
 {
-    assert(tag == STARTSOUND2);
+    //assert(tag == STARTSOUND2);
 
     std::string className;
     in.read_string(className);

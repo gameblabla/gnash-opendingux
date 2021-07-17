@@ -407,7 +407,7 @@ readSolidFill(SWFStream& in, SWF::TagType t, bool readMorph)
     }
     else {
         // For DefineMorphShape tags we should use morphFillStyle 
-        assert(t == SWF::DEFINESHAPE || t == SWF::DEFINESHAPE2);
+        //assert(t == SWF::DEFINESHAPE || t == SWF::DEFINESHAPE2);
         color = readRGB(in);
     }
 

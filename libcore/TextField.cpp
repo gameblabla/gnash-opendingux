@@ -122,7 +122,7 @@ TextField::TextField(as_object* object, DisplayObject* parent,
     _html(def.html()),
     _selectable(!def.noSelect())
 {
-    assert(object);
+    //assert(object);
 
     // WARNING! remember to set the font *before* setting text value!
     boost::intrusive_ptr<const Font> f = def.getFont();
@@ -189,7 +189,7 @@ TextField::TextField(as_object* object, DisplayObject* parent,
     _html(false),
     _selectable(true)
 {
-    assert(object);
+    //assert(object);
     // Use the default font (Times New Roman for Windows, Times for Mac
     // according to docs. They don't say what it is for Linux.
     boost::intrusive_ptr<const Font> f = fontlib::get_default_font(); 
@@ -226,7 +226,7 @@ TextField::removeTextField()
     }
 
     DisplayObject* p = parent();
-    assert(p); // every TextField must have a parent, right ?
+    //assert(p); // every TextField must have a parent, right ?
 
     MovieClip* parentSprite = p->to_movie();
 
@@ -483,9 +483,9 @@ TextField::replaceSelection(const std::string& replace)
     const int version = getSWFVersion(*getObject(this));
     const std::wstring& wstr = utf8::decodeCanonicalString(replace, version);
     
-    assert(_selection.second >= _selection.first);
-    assert(_selection.second <= _text.size());
-    assert(_selection.first <= _text.size());
+    //assert(_selection.second >= _selection.first);
+    //assert(_selection.second <= _text.size());
+    //assert(_selection.first <= _text.size());
 
     // If the text has changed but the selection hasn't, make sure we
     // don't access it out of bounds.
@@ -1806,7 +1806,7 @@ TextField::handleChar(std::wstring::const_iterator& it,
 
                 // TODO : what if m_text_glyph_records is empty ?
                 // Is it possible ?
-                assert(!_textRecords.empty());
+                //assert(!_textRecords.empty());
                 SWF::TextRecord& last_line = _textRecords.back();
                 
                 linestartit = _line_starts.begin();

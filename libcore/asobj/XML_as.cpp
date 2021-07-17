@@ -823,7 +823,7 @@ as_value
 xml_onData(const fn_call& fn)
 {
     as_object* thisPtr = fn.this_ptr;
-    assert(thisPtr);
+    //assert(thisPtr);
 
     // See http://gitweb.freedesktop.org/?p=swfdec/swfdec.git;
     // a=blob;f=libswfdec/swfdec_initialize.as
@@ -924,7 +924,7 @@ setIdMap(as_object& xml, XMLNode_as& childNode, const std::string& val)
         if (!im.is_object()) return;
 
         idMap = toObject(im, vm);
-        assert(idMap);
+        //assert(idMap);
     }
     else {
         // If it's not there at all create it.

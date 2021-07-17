@@ -85,7 +85,7 @@ bool AquaOglGlue::prepDrawingArea(int width, int height, AGLDrawable drawable)
 void AquaOglGlue::render()
 {
     GNASH_REPORT_FUNCTION;
-    assert(aglSetCurrentContext(_context));
+    //assert(aglSetCurrentContext(_context));
     aglUpdateContext(_context);
 
     aglSwapBuffers(_context);

@@ -61,7 +61,7 @@ void
 readData(png_structp pngptr, png_bytep data, png_size_t length)
 {
     // Do not call unless the PNG exists.
-    assert(pngptr);
+    //assert(pngptr);
     IOChannel* in = reinterpret_cast<IOChannel*>(png_get_io_ptr(pngptr));
     in->read(reinterpret_cast<char*>(data), length);
 }
@@ -70,7 +70,7 @@ void
 writeData(png_structp pngptr, png_bytep data, png_size_t length)
 {
     // Do not call unless the PNG exists.
-    assert(pngptr);
+    //assert(pngptr);
     IOChannel* out = reinterpret_cast<IOChannel*>(png_get_io_ptr(pngptr));
     out->write(reinterpret_cast<char*>(data), length);
 }
@@ -180,14 +180,14 @@ PngInput::~PngInput()
 size_t
 PngInput::getHeight() const
 {
-    assert(_pngPtr && _infoPtr);
+    //assert(_pngPtr && _infoPtr);
     return png_get_image_height(_pngPtr, _infoPtr);
 }
 
 size_t
 PngInput::getWidth() const
 {
-    assert(_pngPtr && _infoPtr);
+    //assert(_pngPtr && _infoPtr);
     return png_get_image_width(_pngPtr, _infoPtr);
 }
 
@@ -200,8 +200,8 @@ PngInput::getComponents() const
 void
 PngInput::readScanline(unsigned char* imageData)
 {
-    assert(_currentRow < getHeight());
-    assert(_rowPtrs);
+    //assert(_currentRow < getHeight());
+    //assert(_rowPtrs);
 
     // Data packed as RGB / RGBA
     const size_t size = getWidth() * getComponents();
@@ -291,8 +291,8 @@ PngInput::read()
     const size_t components = getComponents();
 
     // We must have 3 or 4-channel data by this point.
-    assert((_type == TYPE_RGB && components == 3) ||
-           (_type == TYPE_RGBA && components == 4));
+    /*assert((_type == TYPE_RGB && components == 3) ||
+           (_type == TYPE_RGBA && components == 4));*/
 
     // Allocate space for the data
     _pixelData.reset(new png_byte[width * height * components]);

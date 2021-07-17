@@ -45,11 +45,11 @@ void
 DefineShapeTag::loader(SWFStream& in, TagType tag, movie_definition& m,
         const RunResources& r)
 {
-    assert(tag == DEFINESHAPE ||
+    /*assert(tag == DEFINESHAPE ||
            tag == DEFINESHAPE2 ||
            tag == DEFINESHAPE3 ||
            tag == DEFINESHAPE4 ||
-           tag == DEFINESHAPE4_);
+           tag == DEFINESHAPE4_);*/
 
     in.ensureBytes(2);
     const std::uint16_t id = in.read_u16();

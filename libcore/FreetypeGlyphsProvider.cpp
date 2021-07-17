@@ -382,7 +382,7 @@ FreetypeGlyphsProvider::createFace(const std::string& name, bool bold, bool ital
     }
     catch (const GnashException& ge) {
         log_error(ge.what());
-        assert(! ret.get());
+        //assert(! ret.get());
     }
 
     return ret;
@@ -400,21 +400,21 @@ FreetypeGlyphsProvider::createFace(const std::string&, bool, bool)
 unsigned short
 FreetypeGlyphsProvider::unitsPerEM() const
 {
-    assert(_face);
+    //assert(_face);
     return _face->units_per_EM;
 }
 
 float
 FreetypeGlyphsProvider::descent() const
 {
-    assert(_face);
+    //assert(_face);
     return std::abs(_face->descender);
 }
 
 float
 FreetypeGlyphsProvider::ascent() const
 {
-    assert(_face);
+    //assert(_face);
     return _face->ascender;
 }
 

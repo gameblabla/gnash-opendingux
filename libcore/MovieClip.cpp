@@ -160,7 +160,7 @@ public:
     {}
 
     void operator() (DisplayObject* ch) {
-        assert(!_checked);
+        //assert(!_checked);
         if (ch->get_depth() <= _highestHiddenDepth) {
             if (ch->isMaskLayer()) {
 #ifdef DEBUG_MOUSE_ENTITY_FINDING
@@ -396,7 +396,7 @@ public:
     {}
 
     void operator()(const DisplayObject* ch) {
-        assert(!_checked);
+        //assert(!_checked);
         if (ch->get_depth() <= _highestHiddenDepth) {
             if (ch->isMaskLayer()) {
 #ifdef DEBUG_MOUSE_ENTITY_FINDING
@@ -490,7 +490,7 @@ public:
          if (name.empty()) return;
           
          // Referenceable DisplayObject always have an object.
-         assert(getObject(ch));
+         //assert(getObject(ch));
          _v(name);
     }
 private:
@@ -516,8 +516,8 @@ MovieClip::MovieClip(as_object* object, const movie_definition* def,
     _lockroot(false),
     _onLoadCalled(false)
 {
-    assert(_swf);
-    assert(object);
+    //assert(_swf);
+    //assert(object);
 
     _environment.set_target(this);
 }
@@ -816,7 +816,7 @@ MovieClip::pathElement(const ObjectURI& uri)
     if (obj) return obj;
 
     obj = getObject(this);
-    assert(obj);
+    //assert(obj);
 
     // See if it's a member
     as_value tmp;
@@ -874,10 +874,10 @@ MovieClip::advance()
         get_frame_count());
 #endif
 
-    assert(!unloaded());
+    //assert(!unloaded());
 
     // call_frame should never trigger advance_movieclip
-    assert(!_callingFrameActions);
+    //assert(!_callingFrameActions);
 
     // We might have loaded NO frames !
     if (get_loaded_frames() == 0) {
@@ -979,7 +979,7 @@ MovieClip::advance()
 void
 MovieClip::execute_init_action_buffer(const action_buffer& a, int cid)
 {
-    assert(cid >= 0);
+    //assert(cid >= 0);
 
     if (_swf->initializeCharacter(cid)) {
 #ifdef GNASH_DEBUG
@@ -1011,7 +1011,7 @@ MovieClip::restoreDisplayList(size_t tgtFrame)
     // This is not tested as usable for jump-forwards (yet)...
     // TODO: I guess just moving here the code currently in goto_frame
     //             for jump-forwards would do
-    assert(tgtFrame <= _currentFrame);
+    //assert(tgtFrame <= _currentFrame);
 
     DisplayList tmplist;
     for (size_t f = 0; f < tgtFrame; ++f) {
@@ -1036,7 +1036,7 @@ MovieClip::executeFrameTags(size_t frame, DisplayList& dlist, int typeflags)
     if (!_def) return;
     if (isDestroyed()) return;
 
-    assert(typeflags);
+    //assert(typeflags);
 
     const PlayList* playlist = _def->getPlaylist(frame);
     if (playlist) {
@@ -1141,13 +1141,13 @@ MovieClip::goto_frame(size_t target_frame_number)
         // restoreDisplayList takes care of properly setting the 
         // _currentFrame variable
         restoreDisplayList(target_frame_number);
-        assert(_currentFrame == target_frame_number);
+        //assert(_currentFrame == target_frame_number);
         _callingFrameActions = callingFrameActionsBackup;
     }
     else {
         // Go forward to a later frame
         // We'd immediately return if target_frame_number == _currentFrame
-        assert(target_frame_number > _currentFrame);
+        //assert(target_frame_number > _currentFrame);
         while (++_currentFrame < target_frame_number) {
             //for (size_t f = _currentFrame+1; f<target_frame_number; ++f) 
             // Second argument requests that only "DisplayList" tags
@@ -1156,7 +1156,7 @@ MovieClip::goto_frame(size_t target_frame_number)
             executeFrameTags(_currentFrame, _displayList,
                     SWF::ControlTag::TAG_DLIST);
         }
-        assert(_currentFrame == target_frame_number);
+        //assert(_currentFrame == target_frame_number);
 
         // Now execute target frame tags (queuing actions)
         // NOTE: just in case we're being called by code in a called frame
@@ -1168,7 +1168,7 @@ MovieClip::goto_frame(size_t target_frame_number)
         _callingFrameActions = callingFrameActionsBackup;
     }
 
-    assert(_currentFrame == target_frame_number);
+    //assert(_currentFrame == target_frame_number);
 }
 
 bool
@@ -1235,11 +1235,11 @@ MovieClip::add_display_object(const SWF::PlaceObject2Tag* tag,
 {
     // If this MovieClip has no definition, it should also have no ControlTags,
     // and this shouldn't be called.
-    assert(_def);
-    assert(tag);
+    //assert(_def);
+    //assert(tag);
 
     // No tags should ever be executed on destroyed MovieClips.
-    assert(!isDestroyed());
+    //assert(!isDestroyed());
 
     SWF::DefinitionTag* cdef = _def->getDefinitionTag(tag->getID());
     if (!cdef) {
@@ -1307,8 +1307,8 @@ MovieClip::replace_display_object(const SWF::PlaceObject2Tag* tag,
 {
     // A MovieClip without a definition cannot have any ControlTags, so this
     // should not be called.
-    assert(_def);
-    assert(tag != nullptr);
+    //assert(_def);
+    //assert(tag != nullptr);
 
     const std::uint16_t id = tag->getID();
 
@@ -1318,7 +1318,7 @@ MovieClip::replace_display_object(const SWF::PlaceObject2Tag* tag,
             "unknown cid = %d"), id);
         return;
     }
-    assert(cdef);
+    //assert(cdef);
 
     DisplayObject* existing_char = dlist.getDisplayObjectAtDepth(tag->getDepth());
 
@@ -1396,7 +1396,7 @@ bool
 MovieClip::handleFocus()
 {
     as_object* obj = getObject(this);
-    assert(obj);
+    //assert(obj);
 
     // For SWF6 and above: the MovieClip can always receive focus if
     // focusEnabled evaluates to true.
@@ -1538,7 +1538,7 @@ bool
 MovieClip::trackAsMenu()
 {
     as_object* obj = getObject(this);
-    assert(obj);
+    //assert(obj);
 
     as_value track;
     VM& vm = getVM(*obj);
@@ -1603,7 +1603,7 @@ MovieClip::cleanup_textfield_variables()
 void
 MovieClip::set_textfield_variable(const ObjectURI& name, TextField* ch)
 {
-    assert(ch);
+    //assert(ch);
 
     // lazy allocation
     if (!_text_variables.get()) {
@@ -1617,7 +1617,7 @@ DisplayObject*
 MovieClip::getDisplayListObject(const ObjectURI& uri)
 {
     as_object* obj = getObject(this);
-    assert(obj);
+    //assert(obj);
 
     string_table& st = getStringTable(*obj);
 
@@ -1671,7 +1671,7 @@ MovieClip::constructAsScriptObject()
     as_object* mc = getObject(this);
     
     // A MovieClip should always have an associated object.
-    assert(mc);
+    //assert(mc);
 
     if (!parent()) {
         mc->init_member("$version", getVM(*mc).getPlayerVersion(), 0); 
@@ -1710,7 +1710,7 @@ MovieClip::constructAsScriptObject()
 void
 MovieClip::construct(as_object* initObj)
 {
-    assert(!unloaded());
+    //assert(!unloaded());
 
     saveOriginalTarget();
 
@@ -1732,7 +1732,7 @@ MovieClip::construct(as_object* initObj)
     // actions in first frame
     // See misc-ming.all/action_order/action_execution_order_test4.{c,swf}
     //
-    assert(!_callingFrameActions); // or will not be queuing actions
+    //assert(!_callingFrameActions); // or will not be queuing actions
 
     if ( ! get_event_handlers().empty() ) {
         queueLoad();
@@ -1772,7 +1772,7 @@ MovieClip::construct(as_object* initObj)
             as_object* mc = getObject(this);
             
             // A MovieClip should always have an associated object.
-            assert(mc);
+            //assert(mc);
 
             mc->copyProperties(*initObj);
         }
@@ -1851,7 +1851,7 @@ MovieClip::getLoadedMovie(Movie* extern_movie)
         //       At most we should require it to be a
         //       DisplayObjectContainer and log an error if it's not.
         MovieClip* parent_sp = p->to_movie();
-        assert(parent_sp);
+        //assert(parent_sp);
         parent_sp->_displayList.replaceDisplayObject(extern_movie, get_depth(),
                 true, true);
         extern_movie->construct();
@@ -1988,7 +1988,7 @@ bool
 MovieClip::isEnabled() const
 {
     as_object* obj = getObject(this);
-    assert(obj);
+    //assert(obj);
 
     as_value enabled;
     if (!obj->get_member(NSV::PROP_ENABLED, &enabled)) {

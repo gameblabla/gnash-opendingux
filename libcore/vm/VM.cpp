@@ -228,7 +228,7 @@ VM::setRegister(size_t index, const as_value& val)
 CallFrame&
 VM::currentCall()
 {
-    assert(!_callStack.empty());
+    //assert(!_callStack.empty());
     return _callStack.back();
 }
 
@@ -260,15 +260,15 @@ VM::pushCallFrame(UserFunction& func)
 void 
 VM::popCallFrame()
 {
-    assert(!_callStack.empty());
+    //assert(!_callStack.empty());
     _callStack.pop_back();
 }
 
 void
 VM::registerNative(Global_as::ASFunction fun, unsigned int x, unsigned int y)
 {
-    assert(fun);
-    assert(!_asNativeTable[x][y]);
+    //assert(fun);
+    //assert(!_asNativeTable[x][y]);
     _asNativeTable[x][y] = fun;
 }
 

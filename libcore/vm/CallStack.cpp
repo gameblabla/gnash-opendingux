@@ -33,7 +33,7 @@ CallFrame::CallFrame(UserFunction* f)
     _func(f),
     _registers(_func->registers())
 {
-    assert(_func);
+    //assert(_func);
 }
 
 /// Mark all reachable resources
@@ -43,13 +43,13 @@ CallFrame::CallFrame(UserFunction* f)
 void
 CallFrame::markReachableResources() const
 {
-    assert(_func);
+    //assert(_func);
     _func->setReachable();
 
     std::for_each(_registers.begin(), _registers.end(),
             std::mem_fun_ref(&as_value::setReachable));
 
-    assert(_locals);
+    //assert(_locals);
     _locals->setReachable();
 }
 

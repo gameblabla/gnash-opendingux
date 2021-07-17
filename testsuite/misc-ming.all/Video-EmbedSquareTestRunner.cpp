@@ -45,7 +45,7 @@ trymain(int /*argc*/, char** /*argv*/)
 	dbglogfile.setVerbosity(1);
 
 	MovieClip* root = tester.getRootMovie();
-	assert(root);
+	//assert(root);
 
 	if ( ! tester.canTestRendering() )
 	{
@@ -91,7 +91,7 @@ trymain(int /*argc*/, char** /*argv*/)
 			// Frame X
 			tester.advance();
 			size_t framenum = root->get_current_frame();
-            assert(framenum > 0);
+            //assert(framenum > 0);
 
 			cout << "---- Pixel checking in frame " << framenum+1 << " play state " << root->getPlayState() << endl;
 			

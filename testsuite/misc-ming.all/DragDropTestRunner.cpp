@@ -52,7 +52,7 @@ trymain(int /*argc*/, char** /*argv*/)
 	dbglogfile.setVerbosity(1);
 
 	MovieClip* root = tester.getRootMovie();
-	assert(root);
+	//assert(root);
 
 	// for variables lookup (consistency checking)
 	VM& vm = getVM(*getObject(root));

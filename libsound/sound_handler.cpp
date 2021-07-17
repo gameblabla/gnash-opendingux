@@ -174,7 +174,7 @@ sound_handler::delete_all_sounds()
         if (!sdef) continue;
 
         stopEmbedSoundInstances(*sdef);
-        assert(!sdef->numPlayingInstances());
+        //assert(!sdef->numPlayingInstances());
 
         delete sdef; 
     }
@@ -183,10 +183,10 @@ sound_handler::delete_all_sounds()
     for (StreamingSoundData* sdef : _streamingSounds)
     {
         // Streaming sounds are never deleted.
-        assert(sdef);
+        //assert(sdef);
 
         stopEmbedSoundInstances(*sdef);
-        assert(!sdef->numPlayingInstances());
+        //assert(!sdef->numPlayingInstances());
 
         delete sdef; 
     }
@@ -274,7 +274,7 @@ sound_handler::stopStreamingSound(int handle)
     }
     
     StreamingSoundData* sounddata = _streamingSounds[handle];
-    assert(sounddata);
+    //assert(sounddata);
 
     stopEmbedSoundInstances(*sounddata);
 }
@@ -819,8 +819,8 @@ sound_handler::reset()
 InputStream*
 sound_handler::attach_aux_streamer(aux_streamer_ptr ptr, void* owner)
 {
-    assert(owner);
-    assert(ptr);
+    //assert(owner);
+    //assert(ptr);
 
     std::unique_ptr<InputStream> newStreamer ( new AuxStream(ptr, owner) );
 

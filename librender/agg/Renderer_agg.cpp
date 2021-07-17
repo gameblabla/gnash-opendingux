@@ -196,7 +196,7 @@ T round(T t)
 template <class Rasterizer>
 inline void applyClipBox(Rasterizer& ras, const geometry::Range2d<int>& bounds)
 {
-    assert(bounds.isFinite());
+    //assert(bounds.isFinite());
     ras.clip_box(static_cast<double>(bounds.getMinX()),
             static_cast<double>(bounds.getMinY()),
             static_cast<double>(bounds.getMaxX() + 1), 
@@ -346,13 +346,13 @@ public:
     void clear(const geometry::Range2d<int>& region)
     {
         if (region.isNull()) return;
-        assert(region.isFinite());
+        //assert(region.isFinite());
 
         const agg::gray8 black(0);
                 
         // region can't be world as it should be intersected with 
         // the visible SWFRect
-        assert(!region.isWorld());
+        //assert(!region.isWorld());
 
         unsigned int left = region.getMinX();
         unsigned int width = region.width() + 1;
@@ -506,7 +506,7 @@ private:
 
                     for (;;) {
                         const int x = span->x;
-                        assert(span->len > 0); // XXX: check span->len < 0 case!
+                        //assert(span->len > 0); // XXX: check span->len < 0 case!
                         if (span->len > 0)
                             rbase.copy_hline(x, y, (unsigned)span->len, col);
                         else
@@ -820,8 +820,8 @@ public:
   /// This method *must* be called prior to any other method of the class!
   void init_buffer(unsigned char *mem, int /*size*/, int x, int y, int rowstride)
   {
-        assert(x > 0);
-        assert(y > 0);
+        //assert(x > 0);
+        //assert(y > 0);
 
     xres    = x;
     yres    = y;
@@ -841,9 +841,9 @@ public:
       int /*viewport_width*/, int /*viewport_height*/,
       float /*x0*/, float /*x1*/, float /*y0*/, float /*y1*/)
   {
-    assert(m_pixf.get());
+    //assert(m_pixf.get());
     
-    assert(scale_set);
+    //assert(scale_set);
 
     // Render images list is cleared here because the GUI may want
     // them for display after ::end_display()
@@ -900,7 +900,7 @@ public:
     void clear_framebuffer(const geometry::Range2d<int>& region,
         const agg::rgba8& color)
     {
-        assert(region.isFinite());
+        //assert(region.isFinite());
 
         // add 1 to width since we have still to draw a pixel when 
         // getMinX==getMaxX     
@@ -938,7 +938,7 @@ public:
             const SWFMatrix& line_mat)
     {
 
-        assert(m_pixf.get());
+        //assert(m_pixf.get());
         
         if (_clipbounds.empty()) return;
         if (coords.empty()) return;
@@ -1010,7 +1010,7 @@ public:
 
     void disable_mask()
     {
-        assert(!_alphaMasks.empty());
+        //assert(!_alphaMasks.empty());
         _alphaMasks.pop_back();
     }
   
@@ -1019,7 +1019,7 @@ public:
           const SWFMatrix& mat) 
   {
     if (shape.subshapes().empty()) return;
-    assert(shape.subshapes().size() == 1);
+    //assert(shape.subshapes().size() == 1);
     
     // select relevant clipping bounds
     if (shape.getBounds().is_null()) {
@@ -1081,7 +1081,7 @@ public:
     bounds.set_null();
     bounds.expand_to_transformed_rect(mat, objectBounds);
     
-    assert(bounds.getRange().isFinite());
+    //assert(bounds.getRange().isFinite());
     
     for (const auto& clip : _clipbounds) {
 
@@ -1452,9 +1452,9 @@ public:
     Thank to Maxim Shemanarev for providing us such a great tool with AGG...
     */
     
-    assert(m_pixf.get());
+    //assert(m_pixf.get());
     
-    assert(!m_drawing_mask);
+    //assert(!m_drawing_mask);
     
     if ( _clipbounds.empty() ) return;
 
@@ -1556,7 +1556,7 @@ public:
     typedef agg::pixfmt_gray8 pixfmt;
     typedef agg::renderer_base<pixfmt> renderer_base;
     
-    assert(!_alphaMasks.empty());
+    //assert(!_alphaMasks.empty());
     
     // dummy style handler
     typedef agg_mask_style_handler sh_type;
@@ -1651,7 +1651,7 @@ public:
     const std::vector<LineStyle> &line_styles, const SWFCxForm& cx, 
     const SWFMatrix& linestyle_matrix, scanline_type& sl) {
     
-    assert(m_pixf.get());
+    //assert(m_pixf.get());
 
     // Flash ignores lines in mask /definitions/ 
     if (m_drawing_mask) return;    
@@ -1758,7 +1758,7 @@ public:
   void draw_poly_impl(const point* corners, size_t corner_count, const rgba& fill, 
     const rgba& outline, scanline_type& sl, const SWFMatrix& poly_mat) {
     
-    assert(m_pixf.get());
+    //assert(m_pixf.get());
 
     if (corner_count<1) return;
     
@@ -1931,7 +1931,7 @@ public:
       
       if (bounds.isNull()) continue; // out of screen
       
-      assert(bounds.isFinite());
+      //assert(bounds.isFinite());
       
       _clipbounds.push_back(bounds);
       

@@ -64,8 +64,8 @@ IncrementalRename::operator()(const URL& url) const
 {
 
     const std::string& path = url.path();
-    assert(!path.empty());
-    assert(path[0] == '/');
+    //assert(!path.empty());
+    //assert(path[0] == '/');
     
     // Find the last dot, but not if it's first in the path (after the
     // initial '/').

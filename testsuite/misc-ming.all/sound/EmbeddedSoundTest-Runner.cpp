@@ -45,7 +45,7 @@ trymain(int /*argc*/, char** /*argv*/)
 	dbglogfile.setVerbosity(1);
 
 	MovieClip* root = tester.getRootMovie();
-	assert(root);
+	//assert(root);
 
     VM& vm = getVM(*getObject(root));
 

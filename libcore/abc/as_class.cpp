@@ -34,7 +34,7 @@ as_class::as_class(Global_as& gl, Class* c)
 const std::string&
 as_class::stringValue() const
 {
-    assert(isAS3(*this));
+    //assert(isAS3(*this));
     return _name;
 }
 

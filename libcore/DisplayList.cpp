@@ -171,7 +171,7 @@ DisplayList::getDisplayObjectByName(string_table& st, const ObjectURI& uri,
 void
 DisplayList::placeDisplayObject(DisplayObject* ch, int depth)
 {
-    assert(!ch->unloaded());
+    //assert(!ch->unloaded());
     ch->set_invalidated();
     ch->set_depth(depth);
 
@@ -233,7 +233,7 @@ DisplayList::replaceDisplayObject(DisplayObject* ch, int depth,
     testInvariant();
 
     //GNASH_REPORT_FUNCTION;
-    assert(!ch->unloaded());
+    //assert(!ch->unloaded());
 
     ch->set_invalidated();
     ch->set_depth(depth);
@@ -308,7 +308,7 @@ DisplayList::moveDisplayObject(int depth, const SWFCxForm* color_xform,
 
     if (ch->unloaded()) {
         log_error(_("Request to move an unloaded DisplayObject"));
-        assert(!ch->unloaded());
+        //assert(!ch->unloaded());
     }
 
     // TODO: is sign of depth related to accepting anim moves ?
@@ -361,7 +361,7 @@ DisplayList::removeDisplayObject(int depth)
         else oldCh->destroy();
     }
 
-    assert(size >= _charsByDepth.size());
+    //assert(size >= _charsByDepth.size());
 
     testInvariant();
 
@@ -385,9 +385,9 @@ DisplayList::swapDepths(DisplayObject* ch1, int newdepth)
     const int srcdepth = ch1->get_depth();
 
     // what if source char is at a lower depth ?
-    assert(srcdepth >= DisplayObject::staticDepthOffset);
+    //assert(srcdepth >= DisplayObject::staticDepthOffset);
 
-    assert(srcdepth != newdepth);
+    //assert(srcdepth != newdepth);
 
     // TODO: optimize this scan by taking ch1 depth into account ?
     container_type::iterator it1 =
@@ -448,7 +448,7 @@ DisplayList::insertDisplayObject(DisplayObject* obj, int index)
 {
     testInvariant();
 
-    assert(!obj->unloaded());
+    //assert(!obj->unloaded());
 
     obj->set_invalidated();
     obj->set_depth(index);
@@ -490,7 +490,7 @@ DisplayList::unload()
         DisplayObject* di = *it;
 
         // Destroyed objects should not be there!
-        assert(!di->isDestroyed());
+        //assert(!di->isDestroyed());
 
         // Destroy those with a handler anyway?
         if (di->unload()) {
@@ -550,12 +550,12 @@ DisplayList::display(Renderer& renderer, const Transform& base)
             endIt = _charsByDepth.end(); it != endIt; ++it) {
 
         DisplayObject* ch = *it;
-        assert(!ch->isDestroyed());
+        //assert(!ch->isDestroyed());
 
         // Don't display dynamic masks
         if (ch->isDynamicMask()) continue;
 
-        assert(!ch->unloaded()); // we don't advance unloaded chars
+        //assert(!ch->unloaded()); // we don't advance unloaded chars
 
         // Check if this charater or any of its parents is a mask.
         // Characters acting as masks should always be rendered to the
@@ -684,7 +684,7 @@ DisplayList::add_invalidated_bounds(InvalidatedRanges& ranges, bool force)
             // --> The child is part of a mask, so add ranges to our 
             // mask ranges stack
             
-            assert(!rangesStack.empty());
+            //assert(!rangesStack.empty());
             dobj->add_invalidated_bounds(rangesStack.top(), true);                    
             
             // need to call add_invalidated_bounds again because the previous
@@ -893,8 +893,8 @@ DisplayList::mergeDisplayList(DisplayList& newList, DisplayObject& o)
 void
 DisplayList::reinsertRemovedCharacter(DisplayObject* ch)
 {
-    assert(ch->unloaded());
-    assert(!ch->isDestroyed());
+    //assert(ch->unloaded());
+    //assert(!ch->isDestroyed());
     testInvariant();
 
     // TODO: have this done by DisplayObject::unload() instead ?

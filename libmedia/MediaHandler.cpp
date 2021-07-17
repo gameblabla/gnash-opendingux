@@ -80,7 +80,7 @@ MediaHandler::createMediaParser(std::unique_ptr<IOChannel> stream)
     }
 
     parser.reset( new FLVParser(std::move(stream)) );
-    assert(!stream.get()); // TODO: when ownership will be transferred...
+    //assert(!stream.get()); // TODO: when ownership will be transferred...
 
     return parser;
 }

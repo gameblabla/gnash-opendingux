@@ -53,7 +53,7 @@ Qt4OglGlue::init(int /* argc */, char *** /* argv */)
 void
 Qt4OglGlue::prepDrawingArea(DrawingWidget *drawing_area)
 {
-    assert(drawing_area);
+    //assert(drawing_area);
     _drawing_area = drawing_area;
     _drawing_area->_glWidget = new QGLWidget(drawing_area);
     _drawing_area->_glWidget->setVisible(drawing_area->isVisible());
@@ -67,7 +67,7 @@ Qt4OglGlue::prepDrawingArea(DrawingWidget *drawing_area)
 void
 Qt4OglGlue::render()
 {
-    assert(_drawing_area);
+    //assert(_drawing_area);
     _drawing_area->_glWidget->swapBuffers();
 }
 

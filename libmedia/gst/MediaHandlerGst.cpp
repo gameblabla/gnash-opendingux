@@ -74,7 +74,7 @@ MediaHandlerGst::createMediaParser(std::unique_ptr<IOChannel> stream)
     {
         log_error("Could not create Gstreamer based media parser for "
                 "input stream: %s", ex.what());
-        assert(!parser.get());
+        //assert(!parser.get());
     }
 
     return parser;
@@ -118,7 +118,7 @@ MediaHandlerGst::createAudioDecoder(const AudioInfo& info)
 
 #ifdef DECODING_SPEEX
     if (info.codec == AUDIO_CODEC_SPEEX) {
-        assert(info.type == CODEC_TYPE_FLASH);
+        //assert(info.type == CODEC_TYPE_FLASH);
         ret.reset(new AudioDecoderSpeex);
     } else
 #endif

@@ -90,7 +90,7 @@ Font::Font(std::string name, bool bold, bool italic)
     _italic(italic),
     _bold(bold)
 {
-    assert(!_name.empty());
+    //assert(!_name.empty());
 }
 
 Font::~Font()
@@ -135,7 +135,7 @@ Font::addFontNameInfo(const FontNameInfo& fontName)
 Font::GlyphInfoRecords::size_type
 Font::glyphCount() const
 {
-        assert(_fontTag);
+        //assert(_fontTag);
         return _fontTag->glyphTable().size();
 }
 
@@ -230,8 +230,8 @@ Font::get_advance(int glyph_index, bool embedded) const
         return 512.0f;
     }
 
-    assert(static_cast<size_t>(glyph_index) < lookup.size());
-    assert(glyph_index >= 0);
+    //assert(static_cast<size_t>(glyph_index) < lookup.size());
+    //assert(glyph_index >= 0);
     
     return lookup[glyph_index].advance;
 }
@@ -279,7 +279,7 @@ Font::add_os_glyph(std::uint16_t code)
     FreetypeGlyphsProvider* ft = ftProvider();
     if (!ft) return -1;
 
-    assert(_deviceCodeTable.find(code) == _deviceCodeTable.end());
+    //assert(_deviceCodeTable.find(code) == _deviceCodeTable.end());
 
     float advance;
 

@@ -144,8 +144,8 @@ DynamicShape::finalize() const
 	// Close any pending filled path (_currpath should be last path)
 	if ( _currpath && _currfill)
 	{
-		assert(!_currsubshape.paths().empty());
-		assert(_currpath == &(_currsubshape.paths().back()));
+		//assert(!_currsubshape.paths().empty());
+		//assert(_currpath == &(_currsubshape.paths().back()));
 		_currpath->close();
 	}
 
@@ -196,7 +196,7 @@ void
 DynamicShape::lineTo(std::int32_t x, std::int32_t y, int swfVersion)
 {
 	if (!_currpath) startNewPath(false);
-	assert(_currpath);
+	//assert(_currpath);
 
 	_currpath->drawLineTo(x, y);
 
@@ -228,7 +228,7 @@ DynamicShape::curveTo(std::int32_t cx, std::int32_t cy,
                       std::int32_t ax, std::int32_t ay, int swfVersion)
 {
 	if (!_currpath) startNewPath(false);
-	assert(_currpath);
+	//assert(_currpath);
 
 	_currpath->drawCurveTo(cx, cy, ax, ay);
 

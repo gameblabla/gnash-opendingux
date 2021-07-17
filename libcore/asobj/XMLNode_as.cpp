@@ -221,7 +221,7 @@ XMLNode_as::removeChild(XMLNode_as* node)
 void
 XMLNode_as::appendChild(XMLNode_as* node)
 {
-    assert(node);
+    //assert(node);
     node->setParent(this);
     _children.push_back(node);
     updateChildNodes();
@@ -244,7 +244,7 @@ XMLNode_as::descendsFrom(XMLNode_as* node) const
 void
 XMLNode_as::insertBefore(XMLNode_as* newnode, XMLNode_as* pos)
 {
-    assert(_object);
+    //assert(_object);
 
 	// find iterator for positional parameter
     Children::iterator it = std::find(_children.begin(), _children.end(), pos);

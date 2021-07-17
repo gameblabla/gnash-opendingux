@@ -271,7 +271,7 @@ SDL_sound_handler::sdl_audio_callback(void *udata, Uint8 *buf, int bufLenIn)
     std::int16_t* samples = reinterpret_cast<std::int16_t*>(buf);
 
     // 16 bit per sample, 2 channels == 4 bytes per fetch ?
-    assert(!(bufLen%4));
+    //assert(!(bufLen%4));
 
     unsigned int nSamples = bufLen/2;
 

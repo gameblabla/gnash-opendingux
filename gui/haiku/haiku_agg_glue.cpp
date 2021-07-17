@@ -248,7 +248,7 @@ HaikuAggGlue::init(int /*argc*/, char*** /*argv*/, BWindow **win, std::string sh
 {
     //    GNASH_REPORT_FUNCTION;
     _win = win;
-    assert(_win);
+    //assert(_win);
 
     if (_xid != 0)
     {
@@ -271,7 +271,7 @@ HaikuAggGlue::createRenderHandler(int bpp)
 {
     _bpp = bpp;
 
-    assert(_bpp == 32); // XXX
+    //assert(_bpp == 32); // XXX
 
     const char *pixelformat = "";
 
@@ -330,15 +330,15 @@ HaikuAggGlue::prepDrawingArea(int width, int height, std::uint32_t sdl_flags)
 {
     (void) sdl_flags;
 
-    assert(width > 0);
-    assert(height > 0);
+    //assert(width > 0);
+    //assert(height > 0);
     if (_width == width && _height == height)
         QQ(1);
         //return true;
 
     int depth_bytes = _bpp / 8;  // TODO: <Udo> is this correct? Gives 1 for 15 bit modes!
 
-    assert(_bpp % 8 == 0);
+    //assert(_bpp % 8 == 0);
 
     std::uint32_t rmask, gmask, bmask, amask;
 
@@ -472,7 +472,7 @@ HaikuAggGlue::render(int minx, int miny, int maxx, int maxy)
 {
     if (*_win)
     {
-        assert(_view);
+        //assert(_view);
         _view->LockLooper();
         // Update only the invalidated rectangle
         _view->Invalidate(BRect(minx,miny,maxx,maxy));

@@ -226,7 +226,7 @@ public:
 
     void send(std::unique_ptr<ConnectionData> d)
     {
-        assert(d.get());
+        //assert(d.get());
         VM& vm = getVM(owner());
         d->ts = getTimestamp(vm);
         _queue.push_back(std::move(d));
@@ -451,7 +451,7 @@ LocalConnection_as::close()
 void
 LocalConnection_as::connect(const std::string& name)
 {
-    assert(!name.empty());
+    //assert(!name.empty());
 
     _name = name;
     
@@ -679,7 +679,7 @@ validFunctionName(const std::string& func)
 void
 removeListener(const std::string& name, SharedMem& mem)
 {
-    assert(attached(mem));
+    //assert(attached(mem));
 
     SharedMem::iterator ptr = mem.begin() + LocalConnection_as::listenersOffset;
 
@@ -725,7 +725,7 @@ removeListener(const std::string& name, SharedMem& mem)
 bool
 findListener(const std::string& name, SharedMem& mem)
 {
-    assert(attached(mem));
+    //assert(attached(mem));
 
     SharedMem::iterator ptr = mem.begin() + LocalConnection_as::listenersOffset;
 
@@ -753,7 +753,7 @@ findListener(const std::string& name, SharedMem& mem)
 bool
 addListener(const std::string& name, SharedMem& mem)
 {
-    assert(attached(mem));
+    //assert(attached(mem));
 
     SharedMem::iterator ptr = mem.begin() + LocalConnection_as::listenersOffset;
 
@@ -806,7 +806,7 @@ void
 getMarker(SharedMem::iterator& i, SharedMem::iterator end)
 {
     // i points to 0 before marker.
-    assert(*i == '\0');
+    //assert(*i == '\0');
     if (i == end) return;
 
     // Move to after null.

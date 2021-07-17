@@ -361,9 +361,9 @@ AudioDecoderFfmpeg::decode(const std::uint8_t* input,
         if ( frame )
         {
             // the returned frame pointer is inside the input buffer
-            assert(frame == input+decodedBytes);
+            //assert(frame == input+decodedBytes);
             // the returned frame size is within the input size
-            assert(framesize <= inputSize);
+            //assert(framesize <= inputSize);
         }
 #endif
 
@@ -455,7 +455,7 @@ AudioDecoderFfmpeg::decodeFrame(const std::uint8_t* input,
 {
     //GNASH_REPORT_FUNCTION;
 
-    assert(inputSize);
+    //assert(inputSize);
 
     size_t outSize = MAX_AUDIO_FRAME_SIZE;
 

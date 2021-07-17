@@ -334,16 +334,16 @@ struct PerlinNoise
         setup(x, bx0, bx1, rx0, rx1, step);
         setup(y, by0, by1, ry0, ry1, step);
 
-        assert(bx0 < permTable.size());
-        assert(bx1 < permTable.size());
+        //assert(bx0 < permTable.size());
+        //assert(bx1 < permTable.size());
 
         const int i = permTable[bx0];
         const int j = permTable[bx1];
 
-        assert(i + by0 < permTable.size());
-        assert(j + by0 < permTable.size());
-        assert(i + by1 < permTable.size());
-        assert(j + by0 < permTable.size());
+        //assert(i + by0 < permTable.size());
+        //assert(j + by0 < permTable.size());
+        //assert(i + by1 < permTable.size());
+        //assert(j + by0 < permTable.size());
 
         // Permute values to get indices in the lookup tables.
         const size_t b00 = permTable[i + by0];
@@ -602,8 +602,8 @@ BitmapData_as::BitmapData_as(as_object* owner,
     _owner(owner),
     _cachedBitmap(nullptr)
 {
-    assert(im->width() <= 2880);
-    assert(im->height() <= 2880);
+    //assert(im->width() <= 2880);
+    //assert(im->height() <= 2880);
     
     // If there is a renderer, cache the image there, otherwise we store it.
     Renderer* r = getRunResources(*_owner).renderer();
@@ -863,10 +863,10 @@ bitmapdata_copyChannel(const fn_call& fn)
     BitmapData_as::iterator src = pixelAt(*source, sourceX, sourceY);
 
     // Just being careful...
-    assert(sourceX + destW <= static_cast<int>(source->width()));
-    assert(sourceY + destH <= static_cast<int>(source->height()));
-    assert(destX + destW <= static_cast<int>(ptr->width()));
-    assert(destY + destH <= static_cast<int>(ptr->height()));
+    //assert(sourceX + destW <= static_cast<int>(source->width()));
+    //assert(sourceY + destH <= static_cast<int>(source->height()));
+    //assert(destX + destW <= static_cast<int>(ptr->width()));
+    //assert(destY + destH <= static_cast<int>(ptr->height()));
 
     // Copy for the width and height of the *dest* image.
     // We have already ensured that the copied area
@@ -996,10 +996,10 @@ bitmapdata_copyPixels(const fn_call& fn)
         (destY >= sourceY && destY < sourceY + destH);
 
     // Just being careful...
-    assert(sourceX + destW <= static_cast<int>(source->width()));
-    assert(sourceY + destH <= static_cast<int>(source->height()));
-    assert(destX + destW <= static_cast<int>(ptr->width()));
-    assert(destY + destH <= static_cast<int>(ptr->height()));
+    //assert(sourceX + destW <= static_cast<int>(source->width()));
+    //assert(sourceY + destH <= static_cast<int>(source->height()));
+    //assert(destX + destW <= static_cast<int>(ptr->width()));
+    //assert(destY + destH <= static_cast<int>(ptr->height()));
 
     const size_t ourwidth = ptr->width();
     const size_t srcwidth = source->width();
@@ -1013,7 +1013,7 @@ bitmapdata_copyPixels(const fn_call& fn)
     // If the destination x-range starts within the source x-range, copy from
     // right to left.
     if (copyToYRange) {
-        assert(destH > 0);
+        //assert(destH > 0);
         targ += (destH - 1) * ourwidth;
         src += (destH - 1) * srcwidth;
         // Copy from bottom to top.
@@ -1133,7 +1133,7 @@ bitmapdata_fillRect(const fn_call& fn)
 
     // This can be any object with the right properties.   
     as_object* obj = toObject(arg, getVM(fn));
-    assert(obj);
+    //assert(obj);
     
     as_value x, y, w, h;
     
@@ -1600,7 +1600,7 @@ bitmapdata_loadBitmap(const fn_call& fn)
     if (!tgt) return as_value();
 
     Movie* root = tgt->get_root();
-    assert(root);
+    //assert(root);
 
     const movie_definition* def = root->definition();
 
@@ -1797,7 +1797,7 @@ fillRect(const BitmapData_as& bd, int x, int y, int w, int h,
     BitmapData_as::iterator it = bd.begin() + y * width;
     BitmapData_as::iterator e = it + width * h;
     
-    assert(e <= bd.end());
+    //assert(e <= bd.end());
 
     while (it != e) {
         // Fill from x for the width of the rectangle.
@@ -1832,7 +1832,7 @@ floodFill(const BitmapData_as& bd, size_t startx, size_t starty,
 
         pixelQueue.pop();
 
-        assert(pix != bd.end());
+        //assert(pix != bd.end());
 
         if (*pix != old) continue;
 

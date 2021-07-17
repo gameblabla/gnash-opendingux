@@ -40,7 +40,7 @@ void
 CSMTextSettingsTag::loader(SWFStream& in, TagType tag, movie_definition& /*m*/,
         const RunResources& /*r*/)
 {
-    assert(tag == SWF::CSMTEXTSETTINGS); // 73
+    //assert(tag == SWF::CSMTEXTSETTINGS); // 73
 
     // TextID (UI16) 16 bit int.
     // UseFlashType(UB[2]) 2 bits

@@ -81,7 +81,7 @@ LiveSound::fetchSamples(std::int16_t* to, unsigned int nSamples)
 
                 to += availableSamples;
                 nSamples -= availableSamples;
-                assert(nSamples);
+                //assert(nSamples);
             }
         }
 

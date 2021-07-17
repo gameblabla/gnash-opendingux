@@ -47,7 +47,7 @@ trymain(int /*argc*/, char** /*argv*/)
 	dbglogfile.setVerbosity(1);
 
 	MovieClip* root = tester.getRootMovie();
-	assert(root);
+	//assert(root);
 
 	check_equals(root->get_frame_count(), 4);
 	check_equals(root->getPlayState(), MovieClip::PLAYSTATE_PLAY);

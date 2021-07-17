@@ -57,7 +57,7 @@ void
 StreamSoundBlockTag::loader(SWFStream& in, TagType tag, movie_definition& m,
         const RunResources& r)
 {
-    assert(tag == SWF::SOUNDSTREAMBLOCK); 
+    //assert(tag == SWF::SOUNDSTREAMBLOCK); 
 
     sound::sound_handler* handler = r.soundHandler(); 
 

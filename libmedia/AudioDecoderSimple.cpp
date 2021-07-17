@@ -66,7 +66,7 @@ private:
 
 	static void doSample(int n_bits, int& sample, int& stepsize_index, int raw_code)
 	{
-		assert(raw_code >= 0 && raw_code < (1 << n_bits));
+		//assert(raw_code >= 0 && raw_code < (1 << n_bits));
 
 		static const int	HI_BIT = (1 << (n_bits - 1));
 		int*	index_update_table = s_index_update_tables[n_bits - 2];
@@ -178,7 +178,7 @@ public:
 			int	sample = in.read_sint(16);
 
 			int	stepsize_index = in.read_uint(6);
-			assert(STEPSIZE_CT >= (1 << 6));	// ensure we don't need to clamp.
+			//assert(STEPSIZE_CT >= (1 << 6));	// ensure we don't need to clamp.
 
 			if (stereo == false)
 			{
@@ -204,7 +204,7 @@ public:
 				int	right_sample = in.read_sint(16);
 
 				int	right_stepsize_index = in.read_uint(6);
-				assert(STEPSIZE_CT >= (1 << 6));	// ensure we don't need to clamp.
+				//assert(STEPSIZE_CT >= (1 << 6));	// ensure we don't need to clamp.
 
 				if (n_bits == 0) {
 					abort();
@@ -433,7 +433,7 @@ AudioDecoderSimple::decode(const std::uint8_t* input, std::uint32_t inputSize,
 					break;
 				case 0x00:  // Big-endian host
 					// Swap sample bytes to get big-endian format.
-					assert((inputSize & 1) == 0);
+					//assert((inputSize & 1) == 0);
 
 					// Cast the buffers to help the compiler understand that we
 					// swapping 16-bit words. This should produce a single-instruction

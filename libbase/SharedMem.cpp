@@ -227,7 +227,7 @@ SharedMem::attach()
         return false;
     }
 
-    assert(_addr);
+    //assert(_addr);
     return true;
 }
 

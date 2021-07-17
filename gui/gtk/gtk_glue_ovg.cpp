@@ -191,9 +191,9 @@ GtkOvgGlue::setRenderHandlerSize(int width, int height)
 {
     GNASH_REPORT_FUNCTION;
 
-    assert(width > 0);
-    assert(height > 0);
-    assert(_renderer != NULL);
+    //assert(width > 0);
+    //assert(height > 0);
+    //assert(_renderer != NULL);
     
 #ifdef ENABLE_EGL_OFFSCREEN
     if (_offscreenbuf && _offscreenbuf->width == width &&

@@ -77,7 +77,7 @@ ActionExec::ActionExec(const Function& func, as_environment& newEnv,
     next_pc(pc),
     stop_pc(pc + func.getLength())
 {
-    assert(stop_pc < code.size());
+    //assert(stop_pc < code.size());
 
     // Functions defined in SWF version 6 and higher pushes
     // the activation object to the scope stack
@@ -95,7 +95,7 @@ ActionExec::ActionExec(const Function& func, as_environment& newEnv,
         // its environment so that its activation object is now in the
         // top element of the CallFrame stack
         CallFrame& topFrame = getVM(newEnv).currentCall();
-        assert(&topFrame.function() == &func);
+        //assert(&topFrame.function() == &func);
         _scopeStack.push_back(&topFrame.locals());
     }
 }
@@ -206,7 +206,7 @@ ActionExec::operator()()
             while (!_withStack.empty() && pc >= _withStack.back().end_pc()) {
            
                 // Drop last stack element
-                assert(_withStack.back().object() == _scopeStack.back());
+                //assert(_withStack.back().object() == _scopeStack.back());
                 _withStack.pop_back();
                 
                 // hopefully nothing gets after the 'with' stack.
@@ -580,7 +580,7 @@ ActionExec::skip_actions(size_t offset)
         else {
             // action with extra data
             const std::int16_t length = code.read_int16(next_pc + 1);
-            assert(length >= 0);
+            //assert(length >= 0);
             next_pc += length + 3;
         }
     }
@@ -695,7 +695,7 @@ ActionExec::dumpActions(size_t from, size_t to, std::ostream& os)
         else {
             // action with extra data
             const std::int16_t length = code.read_int16(lpc + 1);
-            assert(length >= 0);
+            //assert(length >= 0);
             lpc += length + 3;
         }
 

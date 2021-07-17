@@ -40,7 +40,7 @@ StreamingSoundData::append(SimpleBuffer data,
 {
     _buffers.push_back(std::move(data));
     _blockData.emplace_back(sampleCount, seekSamples);
-    assert(_blockData.size() == _buffers.size());
+    //assert(_blockData.size() == _buffers.size());
     return _buffers.size() - 1;
 }
 

@@ -33,7 +33,7 @@ bool BitsReader::read_bit()
 
 unsigned BitsReader::read_uint(unsigned short bitcount)
 {
-	assert(bitcount <= 32);
+	//assert(bitcount <= 32);
 
 	std::uint32_t value = 0;
 
@@ -55,14 +55,14 @@ unsigned BitsReader::read_uint(unsigned short bitcount)
 		{
 			// Consume all the unused bits.
 
-			bits_needed -= unusedBits; // assert(bits_needed>0)
+			bits_needed -= unusedBits; // //assert(bits_needed>0)
 
 			value |= ((*ptr&unusedMask) << bits_needed);
 			advanceToNextByte();
 		}
 		else
 		{
-			assert(bits_needed <= unusedBits);
+			//assert(bits_needed <= unusedBits);
 
 			// Consume some of the unused bits.
 

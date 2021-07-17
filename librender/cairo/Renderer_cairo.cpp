@@ -117,8 +117,8 @@ class bitmap_info_cairo : public CachedBitmap, boost::noncopyable
         _pattern(cairo_pattern_create_for_surface (_surface))
     {
       
-      assert(cairo_surface_status(_surface) == CAIRO_STATUS_SUCCESS);
-      assert(cairo_pattern_status(_pattern) == CAIRO_STATUS_SUCCESS);
+      //assert(cairo_surface_status(_surface) == CAIRO_STATUS_SUCCESS);
+      //assert(cairo_pattern_status(_pattern) == CAIRO_STATUS_SUCCESS);
     }
 
     virtual void dispose() {
@@ -179,8 +179,8 @@ class bitmap_info_cairo : public CachedBitmap, boost::noncopyable
     
     cairo_pattern_t* apply(const cairo_matrix_t* mat, int /*fill_type*/) const
     {
-      assert(mat);
-      assert(_pattern);
+      //assert(mat);
+      //assert(_pattern);
       update();
       cairo_pattern_set_matrix(_pattern, mat);
       
@@ -495,7 +495,7 @@ Renderer_cairo::drawVideoFrame(image::GnashImage* baseframe, const Transform& xf
 
     image::ImageRGB* frame = dynamic_cast<image::ImageRGB*>(baseframe);
 
-    assert(frame);
+    //assert(frame);
 
     // Extract frame attributes
     int w = frame->width();
@@ -1078,7 +1078,7 @@ Renderer_cairo::getPixel(rgba& color_return, int x, int y) const
 
     cairo_surface_t* surface = cairo_get_target (_cr);
     
-    assert(cairo_image_surface_get_format (surface) == CAIRO_FORMAT_ARGB32);
+    //assert(cairo_image_surface_get_format (surface) == CAIRO_FORMAT_ARGB32);
     
     unsigned char* data = cairo_image_surface_get_data (surface);
     int width = cairo_image_surface_get_width(surface);

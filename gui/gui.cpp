@@ -284,7 +284,7 @@ Gui::updateStageMatrix()
         return;
     }
     
-    assert(_stage); // when VM is initialized this should hold
+    //assert(_stage); // when VM is initialized this should hold
     
     float swfwidth = _movieDef->get_width_pixels();
     float swfheight = _movieDef->get_height_pixels();
@@ -431,8 +431,8 @@ Gui::resize_view(int width, int height)
 {
     GNASH_REPORT_FUNCTION;
     
-    assert(width > 0);
-    assert(height > 0);
+    //assert(width > 0);
+    //assert(height > 0);
 
     if (_stage && _started) {
         _stage->setDimensions(width, height);
@@ -516,7 +516,7 @@ void
 Gui::notifyMouseWheel(int delta)
 {
     movie_root* m = _stage;
-    assert(m);
+    //assert(m);
 
     if (!_started) return;
     if (_stopped) return;
@@ -532,7 +532,7 @@ void
 Gui::notifyMouseClick(bool mouse_pressed) 
 {
     movie_root* m = _stage;
-    assert(m);
+    //assert(m);
 
     if (!_started) return;
     if (_stopped) return;
@@ -551,7 +551,7 @@ Gui::refreshView()
 
     if ( ! _started ) return;
 
-    assert(m);
+    //assert(m);
     _redraw_flag=true;
     display(m);
 }
@@ -690,9 +690,9 @@ Gui::notify_key_event(gnash::key::code k, int modifier, bool pressed)
 bool
 Gui::display(movie_root* m)
 {
-    assert(m == _stage); // why taking this arg ??
+    //assert(m == _stage); // why taking this arg ??
 
-    assert(_started);
+    //assert(_started);
     
     InvalidatedRanges changed_ranges;
     bool redraw_flag;
@@ -854,7 +854,7 @@ void
 Gui::stop()
 {
     // _stage must be registered before this is called.
-    assert(_stage);
+    //assert(_stage);
 
     if ( _stopped ) return;
     if ( isFullscreen() ) unsetFullscreen();
@@ -1249,15 +1249,15 @@ Gui::addFlashVars(Gui::VariableMap& from)
 void
 Gui::setMovieDefinition(movie_definition* md)
 {
-    assert(!_movieDef);
+    //assert(!_movieDef);
     _movieDef = md;
 }
 
 void
 Gui::setStage(movie_root* stage)
 {
-    assert(stage);
-    assert(!_stage);
+    //assert(stage);
+    //assert(!_stage);
     _stage = stage;
 }
 

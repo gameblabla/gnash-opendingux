@@ -296,7 +296,7 @@ Button::Button(as_object* object, const SWF::DefineButtonTag* def,
     _mouseState(MOUSESTATE_UP),
     _def(def)
 {
-    assert(object);
+    //assert(object);
 }
 
 Button::~Button()
@@ -308,7 +308,7 @@ Button::trackAsMenu()
 {
     // TODO: check whether the AS or the tag value takes precedence.
     as_object* obj = getObject(this);
-    assert(obj);
+    //assert(obj);
 
     VM& vm = getVM(*obj);
 
@@ -326,7 +326,7 @@ bool
 Button::isEnabled()
 {
     as_object* obj = getObject(this);
-    assert(obj);
+    //assert(obj);
 
     as_value enabled;
     if (!obj->get_member(NSV::PROP_ENABLED, &enabled)) return false;

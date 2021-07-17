@@ -47,7 +47,7 @@ namespace {
 
         if (width == 0 || height == 0) return false;
 
-        assert(channels > 0);
+        //assert(channels > 0);
 
         std::uint32_t maxSize = std::numeric_limits<std::int32_t>::max();
         if (width >= maxSize || height >= maxSize) return false;
@@ -70,7 +70,7 @@ GnashImage::GnashImage(iterator data, size_t width, size_t height,
     _data(data)
 {
     // Callers should check dimensions
-    assert(checkValidSize(_width, _height, channels()));
+    //assert(checkValidSize(_width, _height, channels()));
 }
 
 /// Create an image allocating a buffer of height*pitch bytes
@@ -99,10 +99,10 @@ GnashImage::update(const_iterator data)
 void
 GnashImage::update(const GnashImage& from)
 {
-    assert(size() <= from.size());
-    assert(width() == from.width());
-    assert(_type == from._type);
-    assert(_location == from._location);
+    //assert(size() <= from.size());
+    //assert(width() == from.width());
+    //assert(_type == from._type);
+    //assert(_location == from._location);
     std::copy(from.begin(), from.begin() + size(), begin());
 }
 
@@ -130,8 +130,8 @@ void
 ImageRGBA::setPixel(size_t x, size_t y, value_type r, value_type g,
         value_type b, value_type a)
 {
-    assert(x < _width);
-    assert(y < _height);
+    //assert(x < _width);
+    //assert(y < _height);
 
     iterator data = scanline(*this, y) + 4 * x;
 
@@ -146,7 +146,7 @@ void
 mergeAlpha(ImageRGBA& im, GnashImage::const_iterator alphaData,
         const size_t bufferLength)
 {
-    assert(bufferLength * 4 <= im.size());
+    //assert(bufferLength * 4 <= im.size());
 
     // Point to the first alpha byte
     GnashImage::iterator p = im.begin();
@@ -290,7 +290,7 @@ Input::readSWFJpeg3(std::shared_ptr<IOChannel> in)
             JpegInput::createSWFJpeg2HeaderOnly(in, 0));
 
     // If this isn't true, we should have thrown.
-    assert(j_in.get());
+    //assert(j_in.get());
 
     j_in->read();
 

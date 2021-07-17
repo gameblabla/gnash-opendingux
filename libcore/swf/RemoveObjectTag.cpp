@@ -32,7 +32,7 @@ namespace SWF {
 void
 RemoveObjectTag::read(SWFStream& in, TagType tag)
 {
-	assert(tag == SWF::REMOVEOBJECT || tag == SWF::REMOVEOBJECT2);
+	//assert(tag == SWF::REMOVEOBJECT || tag == SWF::REMOVEOBJECT2);
 
 	if (tag == SWF::REMOVEOBJECT) {
 		// Older SWFs allow multiple objects at the same depth;
@@ -60,7 +60,7 @@ void
 RemoveObjectTag::loader(SWFStream& in, TagType tag, movie_definition& m,
         const RunResources& /*r*/)
 {
-    assert(tag == SWF::REMOVEOBJECT || tag == SWF::REMOVEOBJECT2);
+    //assert(tag == SWF::REMOVEOBJECT || tag == SWF::REMOVEOBJECT2);
 
     boost::intrusive_ptr<RemoveObjectTag> t(new RemoveObjectTag);
     t->read(in, tag);

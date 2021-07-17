@@ -99,7 +99,7 @@ Qt4CairoGlue::initBuffer(int width, int height)
 void
 Qt4CairoGlue::prepDrawingArea(DrawingWidget *drawing_area)
 {
-    assert(drawing_area);
+    //assert(drawing_area);
     _drawing_area = drawing_area;
 }
 
@@ -115,7 +115,7 @@ Qt4CairoGlue::render()
 void
 Qt4CairoGlue::render(const QRect& updateRect)
 {
-    assert(_drawing_area);
+    //assert(_drawing_area);
 
     if (_cairo_handle) {
 

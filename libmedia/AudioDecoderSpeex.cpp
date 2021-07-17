@@ -56,7 +56,7 @@ AudioDecoderSpeex::AudioDecoderSpeex()
     spx_uint32_t num = 0, den = 0;
 
     speex_resampler_get_ratio (_resampler, &num, &den);
-    assert(num && den);
+    //assert(num && den);
 
     boost::rational<std::uint32_t> numsamples(den, num);
 

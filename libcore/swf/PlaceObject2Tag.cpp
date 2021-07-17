@@ -485,8 +485,8 @@ void
 PlaceObject2Tag::loader(SWFStream& in, TagType tag, movie_definition& m,
         const RunResources& /*r*/)
 {
-    assert(tag == SWF::PLACEOBJECT || tag == SWF::PLACEOBJECT2 ||
-            tag == SWF::PLACEOBJECT3);
+    /*assert(tag == SWF::PLACEOBJECT || tag == SWF::PLACEOBJECT2 ||
+            tag == SWF::PLACEOBJECT3);*/
 
     boost::intrusive_ptr<PlaceObject2Tag> ch(new PlaceObject2Tag(m));
     ch->read(in, tag);

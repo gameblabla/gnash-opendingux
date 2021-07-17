@@ -80,7 +80,7 @@ void
 initObjectClass(as_object* proto, as_object& where, const ObjectURI& uri)
 {
 
-    assert(proto);
+    //assert(proto);
 
     // Object is a native constructor.
     VM& vm = getVM(where);
@@ -301,7 +301,7 @@ object_registerClass(const fn_call& fn)
     }
 
     Movie* relRoot = tgt->get_root();
-    assert(relRoot);
+    //assert(relRoot);
     const movie_definition* def = relRoot->definition();
     
     // We only care about definitions, not other exportable resources.

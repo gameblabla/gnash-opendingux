@@ -49,8 +49,8 @@ Video::Video(as_object* object,
 	_lastDecodedVideoFrame(),
     _smoothing(false)
 {
-    assert(object);
-    assert(def);
+    //assert(object);
+    //assert(def);
 
     media::MediaHandler* mh = getRunResources(*object).mediaHandler();
 	if (!mh) {
@@ -102,7 +102,7 @@ Video::clear()
 void
 Video::display(Renderer& renderer, const Transform& base)
 {
-	assert(m_def);
+	//assert(m_def);
 
     const DisplayObject::MaskRenderer mr(renderer, *this);
 
@@ -159,7 +159,7 @@ Video::getVideoFrame()
 
         // TODO: find a better way than using -1 to show that no
         // frames have been decoded yet.
-        assert(_lastDecodedVideoFrameNum >= -1);
+        //assert(_lastDecodedVideoFrameNum >= -1);
         std::uint16_t from_frame = _lastDecodedVideoFrameNum + 1;
 
 		// If current frame is smaller then last decoded frame
@@ -209,7 +209,7 @@ Video::add_invalidated_bounds(InvalidatedRanges& ranges, bool force)
     
 	ranges.add(m_old_invalidated_ranges);
 	
-	assert(m_def);
+	//assert(m_def);
 
 	SWFRect bounds;	
 	bounds.expand_to_transformed_rect(getWorldMatrix(*this), m_def->bounds());

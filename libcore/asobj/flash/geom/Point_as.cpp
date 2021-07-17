@@ -203,7 +203,7 @@ point_equals(const fn_call& fn)
         return as_value(false);
     }
     as_object* o = toObject(arg1, getVM(fn));
-    assert(o);
+    //assert(o);
     if (!o->instanceOf(getClassConstructor(fn, "flash.geom.Point")))
     {
         IF_VERBOSE_ASCODING_ERRORS(
@@ -449,7 +449,7 @@ point_distance(const fn_call& fn)
         return as_value();
     }
     as_object* o1 = toObject(arg1, getVM(fn));
-    assert(o1);
+    //assert(o1);
     if (!o1->instanceOf(getClassConstructor(fn, "flash.geom.Point")))
     {
         IF_VERBOSE_ASCODING_ERRORS(
@@ -462,7 +462,7 @@ point_distance(const fn_call& fn)
 
     const as_value& arg2 = fn.arg(1);
     as_object* o2 = toObject(arg2, getVM(fn));
-    assert(o2);
+    //assert(o2);
     // it seems there's no need to check arg2 (see actionscript.all/Point.as)
 
     as_value x1val;

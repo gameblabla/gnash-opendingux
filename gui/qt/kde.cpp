@@ -402,7 +402,7 @@ void
 qwidget::mouseMoveEvent(QMouseEvent *event)
 {
 //    GNASH_REPORT_FUNCTION;
-    assert(_godfather);
+    //assert(_godfather);
     QPoint position = event->pos();
 
     _godfather->notifyMouseMove(position.x(), position.y());

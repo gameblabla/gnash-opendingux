@@ -101,8 +101,8 @@ MediaParserGst::~MediaParserGst()
     }
 
     // Sanity check for threading bug...
-    assert(_enc_video_frames.empty());
-    assert(_enc_audio_frames.empty());
+    //assert(_enc_video_frames.empty());
+    //assert(_enc_audio_frames.empty());
 }
 
 bool
@@ -411,7 +411,7 @@ void MediaParserGst::cb_pad_added(GstElement* /* element */, GstPad* new_pad,
         }
         
         GstPad* sinkpad = gst_element_get_static_pad (parserel, "sink");
-        assert(sinkpad);
+        //assert(sinkpad);
         
         GstPadLinkReturn ret = gst_pad_link(new_pad, sinkpad);
         
@@ -507,7 +507,7 @@ GstFlowReturn
 MediaParserGst::cb_chain_func_video (GstPad *pad, GstBuffer *buffer)
 {
     MediaParserGst* parser = (MediaParserGst*) g_object_get_data (G_OBJECT (pad), "mediaparser-obj");
-    assert(parser);
+    //assert(parser);
 
     unsigned int frame_num = 0;
     unsigned int timestamp = 0;
@@ -539,7 +539,7 @@ GstFlowReturn
 MediaParserGst::cb_chain_func_audio (GstPad *pad, GstBuffer *buffer)
 {
     MediaParserGst* parser = (MediaParserGst*) g_object_get_data (G_OBJECT (pad), "mediaparser-obj");
-    assert(parser);
+    //assert(parser);
 
     EncodedAudioFrame* frame = new EncodedAudioFrame;
 

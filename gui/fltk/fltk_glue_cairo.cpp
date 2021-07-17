@@ -76,7 +76,7 @@ FltkCairoGlue::initBuffer(int width, int height)
     int _bpp = 32;
     int depth_bytes = _bpp / 8;
 
-    assert(_bpp % 8 == 0);
+    //assert(_bpp % 8 == 0);
 
     _stride = width * depth_bytes;
 

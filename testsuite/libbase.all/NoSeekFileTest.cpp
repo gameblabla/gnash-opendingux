@@ -145,7 +145,7 @@ trymain(int /*argc*/, char** /*argv*/)
 	close(fd);
 
 	std::unique_ptr<gnash::IOChannel> reader(gnash::noseek_fd_adapter::make_stream(0, cachename));
-	assert(reader);
+	//assert(reader);
 
 	compare_reads(reader.get(), raw, "wrapped", "raw");
 

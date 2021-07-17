@@ -34,7 +34,7 @@ void
 DefineEditTextTag::loader(SWFStream& in, TagType tag, movie_definition& m,
         const RunResources& /*r*/)
 {
-	assert(tag == SWF::DEFINEEDITTEXT); // 37
+	//assert(tag == SWF::DEFINEEDITTEXT); // 37
 
     in.ensureBytes(2);
     const std::uint16_t id = in.read_u16();

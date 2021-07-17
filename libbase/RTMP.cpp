@@ -359,7 +359,7 @@ int
 RTMP::readSocket(std::uint8_t* buffer, int n)
 {
 
-    assert(n >= 0);
+    //assert(n >= 0);
 
     const std::streamsize bytesRead = _socket.read(buffer, n);
     
@@ -565,7 +565,7 @@ RTMP::readPacketPayload(RTMPPacket& packet)
     const int nToRead = hr.dataSize - bytesRead;
 
     const int nChunk = std::min<int>(nToRead, _inChunkSize);
-    assert(nChunk >= 0);
+    //assert(nChunk >= 0);
 
     // This is fine. We'll keep trying to read this payload until there
     // is enough data.
@@ -601,7 +601,7 @@ RTMP::sendPacket(RTMPPacket& packet)
 
     // All packets should start off as large. They will stay large if there
     // is no previous packet.
-    assert(hr.headerType == RTMP_PACKET_SIZE_LARGE);
+    //assert(hr.headerType == RTMP_PACKET_SIZE_LARGE);
 
     if (!prev) {
         hr._timestamp = uptime;
@@ -766,7 +766,7 @@ RTMP::sendPacket(RTMPPacket& packet)
 
     /* we invoked a remote method */
     if (hr.packetType == PACKET_TYPE_INVOKE) {
-        assert(payloadData(packet)[0] == amf::STRING_AMF0);
+        //assert(payloadData(packet)[0] == amf::STRING_AMF0);
         const std::uint8_t* pos = payloadData(packet) + 1;
         const std::uint8_t* end = payloadEnd(packet);
         const std::string& s = amf::readString(pos, end);
@@ -934,7 +934,7 @@ HandShaker::stage3()
    
     if (!got) return false;
     
-    assert(got == sigSize);
+    //assert(got == sigSize);
 
     const std::uint8_t* serverSig = &_recvBuf.front();
     const std::uint8_t* ourSig = &_sendBuf.front() + 1;

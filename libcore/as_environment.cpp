@@ -206,7 +206,7 @@ findObject(const as_environment& ctx, const std::string& path,
             subpart.resize(next_slash - p);
         }
         
-        assert(subpart[0] != ':');
+        //assert(subpart[0] != ':');
 
         // No more components to scan
         if (subpart.empty()) break;
@@ -229,7 +229,7 @@ findObject(const as_environment& ctx, const std::string& path,
                 }
 
                 // Try current target  (if any)
-                assert(env == getObject(ctx.target()));
+                //assert(env == getObject(ctx.target()));
                 if (env) {
                     element = getElement(env, subpartURI);
                     if (element) break;
@@ -259,7 +259,7 @@ findObject(const as_environment& ctx, const std::string& path,
         }
         else {
 
-            assert(env);
+            //assert(env);
             as_object* element = getElement(env, subpartURI);
             if (!element) return nullptr;
             env = element;
@@ -358,7 +358,7 @@ delVariable(const as_environment& ctx, const std::string& varname,
     const as_environment::ScopeStack& scope) 
 {
     // varname must be a plain variable name; no path parsing.
-    assert(varname.find_first_of(":/.") == std::string::npos);
+    //assert(varname.find_first_of(":/.") == std::string::npos);
 
     VM& vm = ctx.getVM();
 
@@ -515,7 +515,7 @@ getVariableRaw(const as_environment& env, const std::string& varname,
     // Check current target members. TODO: shouldn't target be in scope stack ?
     if (env.target()) {
         as_object* obj = getObject(env.target());
-        assert(obj);
+        //assert(obj);
         if (obj->get_member(key, &val)) {
             if (retTarget) *retTarget = obj;
             return val;
@@ -523,7 +523,7 @@ getVariableRaw(const as_environment& env, const std::string& varname,
     }
     else if (env.get_original_target()) {
         as_object* obj = getObject(env.get_original_target());
-        assert(obj);
+        //assert(obj);
         if (obj->get_member(key, &val)) {
             if (retTarget) *retTarget = obj;
             return val;

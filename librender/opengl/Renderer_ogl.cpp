@@ -521,7 +521,7 @@ Tesselator::combine(GLdouble coords [3], void **/*vertex_data[4] */,
 		    GLfloat * /* weight[4] */, void **outData, void* userdata)
 {
   Tesselator* tess = (Tesselator*)userdata;
-  assert(tess);
+  //assert(tess);
 
   GLdouble* v = new GLdouble[3];
   v[0] = coords[0];
@@ -603,7 +603,7 @@ bitmap_info_ogl::setup() const
                 GL_UNSIGNED_BYTE, resized_data.get());
         if (rv != 0) {
             Tesselator::error(rv);
-            assert(0);
+            //assert(0);
         }
     
         upload(resized_data.get(), w, h);
@@ -798,7 +798,7 @@ public:
           break;
 #endif
       default:
-          assert(0);
+          //assert(0);
           return texture;
       }
 
@@ -844,11 +844,11 @@ public:
           }
       }
 
-      assert(texture->width() == frame->width());
-      assert(texture->height() == frame->height());
-      assert(texture->internal_format() == frameFormat.internal_format());
-      assert(texture->format() == frameFormat.format());
-      assert(texture->flags() == frameFlags);
+      //assert(texture->width() == frame->width());
+      //assert(texture->height() == frame->height());
+      //assert(texture->internal_format() == frameFormat.internal_format());
+      //assert(texture->format() == frameFormat.format());
+      //assert(texture->flags() == frameFlags);
       return texture;
   }
 
@@ -885,7 +885,7 @@ public:
         break;
 #endif
     default:
-        assert(0);
+        //assert(0);
         return;
     }
     _render_textures.push_back(texture);
@@ -1513,7 +1513,7 @@ public:
       
       bool draw_points = apply_line_style(line_styles[cur_path.m_line-1], cx, mat);
       
-      assert(pathpoints.find(&cur_path) != pathpoints.end());
+      //assert(pathpoints.find(&cur_path) != pathpoints.end());
       
       const std::vector<oglVertex>& shape_points = (*pathpoints.find(&cur_path)).second;
 
@@ -1658,7 +1658,7 @@ public:
         for (const auto& ref : refs) {
           const Path& cur_path = *ref;
           
-          assert(pathpoints.find(&cur_path) != pathpoints.end());
+          //assert(pathpoints.find(&cur_path) != pathpoints.end());
 
           _tesselator.feed(pathpoints[&cur_path]);
           

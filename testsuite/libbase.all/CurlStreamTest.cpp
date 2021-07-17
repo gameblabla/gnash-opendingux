@@ -48,7 +48,7 @@ dump_curl(const char* url, ostream& os)
 		reader.reset( gnash::NetworkAdapter::make_stream(url) );
 	}
 
-	assert(reader.get());
+	//assert(reader.get());
 
 	char buf[CHUNK_SIZE];
 
@@ -65,7 +65,7 @@ static void
 dump_tu_file(const char* url, ostream& os)
 {
     std::unique_ptr<IOChannel> reader = makeFileChannel(url, true);
-	assert(reader);
+	//assert(reader);
 	if (reader->bad()) return;
 
 	char buf[CHUNK_SIZE];

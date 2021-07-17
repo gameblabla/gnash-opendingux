@@ -121,7 +121,7 @@ Writer::writePropertyName(const std::string& name)
 bool
 Writer::writeObject(as_object* obj)
 {
-    assert(obj);
+    //assert(obj);
 
     // This probably shouldn't happen.
     if (obj->to_function()) return false;

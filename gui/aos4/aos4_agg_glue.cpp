@@ -185,7 +185,7 @@ AOS4AggGlue::prepDrawingArea(int width, int height)
     APTR vi;
 	uint32 left = 0, top = 0;
 	
-    assert(_bpp % 8 == 0);
+    //assert(_bpp % 8 == 0);
 
 	_width = width;
 	_height = height;

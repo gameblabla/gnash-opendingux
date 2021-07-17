@@ -155,7 +155,7 @@ Socket::connect(const std::string& hostname, std::uint16_t port)
 
     // If _socket is 0, either there has been no connection, or close() has
     // been called. There must not be an error in either case.
-    assert(!_error);
+    //assert(!_error);
     
     if (hostname.empty()) {
         return false;
@@ -244,7 +244,7 @@ Socket::connect(const std::string& hostname, std::uint16_t port)
     ::setsockopt(_socket, IPPROTO_TCP, TCP_NODELAY,
                  reinterpret_cast<const char*>(&on), sizeof(on));
     
-    assert(_socket);
+    //assert(_socket);
     
     return true;
 }
@@ -266,7 +266,7 @@ Socket::fillCache()
                 _pos : cacheSize);
 
         const int thisRead = endpos - startpos;
-        assert(thisRead >= 0);
+        //assert(thisRead >= 0);
 
         const int bytesRead = ::recv(_socket, startpos, thisRead, 0);
         

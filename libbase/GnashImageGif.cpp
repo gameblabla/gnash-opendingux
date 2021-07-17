@@ -42,7 +42,7 @@ int
 readData(GifFileType* ft, GifByteType* data, int length)
 {
     // Do not read until opened.
-    assert(ft);
+    //assert(ft);
     IOChannel* in = reinterpret_cast<IOChannel*>(ft->UserData);
     return in->read(reinterpret_cast<char*>(data), length);
 }
@@ -144,7 +144,7 @@ GifInput::readScanline(unsigned char* rgbData)
     const ColorMapObject* const colormap = (_gif->Image.ColorMap) ?
                             _gif->Image.ColorMap : _gif->SColorMap;
 
-    assert(colormap);
+    //assert(colormap);
 
     unsigned char* ptr = rgbData;
 

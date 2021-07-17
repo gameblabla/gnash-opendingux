@@ -42,7 +42,7 @@ void
 DefineTextTag::loader(SWFStream& in, TagType tag, movie_definition& m,
         const RunResources& /*r*/)
 {
-    assert(tag == DEFINETEXT);
+    //assert(tag == DEFINETEXT);
 
     in.ensureBytes(2);
     const std::uint16_t id = in.read_u16();
@@ -83,7 +83,7 @@ void
 DefineText2Tag::loader(SWFStream& in, TagType tag, movie_definition& m,
         const RunResources& /*r*/)
 {
-    assert(tag == DEFINETEXT2);
+    //assert(tag == DEFINETEXT2);
 
     in.ensureBytes(2);
     const std::uint16_t id = in.read_u16();
@@ -99,7 +99,7 @@ DefineText2Tag::loader(SWFStream& in, TagType tag, movie_definition& m,
 void
 DefineTextTag::read(SWFStream& in, movie_definition&m, TagType tag)
 {
-	assert(tag == DEFINETEXT || tag == DEFINETEXT2);
+	//assert(tag == DEFINETEXT || tag == DEFINETEXT2);
 
 	_rect = readRect(in);
 	_matrix = readSWFMatrix(in);

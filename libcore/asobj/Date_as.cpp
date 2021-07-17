@@ -872,7 +872,7 @@ date_setYear(const fn_call& fn)
 {
     Date_as* date = ensure<ThisIsNative<Date_as> >(fn);
 
-    // assert(fn.nargs == 1);
+    // //assert(fn.nargs == 1);
     if (fn.nargs < 1) {
         IF_VERBOSE_ASCODING_ERRORS(
             log_aserror(_("Date.setYear needs one argument"));
@@ -926,7 +926,7 @@ date_setmonth(const fn_call& fn)
 {
     Date_as* date = ensure<ThisIsNative<Date_as> >(fn);
 
-    // assert(fn.nargs >= 1 && fn.nargs <= 2);
+    // //assert(fn.nargs >= 1 && fn.nargs <= 2);
     if (fn.nargs < 1) {
         IF_VERBOSE_ASCODING_ERRORS(
             log_aserror(_("Date.set%sMonth needs one argument"),
@@ -1022,7 +1022,7 @@ date_setHours(const fn_call& fn)
 {
     Date_as* date = ensure<ThisIsNative<Date_as> >(fn);
 
-    // assert(fn.nargs >= 1 && fn.nargs <= 4);
+    // //assert(fn.nargs >= 1 && fn.nargs <= 4);
     if (fn.nargs < 1) {
         IF_VERBOSE_ASCODING_ERRORS(
             log_aserror(_("Date.set%sHours needs one argument"),
@@ -1067,7 +1067,7 @@ date_setMinutes(const fn_call& fn)
 {
     Date_as* date = ensure<ThisIsNative<Date_as> >(fn);
 
-    //assert(fn.nargs >= 1 && fn.nargs <= 3);
+    ////assert(fn.nargs >= 1 && fn.nargs <= 3);
     if (fn.nargs < 1) {
         IF_VERBOSE_ASCODING_ERRORS(
             log_aserror(_("Date.set%sMinutes needs one argument"),
@@ -1108,7 +1108,7 @@ date_setSeconds(const fn_call& fn)
 {
     Date_as* date = ensure<ThisIsNative<Date_as> >(fn);
 
-    // assert(fn.nargs >= 1 && fn.nargs <= 2);
+    // //assert(fn.nargs >= 1 && fn.nargs <= 2);
     if (fn.nargs < 1) {
         IF_VERBOSE_ASCODING_ERRORS(
             log_aserror(_("Date.set%sSeconds needs one argument"),

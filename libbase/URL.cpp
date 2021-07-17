@@ -236,12 +236,12 @@ URL::init_relative(const std::string& relative_url, const URL& baseurl)
         }
         
 #ifndef __amigaos4__
-        assert(basedir[0] == '/'
-               || basedir[1] == ':');  // for WIN32
+        /*assert(basedir[0] == '/'
+               || basedir[1] == ':');*/  // for WIN32
 #ifndef __OS2__
         // On OS/2 - a filepath such as x:file.swf is acceptable.......
-        assert(*(basedir.rbegin()) == '/' 
-               || *(basedir.rbegin()) == '\\');        // for WIN32
+        /*assert(*(basedir.rbegin()) == '/' 
+               || *(basedir.rbegin()) == '\\');*/        // for WIN32
 #endif
 #endif
         std::string::size_type lpos =  basedir.size()-1;
@@ -292,7 +292,7 @@ URL::str() const
 void
 URL::split_anchor_from_path()
 {
-    assert(_anchor == "");
+    //assert(_anchor == "");
 
     // Extract anchor from path, if any
     std::string::size_type hashpos = _path.find('#');
@@ -305,7 +305,7 @@ URL::split_anchor_from_path()
 void
 URL::split_port_from_host()
 {
-    assert(_port == "");
+    //assert(_port == "");
 
     // Extract anchor from path, if any
 
@@ -333,7 +333,7 @@ URL::split_port_from_host()
 void
 URL::split_querystring_from_path()
 {
-    assert(_querystring == "");
+    //assert(_querystring == "");
 
     // extract the parameters from the URL
 

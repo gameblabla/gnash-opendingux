@@ -76,7 +76,7 @@ void
 DefineButtonTag::loader(SWFStream& in, TagType tag, movie_definition& m, 
             const RunResources& /*r*/)
 {
-    assert(tag == DEFINEBUTTON);
+    //assert(tag == DEFINEBUTTON);
     in.ensureBytes(2);
     const std::uint16_t id = in.read_u16();
 
@@ -93,7 +93,7 @@ void
 DefineButton2Tag::loader(SWFStream& in, TagType tag, movie_definition& m, 
             const RunResources& /*r*/)
 {
-    assert(tag == DEFINEBUTTON2);
+    //assert(tag == DEFINEBUTTON2);
     in.ensureBytes(2);
     const std::uint16_t id = in.read_u16();
 
@@ -267,7 +267,7 @@ ButtonAction::ButtonAction(SWFStream& in, TagType t, unsigned long endPos,
 {
     // Read condition flags.
     if (t != SWF::DEFINEBUTTON) {
-        assert(t == SWF::DEFINEBUTTON2);
+        //assert(t == SWF::DEFINEBUTTON2);
 
         if ( in.tell()+2 > endPos ) 
         {
@@ -318,8 +318,8 @@ ButtonAction::triggeredBy(const event_id& ev) const
 DisplayObject*
 ButtonRecord::instantiate(Button* button, bool name) const
 {
-    assert(button);
-    assert(_definitionTag);
+    //assert(button);
+    //assert(_definitionTag);
 
     Global_as& gl = getGlobal(*getObject(button));
 

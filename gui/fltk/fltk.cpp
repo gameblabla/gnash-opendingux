@@ -471,7 +471,7 @@ FltkGui::setInvalidatedRegions(const InvalidatedRanges& ranges)
       // will lead to bounds==null. 
       if (bounds.isNull()) continue;
 
-      assert(bounds.isFinite());
+      //assert(bounds.isFinite());
 
       _drawbounds_vec.push_back(bounds);
 

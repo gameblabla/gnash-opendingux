@@ -35,7 +35,7 @@ void
 VideoFrameTag::loader(SWFStream& in, SWF::TagType tag, movie_definition& m,
         const RunResources& /*r*/)
 {
-    assert(tag == SWF::VIDEOFRAME);
+    //assert(tag == SWF::VIDEOFRAME);
 
     in.ensureBytes(2);
     std::uint16_t id = in.read_u16();

@@ -90,7 +90,7 @@ EmbedSoundInst::moreData()
 void
 EmbedSoundInst::decodeNextBlock()
 {
-    assert(!decodingCompleted());
+    //assert(!decodingCompleted());
 
     // this value is arbitrary, things would also work
     // with a smaller value, but 2^16 seems fast enough
@@ -110,7 +110,7 @@ EmbedSoundInst::decodeNextBlock()
     log_debug("  decoding %d bytes", inputSize);
 #endif
 
-    assert(inputSize);
+    //assert(inputSize);
     const std::uint8_t* input = _soundDef.data(decodingPosition);
 
     std::uint32_t consumed = 0;
@@ -120,7 +120,7 @@ EmbedSoundInst::decodeNextBlock()
 
     decodingPosition += consumed;
 
-    assert(!(decodedDataSize%2));
+    //assert(!(decodedDataSize%2));
 
     // @todo I hope there are no alignment issues in this cast from int8_t* to int16_t* !
     std::int16_t* samples = reinterpret_cast<std::int16_t*>(decodedData);
@@ -170,7 +170,7 @@ EmbedSoundInst::applyEnvelopes(std::int16_t* samples, unsigned int nSamples,
         return;
     }
 
-    assert(env[current_env].m_mark44 < firstSampleOffset+nSamples);
+    //assert(env[current_env].m_mark44 < firstSampleOffset+nSamples);
 
     // Get next envelope position (absolute samples offset)
     std::uint32_t next_env_pos = 0;

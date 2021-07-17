@@ -68,7 +68,7 @@ MediaParserFfmpeg::probeStream()
 
 	std::unique_ptr<std::uint8_t[]> buffer(new std::uint8_t[bufSize]);
 
-	assert(_stream->tell() == static_cast<std::streampos>(0));
+	//assert(_stream->tell() == static_cast<std::streampos>(0));
 	size_t actuallyRead = _stream->read(buffer.get(), probeSize);
     
     // Fill any padding with 0s.
@@ -150,8 +150,8 @@ MediaParserFfmpeg::seek(std::uint32_t& pos)
 bool
 MediaParserFfmpeg::parseVideoFrame(AVPacket& packet)
 {
-	assert(packet.stream_index == _videoStreamIndex);
-	assert(_videoStream);
+	//assert(packet.stream_index == _videoStreamIndex);
+	//assert(_videoStream);
 
 	// packet.dts is "decompression" timestamp
 	// packet.pts is "presentation" timestamp
@@ -187,8 +187,8 @@ MediaParserFfmpeg::parseVideoFrame(AVPacket& packet)
 bool
 MediaParserFfmpeg::parseAudioFrame(AVPacket& packet)
 {
-	assert(packet.stream_index == _audioStreamIndex);
-	assert(_audioStream);
+	//assert(packet.stream_index == _audioStreamIndex);
+	//assert(_audioStream);
 
 	// packet.dts is "decompression" timestamp
 	// packet.pts is "presentation" timestamp
@@ -253,7 +253,7 @@ MediaParserFfmpeg::parseNextFrame()
 	// or seeking.
 	//_stream->seek(_lastParsedPosition);
 
-	assert(_formatCtx);
+	//assert(_formatCtx);
 
   	AVPacket packet;
 
@@ -385,7 +385,7 @@ MediaParserFfmpeg::initializeParser()
     _avIOCxt->seekable = 0;
 
     _formatCtx = avformat_alloc_context();
-    assert(_formatCtx);
+    //assert(_formatCtx);
 
     _formatCtx->pb = _avIOCxt.get();
 
@@ -559,7 +559,7 @@ MediaParserFfmpeg::seekMedia(std::int64_t offset, int whence)
 	//GNASH_REPORT_FUNCTION;
 	//log_debug("::seekMedia(%1%, %2%)", offset, whence);
 
-	assert(_stream.get());
+	//assert(_stream.get());
 
 	if (whence == SEEK_SET)
 	{	

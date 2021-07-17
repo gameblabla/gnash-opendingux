@@ -44,7 +44,7 @@ Function::Function(const action_buffer& ab, as_environment& env,
     _startPC(start),
     _length(0)
 {
-    assert( _startPC < _action_buffer.size() );
+    //assert( _startPC < _action_buffer.size() );
 }
 
 TargetGuard::TargetGuard(as_environment& e, DisplayObject* ch,
@@ -111,7 +111,7 @@ Function::call(const fn_call& fn)
     // Push the arguments onto the local frame.
     for (size_t i = 0, n = _args.size(); i < n; ++i) {
 
-        assert(_args[i].reg == 0);
+        //assert(_args[i].reg == 0);
         if (i < fn.nargs) {
             setLocal(cf, _args[i].name, fn.arg(i));
         }
@@ -149,7 +149,7 @@ Function::call(const fn_call& fn)
 void
 Function::setLength(size_t len)
 {
-    assert(_startPC + len <= _action_buffer.size());
+    //assert(_startPC + len <= _action_buffer.size());
     _length = len;
 }
 

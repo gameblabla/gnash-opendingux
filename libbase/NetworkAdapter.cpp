@@ -588,7 +588,7 @@ CurlStreamFile::fillCache(std::streampos size)
     log_debug("fillCache(%d), called, currently cached: %d", size, _cached);
 #endif 
 
-    assert(size >= 0);
+    //assert(size >= 0);
 
     if ( ! _running || _cached >= size) {
 #if GNASH_CURL_VERBOSE
@@ -1189,7 +1189,7 @@ CurlStreamFile::size() const
         CURLcode ret = curl_easy_getinfo(_handle,
                 CURLINFO_CONTENT_LENGTH_DOWNLOAD, &size);
         if (ret == CURLE_OK) {
-            assert(size <= std::numeric_limits<size_t>::max());
+            //assert(size <= std::numeric_limits<size_t>::max());
             _size = static_cast<size_t>(size);
         }
     }

@@ -476,10 +476,10 @@ bool
 NetStream_as::startPlayback()
 {
     // Make sure no old information is around
-    assert(!_videoInfoKnown);
-    assert(!_videoDecoder.get());
-    assert(!_audioInfoKnown);
-    assert(!_audioDecoder.get());
+    //assert(!_videoInfoKnown);
+    //assert(!_videoDecoder.get());
+    //assert(!_audioInfoKnown);
+    //assert(!_audioDecoder.get());
     // TODO: assert advance timer is not running either !
 
 
@@ -494,7 +494,7 @@ NetStream_as::startPlayback()
         return false;
     }
 
-    assert(_inputStream->tell() == static_cast<std::streampos>(0));
+    //assert(_inputStream->tell() == static_cast<std::streampos>(0));
     _inputPos = 0;
 
     if (!_mediaHandler) {
@@ -503,7 +503,7 @@ NetStream_as::startPlayback()
         return false;
     }
     _parser = _mediaHandler->createMediaParser(std::move(_inputStream));
-    assert(!_inputStream.get());
+    //assert(!_inputStream.get());
 
     if (!_parser.get()) {
         log_error(_("Unable to create parser for NetStream input"));
@@ -549,12 +549,12 @@ NetStream_as::startPlayback()
 std::unique_ptr<image::GnashImage> 
 NetStream_as::getDecodedVideoFrame(std::uint32_t ts)
 {
-    assert(_videoDecoder.get());
+    //assert(_videoDecoder.get());
     
     std::unique_ptr<image::GnashImage> video;
 
 #ifdef USE_MEDIA
-    assert(_parser.get());
+    //assert(_parser.get());
     if (!_parser.get()) {
         log_error(_("getDecodedVideoFrame: no parser available"));
         return video; 
@@ -652,10 +652,10 @@ NetStream_as::decodeNextVideoFrame()
         return video;
     }
 
-    assert(_videoDecoder.get()); 
+    //assert(_videoDecoder.get()); 
     
     // everything we push, we'll pop too..
-    assert(!_videoDecoder->peek()); 
+    //assert(!_videoDecoder->peek()); 
 
     _videoDecoder->push(*frame);
     video = _videoDecoder->pop();
@@ -836,7 +836,7 @@ NetStream_as::refreshAudioBuffer()
 void
 NetStream_as::pushDecodedAudioFrames(std::uint32_t ts)
 {
-    assert(_parser.get());
+    //assert(_parser.get());
     
 #ifdef USE_MEDIA
     if (!_audioDecoder.get()) {
@@ -1051,7 +1051,7 @@ NetStream_as::pushDecodedAudioFrames(std::uint32_t ts)
 #ifdef GNASH_DEBUG_DECODING
         log_debug(_("resuming playback clock on audio consume"));
 #endif 
-        assert(decodingStatus()!=DEC_BUFFERING);
+        //assert(decodingStatus()!=DEC_BUFFERING);
         _playbackClock->resume();
 
         _playHead.setAudioConsumed();
@@ -1168,14 +1168,14 @@ NetStream_as::refreshVideoFrame(bool alsoIfPaused)
 #endif 
             // There no video but decoder is still running
             // not much to do here except wait for next call
-            //assert(decodingStatus() == DEC_BUFFERING);
+            ////assert(decodingStatus() == DEC_BUFFERING);
         }
 
     }
     else
     {
         _imageframe = std::move(video); // ownership transferred
-        assert(!video.get());
+        //assert(!video.get());
         // A frame is ready for pickup
         if ( _invalidatedVideoCharacter )
         {
@@ -1527,7 +1527,7 @@ BufferedAudioStreamer::fetch(std::int16_t* samples, unsigned int nSamples, bool&
 
         CursoredBuffer& samples = _audioQueue.front();
 
-        assert( ! (samples.m_size%2) ); 
+        //assert( ! (samples.m_size%2) ); 
         int n = std::min<int>(samples.m_size, len);
         std::copy(samples.m_ptr, samples.m_ptr+n, stream);
 
@@ -1544,7 +1544,7 @@ BufferedAudioStreamer::fetch(std::int16_t* samples, unsigned int nSamples, bool&
 
     }
 
-    assert( ! (len%2) ); 
+    //assert( ! (len%2) ); 
 
     // currently never signalling EOF
     eof=false;
@@ -1771,7 +1771,7 @@ netstream_time(const fn_call& fn)
 
     NetStream_as* ns = ensure<ThisIsNative<NetStream_as> >(fn);
 
-    assert(fn.nargs == 0); // we're a getter
+    //assert(fn.nargs == 0); // we're a getter
     return as_value(double(ns->time()/1000.0));
 }
 

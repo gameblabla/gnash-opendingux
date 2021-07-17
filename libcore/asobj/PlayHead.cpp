@@ -48,7 +48,7 @@ PlayHead::setState(PlaybackStatus newState)
 
     if ( _state == PLAY_PAUSED )
     {
-        assert(newState == PLAY_PLAYING);
+        //assert(newState == PLAY_PLAYING);
         _state = PLAY_PLAYING;
 
         // if we go from PAUSED to PLAYING, reset
@@ -59,15 +59,15 @@ PlayHead::setState(PlaybackStatus newState)
 
         // check if we did the right thing
         // TODO: wrap this in PARANOIA_LEVEL > 1
-        assert( now-_clockOffset == _position );
+        //assert( now-_clockOffset == _position );
 
         return PLAY_PAUSED;
     }
     else
     {
         // TODO: wrap these in PARANOIA_LEVEL > 1 (or > 2)
-        assert(_state == PLAY_PLAYING);
-        assert(newState == PLAY_PAUSED);
+        //assert(_state == PLAY_PLAYING);
+        //assert(newState == PLAY_PAUSED);
 
         _state = PLAY_PAUSED;
 
@@ -115,7 +115,7 @@ PlayHead::seekTo(std::uint64_t position)
     _position = position;
 
     _clockOffset = ( now - _position );
-    assert( now-_clockOffset == _position ); // check if we did the right thing
+    //assert( now-_clockOffset == _position ); // check if we did the right thing
 
     // Reset consumers state
     _positionConsumers = 0;

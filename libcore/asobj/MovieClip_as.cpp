@@ -925,7 +925,7 @@ movieclip_loadVariables(const fn_call& fn)
     MovieClip* movieclip = ensure<IsDisplayObject<MovieClip> >(fn);
 
     as_object* obj = getObject(movieclip);
-    assert(obj);
+    //assert(obj);
 
     // This always calls MovieClip.meth, even when there are no
     // arguments.
@@ -1853,8 +1853,8 @@ movieclip_beginGradientFill(const fn_call& fn)
         // The renderer may expect successively larger ratios; failure to
         // do this can lead to memory errors.
         if (!gradients.empty()) {
-            assert((rat != 0xff && rat > gradients[i - 1].ratio) ||
-                    (rat >= gradients[i - 1].ratio));
+            /*assert((rat != 0xff && rat > gradients[i - 1].ratio) ||
+                    (rat >= gradients[i - 1].ratio));*/
         }
 
         rgba color;
@@ -1879,14 +1879,14 @@ movieclip_beginGradientFill(const fn_call& fn)
         const std::string& spread = fn.arg(5).to_string();
         if (spread == "reflect") fd.spreadMode = GradientFill::REFLECT;
         else if (spread == "repeat") fd.spreadMode = GradientFill::REPEAT;
-        else assert(fd.spreadMode == GradientFill::PAD);
+       /* else assert(fd.spreadMode == GradientFill::PAD);*/
     }
 
     if (fn.nargs > 6) {
         const std::string& inter = fn.arg(6).to_string();
         if (inter == "rgb") fd.interpolation = GradientFill::RGB;
         else if (inter == "linearRGB") fd.interpolation = GradientFill::LINEAR_RGB;
-        else assert(fd.interpolation == GradientFill::RGB);
+       /* else assert(fd.interpolation == GradientFill::RGB);*/
     }
 
     /// Add a focus if present.

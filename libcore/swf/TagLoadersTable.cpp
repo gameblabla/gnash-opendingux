@@ -41,7 +41,7 @@ TagLoadersTable::get(SWF::TagType t, TagLoader& lf) const
 bool
 TagLoadersTable::registerLoader(SWF::TagType t, TagLoader lf)
 {
-	assert(lf);
+	//assert(lf);
     return _loaders.insert(std::make_pair(t, lf)).second;
 }
 

@@ -180,7 +180,7 @@ double
 parseDecimalNumber(std::string::const_iterator start,
         std::string::const_iterator last)
 {
-    assert(start != last);
+    //assert(start != last);
  
     // Find the first position that is not a numeric character ('e' or 'E' not
     // included). Even if no invalid character is found, it does not mean
@@ -274,7 +274,7 @@ as_value::to_primitive(AsType hint) const
     as_object* obj(nullptr);
 
     if (hint == NUMBER) {
-        assert(_type == OBJECT);
+        //assert(_type == OBJECT);
         obj = getObj();
 
         if (!findMethod(*obj, NSV::PROP_VALUE_OF, method)) {
@@ -286,8 +286,8 @@ as_value::to_primitive(AsType hint) const
         }
     }
     else {
-        assert(hint == STRING);
-        assert(_type == OBJECT);
+        //assert(hint == STRING);
+        //assert(_type == OBJECT);
         obj = getObj();
 
         // @@ Moock says, "the value that results from
@@ -298,7 +298,7 @@ as_value::to_primitive(AsType hint) const
         }
     }
 
-    assert(obj);
+    //assert(obj);
 
     as_environment env(getVM(*obj));
     fn_call::Args args;
@@ -443,7 +443,7 @@ as_value::to_bool(const int version) const
         case DISPLAYOBJECT:
             return true;
         default:
-            assert(_type == UNDEFINED || _type == NULLTYPE || is_exception());
+            //assert(_type == UNDEFINED || _type == NULLTYPE || is_exception());
             return false;
     }
 }
@@ -649,7 +649,7 @@ as_value::typeOf() const
 bool
 as_value::equalsSameType(const as_value& v) const
 {
-    assert(_type == v._type);
+    //assert(_type == v._type);
 
     switch (_type)
     {
@@ -711,14 +711,14 @@ as_value::setReachable() const
 as_object*
 as_value::getObj() const
 {
-    assert(_type == OBJECT);
+    //assert(_type == OBJECT);
     return boost::get<as_object*>(_value);
 }
 
 CharacterProxy
 as_value::getCharacterProxy() const
 {
-    assert(_type == DISPLAYOBJECT);
+    //assert(_type == DISPLAYOBJECT);
     return boost::get<CharacterProxy>(_value);
 }
 
@@ -947,8 +947,8 @@ bool
 objectEqualsPrimitive(const as_value& obj, const as_value& prim, int version)
 try {
 
-    assert(obj.is_object());
-    assert(!prim.is_object());
+    //assert(obj.is_object());
+    //assert(!prim.is_object());
 
     as_value tmp = obj.to_primitive(as_value::NUMBER);
     if (obj.strictly_equals(tmp)) return false;
@@ -963,15 +963,15 @@ catch (const ActionTypeError&) {
 bool
 compareBoolean(const as_value& boolean, const as_value& other, int version)
 {
-    assert(boolean.is_bool());
+    //assert(boolean.is_bool());
     return as_value(boolean.to_number(version)).equals(other, version); 
 }
 
 bool
 stringEqualsNumber(const as_value& str, const as_value& num, int version)
 {
-    assert(num.is_number());
-    assert(str.is_string());
+    //assert(num.is_number());
+    //assert(str.is_string());
     const double n = str.to_number(version);
     if (!isFinite(n)) return false;
     return num.strictly_equals(n);
@@ -1050,7 +1050,7 @@ operator<<(std::ostream& o, const as_value& v)
         case as_value::OBJECT:
         {
             as_object* obj = v.getObj();
-            assert(obj);
+            //assert(obj);
             const std::string desc = obj->array() ? "array" :
                 obj->relay() ? typeName(*obj->relay()) : typeName(*obj);
             return o << "[object(" << desc << "):" << static_cast<void*>(obj)
@@ -1084,7 +1084,7 @@ operator<<(std::ostream& o, const as_value& v)
             return o << ret.str();
         }
         default:
-            assert(v.is_exception());
+            //assert(v.is_exception());
             return o << "[exception]";
     }
 }

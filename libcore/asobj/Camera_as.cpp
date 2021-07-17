@@ -158,7 +158,7 @@ public:
         _input(input.release()),
         _loopback(false)
     {
-        assert(_input.get());
+        //assert(_input.get());
     }
 
     bool muted() const {

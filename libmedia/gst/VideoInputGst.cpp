@@ -811,13 +811,13 @@ VideoInputGst::getSupportedFormats(GnashWebcam *cam, GstCaps *caps)
 bool
 VideoInputGst::setWebcam(size_t dev_select)
 {
-    assert(dev_select < _vidVect.size());
+    //assert(dev_select < _vidVect.size());
     
     GnashWebcamPrivate *webcam = new GnashWebcamPrivate;
     if (webcam) {
         webcam->setWebcamDevice(_vidVect[dev_select]);
         const char* name = _vidVect[dev_select]->getProductName();
-        assert(name);
+        //assert(name);
         _name = name;
         _globalWebcam = webcam;
     } else {
@@ -976,7 +976,7 @@ VideoInputGst::webcamChangeSourceBin()
     GError *error = nullptr;
     gchar *command = nullptr;
     
-    assert(_globalWebcam);
+    //assert(_globalWebcam);
 
     if (_globalWebcam->_pipelineIsPlaying == true) {
         stop();
@@ -1158,10 +1158,10 @@ VideoInputGst::webcamCreateMainBin()
     
     //initialize a new GST pipeline
     webcam->_pipeline = gst_pipeline_new("pipeline");
-    assert(webcam->_pipeline);
+    //assert(webcam->_pipeline);
     
     webcam->_webcamMainBin = gst_bin_new ("webcam_main_bin");
-    assert(webcam->_webcamMainBin);
+    //assert(webcam->_webcamMainBin);
     
     ok = webcamCreateSourceBin();
     if (ok != true) {
@@ -1169,7 +1169,7 @@ VideoInputGst::webcamCreateMainBin()
         return false;
     }
 
-    assert(webcam->_webcamSourceBin);
+    //assert(webcam->_webcamSourceBin);
     
     if ((tee = gst_element_factory_make ("tee", "tee")) == nullptr) {
         log_error(_("%s: problem creating tee element"), __FUNCTION__);
@@ -1231,9 +1231,9 @@ VideoInputGst::webcamCreateMainBin()
         gst_ghost_pad_new ("video_display_queue_src", pad));
     gst_object_unref (GST_OBJECT (pad));
 
-    assert(webcam->_videoSource);
-    assert(_devSelection == 0 || webcam->_capsFilter);
-    assert(_devSelection == 0 || webcam->_currentFormat);
+    //assert(webcam->_videoSource);
+    //assert(_devSelection == 0 || webcam->_capsFilter);
+    //assert(_devSelection == 0 || webcam->_currentFormat);
 
     if (!ok) {
         log_error(_("%s: Unable to create main pipeline"), __FUNCTION__);
@@ -1289,7 +1289,7 @@ VideoInputGst::webcamCreateDisplayBin()
     gst_element_add_pad (webcam->_videoDisplayBin, gst_ghost_pad_new ("sink", pad));
     gst_object_unref (GST_OBJECT (pad));
     
-    assert(webcam->_videoDisplayBin);
+    //assert(webcam->_videoDisplayBin);
 
     return true;
 }
@@ -1535,7 +1535,7 @@ bool
 VideoInputGst::play() 
 {
     GnashWebcamPrivate* webcam = _globalWebcam;
-    assert(_globalWebcam);
+    //assert(_globalWebcam);
 
     GstStateChangeReturn state;
     GstBus *bus;

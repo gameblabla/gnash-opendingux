@@ -186,7 +186,7 @@ XMLSocket_as::close()
 void
 XMLSocket_as::checkForIncomingData()
 {
-    assert(ready());
+    //assert(ready());
     
     std::vector<std::string> msgs;
     
