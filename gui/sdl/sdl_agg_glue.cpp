@@ -35,7 +35,7 @@ extern int mouse_x, mouse_y;
 
 
 /* alekmaul's scaler taken from mame4all */
-static void bitmap_scale(uint32_t startx, uint32_t starty, uint32_t viswidth, uint32_t visheight, uint32_t newwidth, uint32_t newheight,uint32_t pitchsrc,uint32_t pitchdest, uint16_t* src, uint16_t* dst)
+static inline void bitmap_scale(uint32_t startx, uint32_t starty, uint32_t viswidth, uint32_t visheight, uint32_t newwidth, uint32_t newheight,uint32_t pitchsrc,uint32_t pitchdest, uint16_t* src, uint16_t* dst)
 {
     uint32_t W,H,ix,iy,x,y;
     x=startx<<16;
