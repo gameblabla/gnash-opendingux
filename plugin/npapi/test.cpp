@@ -376,7 +376,7 @@ NPN_MemAlloc(uint32_t size)
 void
 NPN_MemFree(void* ptr)
 {
-  assert(ptr);
+  //assert(ptr);
   free(ptr);
 }
 
@@ -495,13 +495,13 @@ NPN_ReleaseVariantValue(NPVariant *variant)
 
 NPObject*
 NPN_RetainObject(NPObject *obj)
-{ assert(obj); ++obj->referenceCount; return obj; }
+{ //assert(obj); ++obj->referenceCount; return obj; }
 
 
 void
 NPN_ReleaseObject(NPObject *npobj)
 {
-    assert(npobj);
+    //assert(npobj);
     --npobj->referenceCount;
     if (npobj->referenceCount == 0) {
         NPN_MemFree(npobj);

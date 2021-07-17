@@ -212,7 +212,7 @@ KDE_NO_EXPORT void KlashPart::stop () {
             void (*oldhandler)(int) = signal(SIGTERM, SIG_IGN);
 
 	    int pid = -1 * ::getpid();
-	    assert(pid < -1);
+	    //assert(pid < -1);
 
 	    // Terminate every process in our process group.
             ::kill (pid, SIGTERM);

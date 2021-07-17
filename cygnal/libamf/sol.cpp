@@ -268,7 +268,7 @@ SOL::writeFile(const std::string &filespec, const std::string &name)
 	      break;
 	  case Element::OBJECT_AMF0:
 	      outsize = el->getNameSize() + 5;
-              assert(ptr+outsize < endPtr);
+              //assert(ptr+outsize < endPtr);
 //	      outsize = el->getNameSize() + 5;
 	      memcpy(ptr, var->reference(), outsize);
 	      ptr += outsize;
@@ -277,7 +277,7 @@ SOL::writeFile(const std::string &filespec, const std::string &name)
 	      break;
 	  case Element::NUMBER_AMF0:
 	      outsize = el->getNameSize() + AMF0_NUMBER_SIZE + 3;
-              assert(ptr+outsize < endPtr);
+              //assert(ptr+outsize < endPtr);
 	      memcpy(ptr, var->reference(), outsize);
 	      ptr += outsize;
 // 	      *ptr++ = 0;	// doubles are terminated too!
@@ -285,18 +285,18 @@ SOL::writeFile(const std::string &filespec, const std::string &name)
 	      break;
 	  case Element::STRING_AMF0:
 	      if (el->getDataSize() == 0) {
-              	  assert(ptr+outsize+1 < endPtr);
+              	  //assert(ptr+outsize+1 < endPtr);
 		  memcpy(ptr, var->reference(), outsize+1);
 		  ptr += outsize+1;
 	      } else {		// null terminate the string
-                  assert(ptr+outsize < endPtr);
+                  //assert(ptr+outsize < endPtr);
 		  memcpy(ptr, var->reference(), outsize);
 		  ptr += outsize;
 		  *ptr++ = 0;
 	      }
 	      break;
 	  default:
-              assert(ptr+outsize < endPtr);
+              //assert(ptr+outsize < endPtr);
 	      memcpy(ptr, var->reference(), outsize);
 	      ptr += outsize;
 	}

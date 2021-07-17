@@ -490,14 +490,14 @@ Network::connectSocket(const string &sockname)
             if (ret == 0) {
                 log_debug(_("\tsocket name %s for fd %d"), sockname, _sockfd);
                 _connected = true;
-                assert(_sockfd > 0);
+                //assert(_sockfd > 0);
                 return true;
             }
             if (ret == -1) {
                 log_error(_("The connect() socket for fd %d never was available for writing"),
                         _sockfd);
                 _sockfd = -1;
-                assert(!_connected);
+                //assert(!_connected);
                 return false;
             }
         }
@@ -509,7 +509,7 @@ Network::connectSocket(const string &sockname)
 #endif
 
     _connected = true;
-    assert(_sockfd > 0);
+    //assert(_sockfd > 0);
     return true;    
 }
 
@@ -561,7 +561,7 @@ Network::createClient(const string &hostname, short port)
     int                 ret;
     int                 retries;
 
-//    assert( ! connected() );
+//    //assert( ! connected() );
     if (connected()) {
         return true;
     }
@@ -694,7 +694,7 @@ Network::createClient(const string &hostname, short port)
                 log_debug(_("\tport %d at IP %s for fd %d"), port,
                           straddr, _sockfd);
                 _connected = true;
-                assert(_sockfd > 0);
+                //assert(_sockfd > 0);
                 return true;
             }
             if (ret == -1) {
@@ -707,7 +707,7 @@ Network::createClient(const string &hostname, short port)
 #endif
 		::close(_sockfd);
                 _sockfd = -1;
-                assert(!_connected);
+                //assert(!_connected);
                 return false;
             }
         }
@@ -721,7 +721,7 @@ Network::createClient(const string &hostname, short port)
 
     _connected = true;
     _port = port;
-    assert(_sockfd > 0);
+    //assert(_sockfd > 0);
 
     return true;
 }

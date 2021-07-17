@@ -26,7 +26,7 @@ namespace mysqldb
 
 	as_value	size_method(const fn_call& fn)
 	{
-		assert(fn.this_ptr);	assert(fn.env);
+		//assert(fn.this_ptr);	//assert(fn.env);
 		table* tbl = (table*) (as_object*) fn.this_ptr;
 		return as_value(tbl->size());
 	}

@@ -730,7 +730,7 @@ nsPluginInstance::handlePlayerRequests(GIOChannel* iochan, GIOCondition cond)
         return false;
     }
 
-    assert(cond & G_IO_IN);
+    //assert(cond & G_IO_IN);
 
     gnash::log_debug("Checking player requests on FD #%d",
               g_io_channel_unix_get_fd(iochan));
@@ -840,7 +840,7 @@ nsPluginInstance::processPlayerRequest()
         
         if (invoke->name == "getURL") {
             
-            assert(invoke->args.size() > 1);
+            //assert(invoke->args.size() > 1);
             
             // The first argument is the URL string.
             std::string url = NPVariantToString(invoke->args[0].get());
@@ -885,7 +885,7 @@ nsPluginInstance::processPlayerRequest()
             continue; 
         } else if (invoke->name == "fsCommand") {
             
-            assert(invoke->args.size() > 1);
+            //assert(invoke->args.size() > 1);
             std::string command = NPVariantToString(invoke->args[0].get());
             std::string arg = NPVariantToString(invoke->args[1].get());            
             std::string name = _name; 
@@ -903,7 +903,7 @@ nsPluginInstance::processPlayerRequest()
             continue;
         } else if (invoke->name == "addMethod") {
             
-            assert(!invoke->args.empty());
+            //assert(!invoke->args.empty());
 
             if (!HasScripting()) {
                LOG_ONCE(log_debug("Ignoring addMethod, no scripting."));

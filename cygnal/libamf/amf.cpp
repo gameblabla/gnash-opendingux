@@ -951,7 +951,7 @@ AMF::extractAMF(std::uint8_t *in, std::uint8_t* tooFar)
         {
             // Make sure this isn't less than 0. We check this above at
             // the moment.
-            assert(tooFar >= tmpptr);
+            //assert(tooFar >= tmpptr);
             
             if (static_cast<size_t>(tooFar - tmpptr) < sizeof(const double)) {
                 gnash::log_error(_("AMF data segment too short to contain"

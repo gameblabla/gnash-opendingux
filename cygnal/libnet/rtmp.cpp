@@ -248,7 +248,7 @@ RTMP::getProperty(const std::string &name)
 
     // If this fails and we return, it will corrupt memory, so either
     // the assertion never fails or we'll have to return a pointer.
-    assert(it != _properties.end()); 
+    //assert(it != _properties.end()); 
     return it->second;
 }
 

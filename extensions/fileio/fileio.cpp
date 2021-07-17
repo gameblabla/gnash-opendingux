@@ -359,7 +359,7 @@ fileio_fopen(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);
+    //assert(ptr);
     
     if (fn.nargs < 2) {
 	IF_VERBOSE_ASCODING_ERRORS(
@@ -380,7 +380,7 @@ fileio_fclose(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);
+    //assert(ptr);
     
     return as_value(ptr->fclose());
 }
@@ -390,7 +390,7 @@ fileio_fread(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);
+    //assert(ptr);
 		
     string str;
     int count = ptr->fread(str);
@@ -407,7 +407,7 @@ fileio_fgetc(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);
+    //assert(ptr);
     int i = ptr->fgetc();
     
     if ((i==EOF) || (i<0)) {
@@ -424,7 +424,7 @@ fileio_fgets(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);
+    //assert(ptr);
     string str; 
     str = ptr->fgets(str);
     return as_value(str.c_str());
@@ -435,7 +435,7 @@ fileio_gets(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);    
+    //assert(ptr);    
     char buf[BUFSIZE];
     memset(buf, 0, BUFSIZE);
     string str = ::fgets(buf, BUFSIZE, stdin);
@@ -448,7 +448,7 @@ fileio_getchar(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);
+    //assert(ptr);
     int i = ::getchar();
     char *c = reinterpret_cast<char *>(&i);
     return as_value(c);
@@ -459,7 +459,7 @@ fileio_fwrite(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);
+    //assert(ptr);
     string str = fn.arg(0).to_string();
     return as_value(ptr->fputs(str));
 }
@@ -469,7 +469,7 @@ fileio_fputc(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);    
+    //assert(ptr);    
     int c = (int) toNumber(fn.arg(0), getVM(fn));
     return as_value(ptr->fputc(c));
 }
@@ -498,7 +498,7 @@ fileio_putchar(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);    
+    //assert(ptr);    
     string x = fn.arg(0).to_string();
     return as_value(::putchar(x[0]));
 }
@@ -508,7 +508,7 @@ fileio_fflush(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);    
+    //assert(ptr);    
     return as_value(ptr->fflush());
 }
 
@@ -517,7 +517,7 @@ fileio_fseek(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);    
+    //assert(ptr);    
     long c = static_cast<long>(toNumber(fn.arg(0), getVM(fn)));
     return as_value(ptr->fseek(c));
 }
@@ -527,7 +527,7 @@ fileio_ftell(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);
+    //assert(ptr);
     int i = ptr->ftell();
     return as_value(i);
 }
@@ -537,7 +537,7 @@ fileio_asyncmode(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);
+    //assert(ptr);
     bool b = toBool(fn.arg(0), getVM(fn));
     return as_value(ptr->asyncmode(b));
 }
@@ -547,7 +547,7 @@ fileio_feof(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);
+    //assert(ptr);
     bool b = ptr->feof();
     return as_value(b);
 }
@@ -557,7 +557,7 @@ fileio_unlink(const fn_call& fn)
 {
 //    GNASH_REPORT_FUNCTION;
     FileIO* ptr = ensure<ThisIsNative<FileIO> >(fn);
-    assert(ptr);
+    //assert(ptr);
     string str = fn.arg(0).to_string();
     return as_value(ptr->unlink(str));
 }
