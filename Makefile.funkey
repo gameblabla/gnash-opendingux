@@ -8,6 +8,8 @@ PKG_CONFIG		:= $(BINDIR)/pkg-config
 CC			= $(BINDIR)/arm-linux-gcc
 CXX			= $(BINDIR)/arm-linux-g++
 
+PROFILE		= 0
+
 RENDERER_CONFIG =  agg
 HWACCEL_CONFIG = none
 PIXEL_FORMAT = RGB565
@@ -25,8 +27,9 @@ OBJ_C		= $(notdir $(patsubst %.c, %.o, $(SRC_C)))
 OBJ_CP		= $(notdir $(patsubst %.cpp, %.o, $(SRC_CP)))
 OBJS		= $(OBJ_C) $(OBJ_CP)
 
-CFLAGS		= -Os -fno-PIC -fno-common
-	
+CFLAGS		= -Os -fno-PIC -flto -fno-common
+CFLAGS		+= -fdata-sections -ffunction-sections -freorder-functions -fno-math-errno -fgcse-las -fgcse-sm -fmerge-all-constants
+
 CFLAGS		+= -DLSB_FIRST  -DHAVE_CONFIG_H
 
 CFLAGS		+= -I./ -Ilibmedia/ffmpeg -Ilibmedia -Ilibrender/$(RENDERER_CONFIG) -Ilibrender -Igui -Igui/sdl -Ilibcore/abc -Ilibcore/asobj -Ilibcore/asobj/flash
@@ -60,14 +63,14 @@ CFLAGS		+= -DPIXELFORMAT_ARGB32
 endif
 
 ifeq ($(PROFILE), YES)
-CFLAGS 		+= -fprofile-generate=./
+CFLAGS 		+= -fprofile-generate=/mnt/gnash_profile
 else ifeq ($(PROFILE), APPLY)
 CFLAGS		+= -fprofile-use="./"
 endif
 
-CXXFLAGS 	= $(CFLAGS)
+CXXFLAGS 	= $(CFLAGS) -ftree-vectorize
 
-LDFLAGS     = -Wl,--start-group -no-pie -lc -lgcc -lm -lstdc++ -latomic -lspeex -lSDL -lvorbis -lvorbisidec -lvorbisenc -lvorbisfile -logg -lasound -lfreetype -lavcodec -lavformat -lavutil -lswresample -lswscale -lgif -ljpeg -lpng -lz -lboost_program_options -pthread -Wl,--as-needed -Wl,--gc-sections -s -flto -Wl,--end-group
+LDFLAGS     = -no-pie -lc -lgcc -lm -lstdc++ -latomic -lspeex -lSDL -lasound -lfreetype -lavcodec -lavformat -lavutil -lswresample -lswscale -lgif -ljpeg -lpng -lz -lboost_program_options -pthread -Wl,-z,norelro -Wl,--hash-style=gnu -Wl,--build-id=none -Wl,-O1,--sort-common,--as-needed,--gc-sections -flto -no-pie -s
 ifeq ($(RENDERER_CONFIG), cairo)
 LDFLAGS		+= -lcairo
 else ifeq ($(RENDERER_CONFIG), opengl)
