@@ -32,7 +32,7 @@
 #define LIBLTDL_DLL_IMPORT 1
 #endif
 
-#include <ltdl.h>
+//#include <ltdl.h>
 
 // Used on Darwin for basename
 #ifdef HAVE_LIBGEN_H

@@ -7,6 +7,9 @@ TAGS
 *.la
 *.moc
 *.o
+*.gcda
+*.opk
+*.swf
 *.out
 *.bak
 *.deb
@@ -15,6 +18,11 @@ TAGS
 *.a
 *.changes
 *.tar.gz
+log.txt
+log2.txt
+log3.txt
+*.out
+*.elf
 *-attempt-install-dependencies.sh
 testsuite/*/*est
 testsuite/*/*est[0-9]

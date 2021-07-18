@@ -1,3 +1,0 @@
-etc/cygnalrc
-usr/bin/cygnal
-usr/lib/cygnal/plugins/*.so

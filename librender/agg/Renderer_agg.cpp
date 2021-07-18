@@ -651,7 +651,7 @@ private:
     const ClipBounds& _clipbounds;
 
     /// Quality of renderering
-    const Quality _quality;
+    const Quality _quality = QUALITY_LOW;
 
     /// Whether smoothing is required.
     bool _smoothing;
@@ -1386,7 +1386,7 @@ public:
 
         for (size_t fno = 0; fno < fcount; ++fno) {
             const AddStyles st(stage_matrix, fillstyle_matrix, cx, sh,
-                    _quality);
+                    QUALITY_LOW);
             boost::apply_visitor(st, FillStyles[fno].fill);
         } 
     } 

@@ -42,7 +42,7 @@
 # include <libgen.h>
 #endif
 
-#include <ltdl.h>
+//#include <ltdl.h>
 #include <mutex>
 
 #if defined(WIN32) || defined(_WIN32)
@@ -122,12 +122,13 @@ SharedLib::openLib (const std::string& filespec)
 SharedLib::initentry *
 SharedLib::getInitEntry (const std::string& symbol)
 {
+	
+#ifdef HAVE_LTDL
     // GNASH_REPORT_FUNCTION;
     lt_ptr run = nullptr;
     
     scoped_lock lock(_libMutex);
 
-#ifdef HAVE_LTDL
     run  = lt_dlsym (_dlhandle, symbol.c_str());
     
     if (run == nullptr) {
@@ -136,11 +137,13 @@ SharedLib::getInitEntry (const std::string& symbol)
     } else {
         log_debug(_("Found symbol %s @ %p"), symbol, (void *)run);
     }
+	return (initentry*)(run);
 #else
     (void)symbol;
+    return NULL;
 #endif
     
-    return (initentry*)(run);
+
 }
 
 SharedLib::entrypoint *
@@ -148,13 +151,13 @@ SharedLib::getDllSymbol(const std::string& symbol)
 {
     GNASH_REPORT_FUNCTION;
     
+#ifdef HAVE_LTDL
     lt_ptr run = nullptr;
     
     scoped_lock lock(_libMutex);
 
-#ifdef HAVE_LTDL
     run  = lt_dlsym (_dlhandle, symbol.c_str());
-#endif
+
     
     /* 
     Realistically, we should never get a valid pointer with a value of 0
@@ -168,6 +171,10 @@ SharedLib::getDllSymbol(const std::string& symbol)
     }
     
     return (entrypoint*)(run);
+   
+#else
+	return NULL;
+#endif
 }
 
 } // end of gnash namespace

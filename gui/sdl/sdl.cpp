@@ -33,6 +33,8 @@ extern int internal_width, internal_height, hw_width, hw_height;
 int mouse_mode = 0;
 int mouse_x = 0, mouse_y = 0;
 
+extern void Exit_App();
+
 using namespace std;
 
 namespace gnash 
@@ -59,9 +61,6 @@ SDLGui::run()
     Uint32 movie_time = 0;// SDL_GetTicks(); // what time it should be in the movie
     Uint8 *keystate;
 
-
-
-
     SDL_Event   event;
     while (true)
     {
@@ -70,25 +69,29 @@ SDLGui::run()
             break;
         }
 
-	keystate = SDL_GetKeyState(NULL);
+		keystate = SDL_GetKeyState(NULL);
 		
-	if (mouse_mode == 1)
-	{
-		if (keystate[SDLK_UP]) mouse_y = mouse_y - 4;
-		else if (keystate[SDLK_DOWN]) mouse_y = mouse_y + 4;
-		if (keystate[SDLK_LEFT])  mouse_x = mouse_x - 4;
-		else if (keystate[SDLK_RIGHT]) mouse_x = mouse_x + 4;
-			
-		if (mouse_x > hw_width) mouse_x = hw_width;
-		if (mouse_y > hw_height) mouse_y = hw_height;
-		if (mouse_x < 0) mouse_x = 0;
-		if (mouse_y < 0) mouse_y = 0;
+		if (mouse_mode == 1)
+		{
+			if (keystate[SDLK_UP]) mouse_y = mouse_y - 4;
+			else if (keystate[SDLK_DOWN]) mouse_y = mouse_y + 4;
+			if (keystate[SDLK_LEFT])  mouse_x = mouse_x - 4;
+			else if (keystate[SDLK_RIGHT]) mouse_x = mouse_x + 4;
+				
+			if (mouse_x > hw_width) mouse_x = hw_width;
+			if (mouse_y > hw_height) mouse_y = hw_height;
+			if (mouse_x < 0) mouse_x = 0;
+			if (mouse_y < 0) mouse_y = 0;
 
-		x_old = mouse_x * ((float)internal_width / (float)hw_width);
-		y_old = mouse_y * ((float)internal_height / (float)hw_height);
-		notifyMouseMove(x_old, y_old);
-		_glue.render(0,0,0,0);
-	}
+			x_old = mouse_x * ((float)internal_width / (float)hw_width);
+			y_old = mouse_y * ((float)internal_height / (float)hw_height);
+			notifyMouseMove(x_old, y_old);
+			#ifdef RENDERER_CAIRO
+			_glue.render();
+			#elif defined(RENDERER_AGG)
+			_glue.render(0,0,0,0);
+			#endif
+		}
 
         while (SDL_PollEvent(&event))
         {
@@ -201,7 +204,6 @@ SDLGui::setTimeout(unsigned int timeout)
 bool
 SDLGui::init(int argc, char **argv[])
 {
-
     disableCoreTrap();
 
     if (_xid) {
@@ -213,12 +215,13 @@ SDLGui::init(int argc, char **argv[])
     // Initialize the SDL subsystems we're using. Linux
     // and Darwin use Pthreads for SDL threads, Win32
     // doesn't. Otherwise the SDL event loop just polls.
+    SDL_ShowCursor(0);
     if (SDL_Init(SDL_INIT_VIDEO)) {
         fprintf(stderr, "Unable to init SDL: %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
     }
 
-    atexit(SDL_Quit);
+    atexit(Exit_App);
 
     SDL_EnableKeyRepeat(250, 33);
 

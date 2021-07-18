@@ -34,7 +34,7 @@
 #include <vector>
 
 #include "gui.h"
-#include "NullGui.h"
+//#include "NullGui.h"
 #include "MovieFactory.h"
 #include "movie_definition.h"
 #include "sound_handler.h" // for set_sound_handler and create_sound_handler_*
@@ -303,11 +303,12 @@ Player::init_sound()
 void
 Player::init_gui()
 {
-    if (_doRender) {
+    /*if (_doRender) {
         _gui = getGui();
     } else {
         _gui.reset(new NullGui(_doLoop, *_runResources));
-    }
+    }*/
+     _gui = getGui();
 
     _gui->setAudioDump(_audioDump);
     _gui->setMaxAdvances(_maxAdvances);
@@ -865,7 +866,7 @@ Player::getGui()
     return createDumpGui(_windowID, _scale, _doLoop, *_runResources);
 #endif
 
-    return std::unique_ptr<Gui>(new NullGui(_doLoop, *_runResources));
+    /*return std::unique_ptr<Gui>(new NullGui(_doLoop, *_runResources));*/
 }
 
 Player::~Player()

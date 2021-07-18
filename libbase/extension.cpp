@@ -28,7 +28,7 @@
 #include <cstring>
 #include <iostream>
 #include <sys/types.h>
-#include <ltdl.h>
+//#include <ltdl.h>
 
 #include "log.h"
 #include "sharedlib.h"
