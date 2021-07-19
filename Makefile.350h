@@ -12,6 +12,8 @@ RENDERER_CONFIG =  agg
 HWACCEL_CONFIG = none
 PIXEL_FORMAT = RGB565
 
+PROFILE = APPLY
+
 SRCDIR		= ./gui/sdl/$(RENDERER_CONFIG) ./libcore/asobj/flash/geom ./libmedia/ffmpeg ./libmedia ./libcore ./librender/$(RENDERER_CONFIG) ./librender ./gui ./gui/sdl ./libcore/abc ./libcore/asobj ./libcore/asobj/flash ./libcore/asobj/flash/filters ./libcore/asobj/flash/external ./libcore/asobj/flash/display ./libcore/asobj/flash/text ./libcore/asobj/flash/net ./libcore/swf ./libcore/vm ./libcore/parser ./libsound ./libsound/sdl ./libbase ./libdevice
 
 ifeq ($(RENDERER_CONFIG), agg)
@@ -61,19 +63,24 @@ CFLAGS		+= -DPIXELFORMAT_ARGB32
 endif
 
 ifeq ($(PROFILE), YES)
-CFLAGS 		+= -fprofile-generate=./
+CFLAGS 		+= -fprofile-generate=/media/roms/gnash_gcda
 else ifeq ($(PROFILE), APPLY)
 CFLAGS		+= -fprofile-use="./"
 endif
 
-CXXFLAGS 	= $(CFLAGS)
+CXXFLAGS 	= $(CFLAGS) -ftree-vectorize
 
-LDFLAGS     = -lc -lgcc -lm -lstdc++ -latomic -lSDL -lvorbis -lvorbisenc -logg -lopus -lopusfile -lasound -lfreetype -lavcodec -lavformat -lavutil -lswresample -lswscale -ldrm -lbz2 -lgif -ljpeg -lpng -lz -lboost_program_options -pthread -Wl,--as-needed -Wl,--gc-sections -s -flto
+LDFLAGS     = -lc -lgcc -lm -lstdc++ -latomic -lSDL -lasound -lfreetype -lavcodec -lavformat -lavutil -lswresample -lswscale -lgif -ljpeg -lpng -lz -lboost_program_options -pthread -Wl,-z,norelro -Wl,--hash-style=gnu -Wl,--build-id=none -Wl,-O1,--sort-common,--as-needed,--gc-sections -flto -no-pie -s
 ifeq ($(RENDERER_CONFIG), cairo)
 LDFLAGS		+= -lcairo
 else ifeq ($(RENDERER_CONFIG), opengl)
 LDFLAGS		+= -lGL -lGLU
 endif
+
+ifeq ($(PROFILE), YES)
+LDFLAGS 	+= -lgcov
+endif
+
 
 # Rules to make executable
 $(PRGNAME): $(OBJS)  

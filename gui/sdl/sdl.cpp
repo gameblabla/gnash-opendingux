@@ -135,7 +135,7 @@ SDLGui::run()
 						mouse_x = hw_width/2;
 						mouse_y = hw_height/2;
 					}
-					else if (event.key.keysym.sym == SDLK_END || event.key.keysym.sym == SDLK_HOME)
+					else if (event.key.keysym.sym == SDLK_END || event.key.keysym.sym == SDLK_HOME || event.key.keysym.sym == SDLK_ESCAPE)
 					{
 						return true;
 					}
@@ -147,6 +147,11 @@ SDLGui::run()
 					if (event.key.keysym.sym == SDLK_TAB)
 					{
 						mouse_mode = 0;
+						_glue.render(0,0,0,0);
+					}
+					else if (event.key.keysym.sym == SDLK_END || event.key.keysym.sym == SDLK_HOME || event.key.keysym.sym == SDLK_ESCAPE)
+					{
+						return true;
 					}
 					else if (event.key.keysym.sym == SDLK_LCTRL || event.key.keysym.sym == SDLK_BACKSPACE)
 					{
@@ -331,6 +336,7 @@ SDLGui::sdl_to_gnash_key(SDL_KeyboardEvent * key)
       case SDLK_INSERT:   c = gnash::key::INSERT;   break;
       case SDLK_HOME:     c = gnash::key::HOME;     break;
       case SDLK_END:      c = gnash::key::END;      break;
+      case SDLK_ESCAPE:      c = gnash::key::END;      break;
       case SDLK_PAGEUP:   c = gnash::key::PGUP;     break;
       case SDLK_PAGEDOWN: c = gnash::key::PGDN;     break;
       case SDLK_RSHIFT:

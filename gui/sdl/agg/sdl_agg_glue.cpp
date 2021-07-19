@@ -73,6 +73,11 @@ void Exit_App()
 		SDL_FreeSurface(rl_screen);
 		rl_screen = rl_screen;
 	}
+	if (cursor_sdl != nullptr)
+	{
+		SDL_FreeSurface(cursor_sdl);
+		cursor_sdl = nullptr;
+	}
 	//SDL_Quit();
 }
 
@@ -93,7 +98,14 @@ SdlAggGlue::~SdlAggGlue()
 {
 //    GNASH_REPORT_FUNCTION;
     //SDL_FreeSurface(_sdl_surface);
-   // SDL_FreeSurface(_screen);
+	//SDL_FreeSurface(_screen);
+	#ifdef OPENDINGUX
+    if (_sdl_surface != nullptr)
+    {
+		SDL_FreeSurface(_sdl_surface);
+		_sdl_surface = nullptr;
+	}
+	#endif
     if (rl_screen != nullptr)
     {
 		SDL_FreeSurface(rl_screen);
@@ -104,7 +116,6 @@ SdlAggGlue::~SdlAggGlue()
 		SDL_FreeSurface(cursor_sdl);
 		cursor_sdl = nullptr;
 	}
-    delete [] _offscreenbuf;
 }
 
 bool
@@ -149,17 +160,19 @@ SdlAggGlue::prepDrawingArea(int width, int height, std::uint32_t sdl_flags)
     //assert(_bpp % 8 == 0);
     
     printf("Internal width, height %d %d\n", width, height);
-
+	SDL_ShowCursor(SDL_DISABLE);
+	_sdl_surface = SDL_CreateRGBSurface(SDL_HWSURFACE, width, height, _bpp, 0,0,0,0);
 	#ifdef OPENDINGUX
-	if (width > 640 || height > 480)
+	toscaleup = 0;
+	rl_screen = SDL_SetVideoMode(width, height, _bpp, SDL_HWSURFACE);
+	if (!rl_screen)
 	{
-		toscaleup = 1;
-		rl_screen = SDL_SetVideoMode(0, 0, _bpp, SDL_HWSURFACE | SDL_TRIPLEBUF);
-	}
-	else
-	{
-		toscaleup = 0;
-		rl_screen = SDL_SetVideoMode(width, height, _bpp, SDL_HWSURFACE | SDL_TRIPLEBUF);
+		rl_screen = SDL_SetVideoMode(width, height + 1, _bpp, SDL_HWSURFACE);
+		if (!rl_screen)
+		{
+			toscaleup = 1;
+			rl_screen = SDL_SetVideoMode(0, 0, _bpp, SDL_HWSURFACE);
+		}
 	}
 	#else
     //_screen = SDL_SetVideoMode(width, height, _bpp, sdl_flags | SDL_SWSURFACE);
@@ -214,43 +227,12 @@ SdlAggGlue::prepDrawingArea(int width, int height, std::uint32_t sdl_flags)
 
 	#define CHUNK_SIZE (100 * 100 * depth_bytes)
 
-	#ifdef OPENDINGUX
 	int bufsize = static_cast<int>(width * height * depth_bytes / CHUNK_SIZE + 1) * CHUNK_SIZE;
-	if (toscaleup == 1)
-	{
-		_offscreenbuf = new unsigned char[bufsize];
-		// Only the AGG renderer has the function init_buffer, which is *not* part of
-		// the renderer api. It allows us to change the renderers movie size (and buffer
-		// address) during run-time.
-		Renderer_agg_base * renderer =
-		  static_cast<Renderer_agg_base *>(_agg_renderer);
-		renderer->init_buffer(_offscreenbuf, bufsize, width, height,
-		  width*((_bpp+7)/8));
-	}
-	else
-	{
-		_offscreenbuf = (unsigned char*)rl_screen->pixels;
-		Renderer_agg_base * renderer =
-		  static_cast<Renderer_agg_base *>(_agg_renderer);
-		renderer->init_buffer(_offscreenbuf, bufsize, width, height,
-		  width*((_bpp+7)/8));
-	}
-	#else
-    int bufsize = static_cast<int>(width * height * depth_bytes / CHUNK_SIZE + 1) * CHUNK_SIZE;
-
-    _offscreenbuf = new unsigned char[bufsize];
-
-    log_debug (_("SDL-AGG: %i byte offscreen buffer allocated"), bufsize);
-
-
-    // Only the AGG renderer has the function init_buffer, which is *not* part of
-    // the renderer api. It allows us to change the renderers movie size (and buffer
-    // address) during run-time.
-    Renderer_agg_base * renderer =
-      static_cast<Renderer_agg_base *>(_agg_renderer);
-    renderer->init_buffer(_offscreenbuf, bufsize, width, height,
-      width*((_bpp+7)/8));
-    #endif
+	_offscreenbuf = (unsigned char*)_sdl_surface->pixels;
+	Renderer_agg_base * renderer =
+	static_cast<Renderer_agg_base *>(_agg_renderer);
+	renderer->init_buffer(_offscreenbuf, bufsize, width, height,
+	width*((_bpp+7)/8));
 
 	/*
     _sdl_surface = SDL_CreateRGBSurfaceFrom((void *) _offscreenbuf, width, height,
@@ -295,46 +277,46 @@ SdlAggGlue::render()
     }
 }
 
+int old_x, old_y;
+int firstime = 0;
 void
 SdlAggGlue::render(int minx, int miny, int maxx, int maxy)
 {
     // Update only the invalidated rectangle
-    /*SDL_Rect clip = { static_cast<Sint16>(minx),
-        static_cast<Sint16>(miny),
-        static_cast<Uint16>(maxx - minx),
-        static_cast<Uint16>(maxy - miny)};
-    SDL_SetClipRect(_screen, &clip);*/
    // SDL_BlitSurface(_sdl_surface, nullptr, _screen, nullptr);
    
    #ifdef OPENDINGUX
-	if (toscaleup != 1)
-	{
-		SDL_UnlockSurface(rl_screen);
-		rl_screen->pixels = _offscreenbuf;
-		SDL_LockSurface(rl_screen);
-	   SDL_Flip(rl_screen);
-	}
-	else
+	SDL_Rect clip = { minx, miny, maxx - minx, maxy - miny};
+	SDL_Rect position;
+	if (toscaleup == 1)
 	{
 	   bitmap_scale(0, 0, internal_width, internal_height, rl_screen->w, rl_screen->h, internal_width,0, (uint16_t*)_offscreenbuf, (uint16_t*)rl_screen->pixels);
 	   //SDL_SoftStretch(_sdl_surface, NULL, rl_screen, NULL);
 	   if (mouse_mode == 1)
 	   {
-			SDL_Rect position;
 			position.x = mouse_x;
 			position.y = mouse_y;
-			if (cursor_sdl)
 			SDL_BlitSurface(cursor_sdl, nullptr, rl_screen, &position);
-			else
-			{
-				position.w = 4;
-				position.h = 4;
-				SDL_FillRect(rl_screen, &position, 512);
-			}
-		}	
-		SDL_Flip(rl_screen);
+		}
+		SDL_UpdateRect(rl_screen, 0, 0, 0, 0);
 	}
-	
+	else
+	{
+		memcpy(rl_screen->pixels, _sdl_surface->pixels, (rl_screen->w * rl_screen->h) *2);
+		if (mouse_mode == 1)
+		{
+			SDL_SetClipRect(rl_screen, NULL);
+			position.x = mouse_x;
+			position.y = mouse_y;
+			SDL_BlitSurface(cursor_sdl, nullptr, rl_screen, &position);
+			SDL_UpdateRect(rl_screen, 0, 0, 0, 0);
+		}
+		else
+		{
+			SDL_SetClipRect(rl_screen, &clip);
+			SDL_UpdateRect(rl_screen, clip.x, clip.y, clip.w, clip.h);
+		}
+	}
    #else
    bitmap_scale(0, 0, internal_width, internal_height, rl_screen->w, rl_screen->h, internal_width,0, (uint16_t*)_offscreenbuf, (uint16_t*)rl_screen->pixels);
    //SDL_SoftStretch(_sdl_surface, NULL, rl_screen, NULL);

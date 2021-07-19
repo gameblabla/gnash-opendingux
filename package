@@ -4,6 +4,7 @@ mkdir -p opk
 cp ./gnash.elf opk/gnash.elf
 cp ./gnash.png opk/gnash.png
 cp ./cursor.bmp opk/cursor.bmp
+cp ./freesans.ttf opk/freesans.ttf
 cp ./COPYING opk/COPYING
 
 # https://unix.stackexchange.com/questions/219268/how-to-add-new-lines-when-using-echo

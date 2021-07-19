@@ -223,6 +223,7 @@ namespace agg
         m_wait_mode(true),
         m_flip_y(flip_y)
     {
+		SDL_ShowCursor(0);
         SDL_Init(SDL_INIT_VIDEO);
         strcpy(m_caption, "Anti-Grain Geometry Application");
     }

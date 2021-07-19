@@ -77,6 +77,10 @@ else ifeq ($(RENDERER_CONFIG), opengl)
 LDFLAGS		+= -lGL -lGLU
 endif
 
+ifeq ($(PROFILE), YES)
+LDFLAGS 	+= -lgcov
+endif
+
 # Rules to make executable
 $(PRGNAME): $(OBJS)  
 	$(CC) $(CFLAGS) -o $(PRGNAME) $^ $(LDFLAGS)
