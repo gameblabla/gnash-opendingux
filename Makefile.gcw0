@@ -70,7 +70,7 @@ endif
 
 CXXFLAGS 	= $(CFLAGS) -ftree-vectorize
 
-LDFLAGS     = -lc -lgcc -lm -lstdc++ -latomic -lSDL -lasound -lfreetype -lavcodec -lavformat -lavutil -lswresample -lswscale -liconv -lgif -ljpeg -lpng -lz -lboost_program_options -pthread -Wl,--as-needed -Wl,--gc-sections -s -flto
+LDFLAGS     = -lc -lgcc -lm -lstdc++ -latomic -lSDL -lasound -lfreetype -lavcodec -lavformat -lavutil -lswresample -lswscale -liconv -lgif -ljpeg -lpng -lz -pthread -Wl,--as-needed -Wl,--gc-sections -s -flto
 ifeq ($(RENDERER_CONFIG), cairo)
 LDFLAGS		+= -lcairo
 else ifeq ($(RENDERER_CONFIG), opengl)

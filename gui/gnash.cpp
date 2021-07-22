@@ -27,7 +27,7 @@
 #include <iterator>
 #include <ios>
 #include <boost/format.hpp>
-#include <boost/program_options.hpp>
+//#include <boost/program_options.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
@@ -69,8 +69,8 @@ namespace {
 
 // Forward declarations
 namespace {
-    namespace po = boost::program_options;
-    po::options_description getSupportedOptions(gnash::Player& p);
+    //namespace po = boost::program_options;
+    //po::options_description getSupportedOptions(gnash::Player& p);
 
     void setupSoundAndRendering(gnash::Player& p, int i);
     void setupFlashVars(gnash::Player& p,
@@ -79,7 +79,7 @@ namespace {
     void setupCookiesIn(gnash::Player& p, const std::string& cookiesIn);
 
     void usage_gui_keys(std::ostream& os);
-    void usage(std::ostream& os, const po::options_description& opts);
+    //void usage(std::ostream& os, const po::options_description& opts);
     void build_options(std::ostream& os);
     void version_and_copyright(std::ostream& os);
 }
@@ -107,6 +107,7 @@ main(int argc, char *argv[])
 
     gnash::Player player;
 
+	/*
     po::options_description opts = getSupportedOptions(player);
 
     // Add all positional arguments as input files.
@@ -129,11 +130,11 @@ main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    po::notify(vm);
+    po::notify(vm);*/
 
-    if (vm.count("help")) {
+    /*if (vm.count("help")) {
         version_and_copyright(std::cout);
-        usage(std::cout, opts);
+        //usage(std::cout, opts);
         return EXIT_SUCCESS;
     }
 
@@ -141,19 +142,19 @@ main(int argc, char *argv[])
         version_and_copyright(std::cout);
         build_options(std::cout);
         return EXIT_SUCCESS;
-    }
+    }*/
 
     // Do some extra sanity checks on the options.
-    const bool plugin = vm.count("xid");
+    /*const bool plugin = vm.count("xid");
 
     if (plugin && vm.count("height") && vm.count("width") &&
             !player.getHeight() && !player.getWidth()) {
             // We were given dimensions of 0x0 to render to (probably the plugin
             // is playing an "invisible" movie. Disable video rendering.
             player.setDoRender(false);
-    }
+    }*/
 
-    if (!vm.count("render-mode")) {
+    /*if (!vm.count("render-mode")) {
         std::cerr << "Using rcfile\n";
         if (plugin) {
             player.setDoSound(rcfile.usePluginSound());
@@ -161,12 +162,17 @@ main(int argc, char *argv[])
         else {
             player.setDoSound(rcfile.useSound());
         }
-    }
+    }*/
+	player.setDoSound(rcfile.useSound());
+	
+	playFile(std::ref(player), argc, argv, argv[1]);
+
+	/*infiles.begin = argv[1];
 
     // No file name was supplied
     if (infiles.empty()) {
         std::cerr << _("Error: no input file was specified. Exiting.\n");
-        usage(std::cerr, opts);
+        //usage(std::cerr, opts);
         return EXIT_FAILURE;
     }
 
@@ -178,7 +184,7 @@ main(int argc, char *argv[])
     catch (const gnash::GnashException& ex) {
         std::cerr << "Error: " << ex.what() << "\n";
         return EXIT_FAILURE;
-    }
+    }*/
     return EXIT_SUCCESS;
 }
 
@@ -267,7 +273,7 @@ setupSoundAndRendering(gnash::Player& p, int i)
     }
 }
 
-po::options_description
+/*po::options_description
 getDebuggingOptions(gnash::Player& p)
 {
 #ifndef GNASH_FPS_DEBUG
@@ -496,7 +502,7 @@ getSupportedOptions(gnash::Player& p)
 #endif
 
     return desc;
-}
+}*/
 
 void
 usage_gui_keys(std::ostream& os)
@@ -516,7 +522,7 @@ usage_gui_keys(std::ostream& os)
        << _("Force immediate redraw\n");
 }
 
-void
+/*void
 usage(std::ostream& os, const po::options_description& opts)
 {
     os << _("Usage: gnash [options] movie_file.swf\n")
@@ -528,7 +534,7 @@ usage(std::ostream& os, const po::options_description& opts)
     usage_gui_keys(os);
 
     os << std::endl;
-}
+}*/
 
 void
 version_and_copyright(std::ostream& os)

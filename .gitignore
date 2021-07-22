@@ -86,8 +86,6 @@ libtool
 macros/argz.m4
 macros/libtool.m4
 macros/lt*.m4
-Makefile
-Makefile.in
 po/*.gmo
 py-compile
 revno.h

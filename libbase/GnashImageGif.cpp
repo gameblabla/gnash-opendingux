@@ -23,9 +23,15 @@
 #include <sstream>
 #include <algorithm>
 
+#ifdef HAVE_CONFIG_H
+#include "gnashconfig.h"
+#endif
+
+#ifdef USE_GIF
 extern "C" {
 #include <gif_lib.h>
 }
+
 
 #include "GnashImage.h"
 #include "utility.h"
@@ -320,3 +326,4 @@ createGifInput(std::shared_ptr<IOChannel> in)
 // tab-width: 8
 // indent-tabs-mode: t
 // End:
+#endif

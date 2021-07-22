@@ -1,14 +1,5 @@
 PRGNAME     = gnash.elf
-
-TOOLCHAINDIR	?= /opt/funkey-toolchain
-SYSROOT			= $(TOOLCHAINDIR)/usr/arm-buildroot-linux-musleabihf/sysroot
-BINDIR			= $(TOOLCHAINDIR)/usr/bin
-PKG_CONFIG		:= $(BINDIR)/pkg-config
-
-CC			= $(BINDIR)/arm-linux-gcc
-CXX			= $(BINDIR)/arm-linux-g++
-
-PROFILE		= 0
+CC			= gcc
 
 RENDERER_CONFIG =  agg
 HWACCEL_CONFIG = none
@@ -27,17 +18,15 @@ OBJ_C		= $(notdir $(patsubst %.c, %.o, $(SRC_C)))
 OBJ_CP		= $(notdir $(patsubst %.cpp, %.o, $(SRC_CP)))
 OBJS		= $(OBJ_C) $(OBJ_CP)
 
-CFLAGS		= -Os -fno-PIC -flto -fno-common
-CFLAGS		+= -fdata-sections -ffunction-sections -freorder-functions -fno-math-errno -fgcse-las -fgcse-sm -fmerge-all-constants
-
-CFLAGS		+= -DLSB_FIRST  -DHAVE_CONFIG_H
+CFLAGS		= -O0 -g3 -Wall -Wextra
+CFLAGS		+= -DLSB_FIRST  -DHAVE_CONFIG_H -DRG99
 
 CFLAGS		+= -I./ -Ilibmedia/ffmpeg -Ilibmedia -Ilibrender/$(RENDERER_CONFIG) -Ilibrender -Igui -Igui/sdl -Ilibcore/abc -Ilibcore/asobj -Ilibcore/asobj/flash
 CFLAGS		+= -Ilibcore/asobj/flash/filters -Ilibcore/asobj/flash/external -Ilibcore/asobj/flash/display -Ilibcore/asobj/flash/text -Ilibcore/asobj/flash/net -Ilibcore/swf
 CFLAGS		+= -Ilibcore/vm -Ilibcore/parser -Ilibsound -Ilibsound/sdl -Ilibbase -Ilibdevice -Ilibcore -Ilibcore/asobj/flash/geom -Igui/sdl/$(RENDERER_CONFIG)
 
 
-CFLAGS		+= $(shell $(PKG_CONFIG) --cflags freetype2) $(shell $(PKG_CONFIG) --cflags sdl)
+CFLAGS		+= -I/usr/include/freetype2 -I/usr/include/SDL
 
 ifeq ($(RENDERER_CONFIG), cairo)
 CFLAGS		+= -I/usr/include/cairo
@@ -46,7 +35,7 @@ CFLAGS		+= -I./agg/src/platform/sdl -I./agg/src -I./agg/src/ctrl -Iagg/include
 endif
 
 CFLAGS		+= -DGUI_SDL -DGUI_CONFIG=\"SDL\" -DRENDERER_CONFIG=\"$(RENDERER_CONFIG)\" -DHWACCEL_CONFIG=\"none\" -DCONFIG_CONFIG=\"none\" -DMEDIA_CONFIG=\"ffmpeg\" -DCXXFLAGS=\"ffmpeg\" -DPLUGINSDIR=\"./\"  -DSYSCONFDIR=\"./\" 
-CFLAGS		+= -DSOUND_SDL -DUSE_MEDIA
+CFLAGS		+= -DSOUND_SDL -DUSE_MEDIA -DOPENDINGUX 
 
 ifeq ($(RENDERER_CONFIG), cairo)
 CFLAGS 		+= -DRENDERER_CAIRO
@@ -63,22 +52,18 @@ CFLAGS		+= -DPIXELFORMAT_ARGB32
 endif
 
 ifeq ($(PROFILE), YES)
-CFLAGS 		+= -fprofile-generate=/mnt/gnash_profile
+CFLAGS 		+= -fprofile-generate=./
 else ifeq ($(PROFILE), APPLY)
 CFLAGS		+= -fprofile-use="./"
 endif
 
-CXXFLAGS 	= $(CFLAGS) -ftree-vectorize
+CXXFLAGS 	= $(CFLAGS)
 
-LDFLAGS     = -no-pie -lc -lgcc -lm -lstdc++ -latomic -lspeex -lSDL -lasound -lfreetype -lavcodec -lavformat -lavutil -lswresample -lswscale -lgif -ljpeg -lpng -lz -pthread -Wl,-z,norelro -Wl,--hash-style=gnu -Wl,--build-id=none -Wl,-O1,--sort-common,--as-needed,--gc-sections -flto -no-pie -s
+LDFLAGS     = -lc -lgcc -lm -lstdc++ -lfreetype -lavcodec -lavformat -lavutil -lswresample -lswscale -lgif -ljpeg -lpng -lz -lSDL -pthread
 ifeq ($(RENDERER_CONFIG), cairo)
 LDFLAGS		+= -lcairo
 else ifeq ($(RENDERER_CONFIG), opengl)
 LDFLAGS		+= -lGL -lGLU
-endif
-
-ifeq ($(PROFILE), YES)
-LDFLAGS 	+= -lgcov
 endif
 
 # Rules to make executable

@@ -1,18 +1,18 @@
 PRGNAME     = gnash.elf
 
-TOOLCHAINDIR	?= /opt/funkey-toolchain
-SYSROOT			= $(TOOLCHAINDIR)/usr/arm-buildroot-linux-musleabihf/sysroot
+TOOLCHAINDIR	?= /opt/rs90-toolchain
+SYSROOT			= $(TOOLCHAINDIR)/usr/mipsel-rs90-linux-musl/sysroot
 BINDIR			= $(TOOLCHAINDIR)/usr/bin
 PKG_CONFIG		:= $(BINDIR)/pkg-config
 
-CC			= $(BINDIR)/arm-linux-gcc
-CXX			= $(BINDIR)/arm-linux-g++
-
-PROFILE		= 0
+CC			= $(BINDIR)/mipsel-linux-gcc
+CXX			= $(BINDIR)/mipsel-linux-g++
 
 RENDERER_CONFIG =  agg
 HWACCEL_CONFIG = none
 PIXEL_FORMAT = RGB565
+
+PROFILE	= APPLY
 
 SRCDIR		= ./gui/sdl/$(RENDERER_CONFIG) ./libcore/asobj/flash/geom ./libmedia/ffmpeg ./libmedia ./libcore ./librender/$(RENDERER_CONFIG) ./librender ./gui ./gui/sdl ./libcore/abc ./libcore/asobj ./libcore/asobj/flash ./libcore/asobj/flash/filters ./libcore/asobj/flash/external ./libcore/asobj/flash/display ./libcore/asobj/flash/text ./libcore/asobj/flash/net ./libcore/swf ./libcore/vm ./libcore/parser ./libsound ./libsound/sdl ./libbase ./libdevice
 
@@ -27,14 +27,14 @@ OBJ_C		= $(notdir $(patsubst %.c, %.o, $(SRC_C)))
 OBJ_CP		= $(notdir $(patsubst %.cpp, %.o, $(SRC_CP)))
 OBJS		= $(OBJ_C) $(OBJ_CP)
 
-CFLAGS		= -Os -fno-PIC -flto -fno-common
-CFLAGS		+= -fdata-sections -ffunction-sections -freorder-functions -fno-math-errno -fgcse-las -fgcse-sm -fmerge-all-constants
-
-CFLAGS		+= -DLSB_FIRST  -DHAVE_CONFIG_H
+CFLAGS		= -Os -mno-shared -mplt -fno-builtin -fomit-frame-pointer -fdata-sections -ffunction-sections -march=mips32 -mtune=mips32 -std=gnu++14 -flto
+CFLAGS		+= -mframe-header-opt -fno-common
+	
+CFLAGS		+= -DLSB_FIRST -DHAVE_CONFIG_H
 
 CFLAGS		+= -I./ -Ilibmedia/ffmpeg -Ilibmedia -Ilibrender/$(RENDERER_CONFIG) -Ilibrender -Igui -Igui/sdl -Ilibcore/abc -Ilibcore/asobj -Ilibcore/asobj/flash
 CFLAGS		+= -Ilibcore/asobj/flash/filters -Ilibcore/asobj/flash/external -Ilibcore/asobj/flash/display -Ilibcore/asobj/flash/text -Ilibcore/asobj/flash/net -Ilibcore/swf
-CFLAGS		+= -Ilibcore/vm -Ilibcore/parser -Ilibsound -Ilibsound/sdl -Ilibbase -Ilibdevice -Ilibcore -Ilibcore/asobj/flash/geom -Igui/sdl/$(RENDERER_CONFIG)
+CFLAGS		+= -Ilibcore/vm -Ilibcore/parser -Ilibsound -Ilibsound/sdl -Ilibbase -Ilibdevice -Ilibcore -Ilibcore/asobj/flash/geom -Igui/sdl/$(RENDERER_CONFIG) -Iboost
 
 
 CFLAGS		+= $(shell $(PKG_CONFIG) --cflags freetype2) $(shell $(PKG_CONFIG) --cflags sdl)
@@ -46,7 +46,7 @@ CFLAGS		+= -I./agg/src/platform/sdl -I./agg/src -I./agg/src/ctrl -Iagg/include
 endif
 
 CFLAGS		+= -DGUI_SDL -DGUI_CONFIG=\"SDL\" -DRENDERER_CONFIG=\"$(RENDERER_CONFIG)\" -DHWACCEL_CONFIG=\"none\" -DCONFIG_CONFIG=\"none\" -DMEDIA_CONFIG=\"ffmpeg\" -DCXXFLAGS=\"ffmpeg\" -DPLUGINSDIR=\"./\"  -DSYSCONFDIR=\"./\" 
-CFLAGS		+= -DSOUND_SDL -DUSE_MEDIA
+CFLAGS		+= -DSOUND_SDL -DUSE_MEDIA -DRG99
 
 ifeq ($(RENDERER_CONFIG), cairo)
 CFLAGS 		+= -DRENDERER_CAIRO
@@ -63,14 +63,14 @@ CFLAGS		+= -DPIXELFORMAT_ARGB32
 endif
 
 ifeq ($(PROFILE), YES)
-CFLAGS 		+= -fprofile-generate=/mnt/gnash_profile
+CFLAGS 		+= -fprofile-generate="/media/mmcblk0p1/gnash_gcda"
 else ifeq ($(PROFILE), APPLY)
 CFLAGS		+= -fprofile-use="./"
 endif
 
 CXXFLAGS 	= $(CFLAGS) -ftree-vectorize
 
-LDFLAGS     = -no-pie -lc -lgcc -lm -lstdc++ -latomic -lspeex -lSDL -lasound -lfreetype -lavcodec -lavformat -lavutil -lswresample -lswscale -lgif -ljpeg -lpng -lz -pthread -Wl,-z,norelro -Wl,--hash-style=gnu -Wl,--build-id=none -Wl,-O1,--sort-common,--as-needed,--gc-sections -flto -no-pie -s
+LDFLAGS     = -lc -lgcc -lm -lstdc++ -latomic -lSDL -lasound -lfreetype -lavcodec -lavformat -lavutil -lswresample -lswscale -ljpeg -lpng -lz -pthread -Wl,--as-needed -Wl,--gc-sections -s -flto
 ifeq ($(RENDERER_CONFIG), cairo)
 LDFLAGS		+= -lcairo
 else ifeq ($(RENDERER_CONFIG), opengl)
