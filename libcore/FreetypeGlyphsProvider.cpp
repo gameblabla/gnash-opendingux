@@ -392,8 +392,8 @@ FreetypeGlyphsProvider::createFace(const std::string& name, bool bold, bool ital
 std::unique_ptr<FreetypeGlyphsProvider>
 FreetypeGlyphsProvider::createFace(const std::string&, bool, bool)
 {
-    log_error(_("Freetype not supported"));
-    return std::unique_ptr<FreetypeGlyphsProvider>(NULL);
+    std::unique_ptr<FreetypeGlyphsProvider> ret;
+    return ret;
 }
 #endif 
 	
@@ -401,21 +401,33 @@ unsigned short
 FreetypeGlyphsProvider::unitsPerEM() const
 {
     //assert(_face);
+#ifdef USE_FREETYPE 
     return _face->units_per_EM;
+#else
+	return 1;
+#endif
 }
 
 float
 FreetypeGlyphsProvider::descent() const
 {
     //assert(_face);
+#ifdef USE_FREETYPE 
     return std::abs(_face->descender);
+#else
+	return 1.0f;
+#endif
 }
 
 float
 FreetypeGlyphsProvider::ascent() const
 {
     //assert(_face);
+#ifdef USE_FREETYPE 
     return _face->ascender;
+#else
+	return 1.0f;
+#endif
 }
 
 #ifdef USE_FREETYPE 

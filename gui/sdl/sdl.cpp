@@ -220,7 +220,6 @@ SDLGui::init(int argc, char **argv[])
     // Initialize the SDL subsystems we're using. Linux
     // and Darwin use Pthreads for SDL threads, Win32
     // doesn't. Otherwise the SDL event loop just polls.
-    SDL_ShowCursor(0);
     if (SDL_Init(SDL_INIT_VIDEO)) {
         fprintf(stderr, "Unable to init SDL: %s\n", SDL_GetError());
         exit(EXIT_FAILURE);

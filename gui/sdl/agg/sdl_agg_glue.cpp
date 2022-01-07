@@ -160,7 +160,9 @@ SdlAggGlue::prepDrawingArea(int width, int height, std::uint32_t sdl_flags)
     //assert(_bpp % 8 == 0);
     
     printf("Internal width, height %d %d\n", width, height);
-	SDL_ShowCursor(SDL_DISABLE);
+    #if !defined(NOHIDEMOUSE)
+    SDL_ShowCursor(SDL_DISABLE);
+    #endif
 	_sdl_surface = SDL_CreateRGBSurface(SDL_HWSURFACE, width, height, _bpp, 0,0,0,0);
 	#ifdef OPENDINGUX
 	toscaleup = 0;
