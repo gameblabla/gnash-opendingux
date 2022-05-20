@@ -152,7 +152,9 @@
 #define HAVE_DIRENT_H 1
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
+#ifndef DREAMCAST
 #define HAVE_DLFCN_H 1
+#endif
 
 /* Have OpenGL-ES EGL/egl.h */
 /* #undef HAVE_EGL_EGL_H */
@@ -398,6 +400,8 @@
 /* Have QT 4.x installed */
 /* #undef HAVE_QT4 */
 
+
+#ifndef DREAMCAST
 /* Define to 1 if you have the `scandir' function. */
 #define HAVE_SCANDIR 1
 
@@ -421,6 +425,7 @@
 
 /* Define to 1 if you have the <signal.h> header file. */
 #define HAVE_SIGNAL_H 1
+#endif
 
 /* Define if you have the speex/speex.h header */
 /* #undef HAVE_SPEEX_SPEEX_H */
@@ -473,7 +478,9 @@
 #define HAVE_SYS_UTSNAME_H 1
 
 /* struct tm has member tm_gmtoff */
+#ifndef DREAMCAST
 #define HAVE_TM_GMTOFF 1
+#endif
 
 /* Define if you have the tslib.h header */
 /* #undef HAVE_TSLIB_H */

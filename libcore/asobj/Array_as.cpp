@@ -39,6 +39,7 @@
 #include "GnashNumeric.h"
 #include "namedStrings.h"
 
+
 namespace gnash {
 
 // Forward declarations
@@ -990,12 +991,23 @@ array_class_init(as_object& where, const ObjectURI& uri)
     where.init_member(uri, cl, flags);
 }
 
+
+namespace patch
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+}
+
 // Used by foreachArray, declared in Array_as.h
 ObjectURI
 arrayKey(VM& vm, size_t i)
 {
     // TODO: tell getURI that the string is already lowercase!
-    return getURI(vm, std::to_string(i), true);
+    return getURI(vm, patch::to_string(i), true);
 }
 
 namespace {
@@ -1514,6 +1526,8 @@ array_slice(const fn_call& fn)
     return as_value(newarray);        
 }
 
+#define smax(a,b) ({ __typeof__ (a) _a = (a); __typeof__ (b) _b = (b); _a > _b ? _a : _b; })
+
 as_value
 array_new(const fn_call& fn)
 {
@@ -1530,7 +1544,7 @@ array_new(const fn_call& fn)
     }
 
     if (fn.nargs == 1 && fn.arg(0).is_number()) {
-        const int newSize = std::max(toInt(fn.arg(0), getVM(fn)), 0);
+        const int newSize = smax(toInt(fn.arg(0), getVM(fn)), 0);
         if (newSize) {
             ao->set_member(NSV::PROP_LENGTH, newSize);
         }
@@ -1544,6 +1558,7 @@ array_new(const fn_call& fn)
 
     return as_value(ao);
 }
+
 
 as_value
 join(as_object* array, const std::string& separator)
@@ -1559,7 +1574,7 @@ join(as_object* array, const std::string& separator)
 
     for (size_t i = 0; i < size; ++i) {
         if (i) s += separator;
-        const std::string& index = std::to_string(i);
+        const std::string& index = patch::to_string(i);
         const as_value& el = getOwnProperty(*array, getURI(vm, index));
         s += el.to_string(version);
     }

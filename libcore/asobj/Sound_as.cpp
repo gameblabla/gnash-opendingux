@@ -1006,6 +1006,8 @@ sound_new(const fn_call& fn)
     return as_value();
 }
 
+
+#define smax(a,b) ({ __typeof__ (a) _a = (a); __typeof__ (b) _b = (b); _a > _b ? _a : _b; })
 as_value
 sound_start(const fn_call& fn)
 {
@@ -1021,7 +1023,7 @@ sound_start(const fn_call& fn)
 
         if (fn.nargs > 1) {
             // Negative values count as playing once (aka looping 0 times)
-            loop = std::max(0, toInt(fn.arg(1), getVM(fn)) - 1);
+            loop = smax(0, toInt(fn.arg(1), getVM(fn)) - 1);
         }
     }
     so->start(secondOffset, loop);

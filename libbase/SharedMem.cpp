@@ -16,6 +16,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+#ifndef DREAMCAST
 #ifdef HAVE_CONFIG_H
 #include "gnashconfig.h"
 #endif
@@ -27,7 +28,7 @@
 #include <cerrno>
 #include <cstring>
 
-#if !defined(__riscos__) && !defined(__OS2__) 
+#if !defined(__riscos__) && !defined(__OS2__)  && !defined(DREAMCAST) 
 # include <sys/types.h>
 # include <sys/shm.h>
 # include <sys/sem.h>
@@ -237,3 +238,4 @@ SharedMem::attach()
 // mode: C++
 // indent-tabs-mode: t
 // End:
+#endif

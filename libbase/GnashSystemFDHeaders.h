@@ -47,12 +47,19 @@ inline int ioctlSocket(int fd, int request, int* arg) {
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <unistd.h>
+
+#ifndef DREAMCAST
 # include <sys/ioctl.h>
+#endif
 
 namespace {
 
 inline int ioctlSocket(int fd, int request, int* arg) {
+#ifdef DREAMCAST
+	return 0;
+#else
     return ::ioctl(fd, request, arg);
+#endif
 }
 
 }

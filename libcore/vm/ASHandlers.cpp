@@ -2355,6 +2355,16 @@ ActionVar(ActionExec& thread)
     env.drop(1);
 }
 
+namespace patch
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+}
+
 void
 ActionInitArray(ActionExec& thread)
 {
@@ -2371,7 +2381,7 @@ ActionInitArray(ActionExec& thread)
     // Fill the elements with the initial values from the stack.
     for (int i = 0; i < array_size; i++) {
         const ObjectURI& k = 
-            getURI(vm, std::to_string(i));
+            getURI(vm, patch::to_string(i));
         ao->set_member(k, env.pop());
     }
 

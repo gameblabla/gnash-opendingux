@@ -26,17 +26,193 @@
 
 #include <sstream>
 
-extern "C" {
-#ifdef HAVE_PNG_H
-# include <png.h>
-#endif
-}
-
 #include "GnashImage.h"
 #include "utility.h"
 #include "log.h"
 #include "GnashException.h"
 #include "IOChannel.h"
+
+#ifdef NOPNG
+
+namespace gnash {
+namespace image {
+	
+#define png_struct int
+#define png_bytep byte
+#define png_size_t size_t
+
+namespace {
+
+void
+error(png_struct*, const char* msg)
+{
+}
+
+void
+warning(png_struct*, const char* msg)
+{
+}
+
+
+class PngInput : public Input
+{
+
+public:
+    
+    ~PngInput();
+    
+    /// Begin processing the image data.
+    void read();
+
+    /// Get the image's height in pixels.
+    //
+    /// @return     The height of the image in pixels.
+    size_t getHeight() const;
+
+    /// Get the image's width in pixels.
+    //
+    /// @return     The width of the image in pixels.
+    size_t getWidth() const;
+
+    /// Read a scanline's worth of image data into the given buffer.
+    //
+    /// The amount of data read is getWidth() * getComponents().
+    ///
+    /// @param rgbData  The buffer for writing raw RGB data to.
+    void readScanline(unsigned char* imageData);
+
+private:
+
+    // A counter for keeping track of the last row copied.
+    size_t _currentRow;
+
+    void init();
+
+    // Return number of components (i.e. == 3 for RGB
+    // data).
+    size_t getComponents() const;
+
+};
+
+// Class object for writing PNG image data.
+class PngOutput : public Output
+{
+
+public:
+
+    /// Create an output object bound to a gnash::IOChannel
+    //
+    /// @param out      The IOChannel used for output. Must be kept alive
+    ///                 throughout
+    /// @param quality Unused in PNG output
+    PngOutput(std::shared_ptr<IOChannel> out, size_t width,
+            size_t height, int quality);
+    
+    ~PngOutput();
+
+    void writeImageRGB(const unsigned char* rgbData);
+    
+    void writeImageRGBA(const unsigned char* rgbaData);
+    
+private:
+
+    /// Initialize libpng.
+    void init();
+    
+};
+
+PngInput::~PngInput()
+{
+}
+
+size_t
+PngInput::getHeight() const
+{
+    //assert(_pngPtr && _infoPtr);
+    return 0;
+}
+
+size_t
+PngInput::getWidth() const
+{
+    //assert(_pngPtr && _infoPtr);
+    return 0;
+}
+
+size_t
+PngInput::getComponents() const
+{
+    return 0;
+}
+
+void
+PngInput::readScanline(unsigned char* imageData)
+{
+}
+
+
+void
+PngInput::init()
+{
+}
+
+void
+PngInput::read()
+{
+
+
+}
+
+
+PngOutput::~PngOutput()
+{
+
+}
+
+
+void
+PngOutput::init()
+{
+
+}
+
+void
+PngOutput::writeImageRGBA(const unsigned char* rgbaData)
+{
+}
+
+
+void
+PngOutput::writeImageRGB(const unsigned char* rgbData)
+{
+}
+
+} // unnamed namespace
+
+std::unique_ptr<Input>
+createPngInput(std::shared_ptr<IOChannel> in)
+{
+    return 0;
+}
+
+std::unique_ptr<Output>
+createPngOutput(std::shared_ptr<IOChannel> o, size_t width,
+                       size_t height, int quality)
+{
+    return nullptr;
+}
+
+} // namespace image
+} // namespace gnash
+
+#else
+
+
+extern "C" {
+#ifdef HAVE_PNG_H
+# include <png.h>
+#endif
+}
 
 namespace gnash {
 namespace image {
@@ -424,3 +600,5 @@ createPngOutput(std::shared_ptr<IOChannel> o, size_t width,
 // tab-width: 8
 // indent-tabs-mode: t
 // End:
+
+#endif

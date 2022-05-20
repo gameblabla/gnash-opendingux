@@ -57,12 +57,14 @@
 # include <sys/socket.h>
 # include <sys/times.h>
 # include <unistd.h>
+# include <fcntl.h>
+#ifndef DREAMCAST
 # include <netinet/in.h>
 # include <netinet/tcp.h>
-# include <fcntl.h>
-
 // gethostbyname()
 # include <netdb.h>
+#endif
+
 #endif
 
 #endif

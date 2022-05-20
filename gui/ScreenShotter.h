@@ -113,6 +113,7 @@ public:
     /// @param r                The renderer to use to render the image.
     template<typename Action>
     void screenShot(const Renderer& r, size_t frameAdvance, Action* t = 0) {
+		#ifndef DREAMCAST
         // Save an image if a spontaneous screenshot was requested or the
         // frame is in the list of requested frames.
         if (_immediate || std::binary_search(_frames.begin(), _frames.end(),
@@ -128,7 +129,7 @@ public:
             saveImage(r, std::to_string(frameAdvance));
             _immediate = false;
         }
-        
+        #endif
     }
 
     /// Request a list of frames to be rendered to image files.

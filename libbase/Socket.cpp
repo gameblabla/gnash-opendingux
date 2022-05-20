@@ -24,6 +24,10 @@
 
 #include "Socket.h"
 
+#ifdef DREAMCAST
+#define addrinfo int
+#endif
+
 #include <cerrno>
 #include <csignal>
 #include <cstdint>
@@ -49,6 +53,9 @@ Socket::Socket()
 bool
 Socket::connected() const
 {
+#ifdef DREAMCAST
+
+#else
     if (_connected) {
         return true;
     }
@@ -106,6 +113,7 @@ Socket::connected() const
             return false;
         }
     }
+#endif
     return false;
 } 
     
@@ -123,8 +131,12 @@ Socket::close()
 
 namespace {
 
+
 addrinfo* getAddrInfo(const std::string& hostname, std::uint16_t port)
 {
+	#ifdef DREAMCAST
+	return nullptr;
+	#else
     addrinfo req = addrinfo(), *ans = nullptr;
     
     req.ai_family = AF_UNSPEC;  // Allow IPv4 or IPv6
@@ -139,6 +151,7 @@ addrinfo* getAddrInfo(const std::string& hostname, std::uint16_t port)
     }
 
     return ans;
+    #endif
 }
   
 }
@@ -146,6 +159,9 @@ addrinfo* getAddrInfo(const std::string& hostname, std::uint16_t port)
 bool
 Socket::connect(const std::string& hostname, std::uint16_t port)
 {
+	#ifdef DREAMCAST
+	
+	#else
     // We use _socket here because connected() or _connected might not
     // be true if a connection attempt is underway but not completed.
     if (_socket) {
@@ -245,13 +261,16 @@ Socket::connect(const std::string& hostname, std::uint16_t port)
                  reinterpret_cast<const char*>(&on), sizeof(on));
     
     //assert(_socket);
-    
+    #endif
     return true;
 }
 
 void
 Socket::fillCache()
 {
+	#ifdef DREAMCAST
+	
+	#else
     // Read position is always _pos + _size wrapped.
     const size_t cacheSize = arraySize(_cache);
     size_t start = (_pos + _size) % cacheSize;
@@ -293,7 +312,7 @@ Socket::fillCache()
         // beginning.
         startpos = _cache;
     }
-    
+    #endif
 }
 
 

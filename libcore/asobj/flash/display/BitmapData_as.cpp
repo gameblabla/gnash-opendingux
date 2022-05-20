@@ -1269,6 +1269,12 @@ bitmapdata_merge(const fn_call& fn)
     return as_value();
 }
 
+int sclamp(int d, int min, int max) {
+  const int t = d < min ? min : d;
+  return t > max ? max : t;
+}
+#define smax(a,b) ({ __typeof__ (a) _a = (a); __typeof__ (b) _b = (b); _a > _b ? _a : _b; })
+
 as_value
 bitmapdata_noise(const fn_call& fn)
 {
@@ -1282,10 +1288,10 @@ bitmapdata_noise(const fn_call& fn)
     const int seed = toInt(fn.arg(0), getVM(fn));
 
     const std::uint8_t low = fn.nargs > 1 ?
-        clamp(toInt(fn.arg(1), getVM(fn)), 0, 255) : 0;
+        sclamp(toInt(fn.arg(1), getVM(fn)), 0, 255) : 0;
 
     const std::uint8_t high = fn.nargs > 2 ?
-        clamp<int>(toInt(fn.arg(2), getVM(fn)), low, 255) : 255;
+        sclamp(toInt(fn.arg(2), getVM(fn)), low, 255) : 255;
 
     const std::uint8_t chans = fn.nargs > 3 ?
         std::abs(toInt(fn.arg(3), getVM(fn))) & 15 :
@@ -1329,7 +1335,7 @@ bitmapdata_perlinNoise(const fn_call& fn)
     }
     const double baseX = toNumber(fn.arg(0), getVM(fn));
     const double baseY = toNumber(fn.arg(1), getVM(fn));
-    const int octave = std::max(0, toInt(fn.arg(2), getVM(fn)));
+    const int octave = smax(0, toInt(fn.arg(2), getVM(fn)));
 
     /// Random seed.
     const int seed = toInt(fn.arg(3), getVM(fn));

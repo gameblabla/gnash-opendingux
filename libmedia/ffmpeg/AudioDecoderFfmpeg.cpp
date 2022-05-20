@@ -33,6 +33,16 @@
 namespace gnash {
 namespace media {
 namespace ffmpeg {
+	
+
+static void get_packet_defaults(AVPacket *pkt)
+{
+    memset(pkt, 0, sizeof(*pkt));
+
+    pkt->pts             = AV_NOPTS_VALUE;
+    pkt->dts             = AV_NOPTS_VALUE;
+    pkt->pos             = -1;
+}
     
 AudioDecoderFfmpeg::AudioDecoderFfmpeg(const AudioInfo& info)
     :
@@ -78,7 +88,7 @@ AudioDecoderFfmpeg::~AudioDecoderFfmpeg()
 
 void AudioDecoderFfmpeg::setup(SoundInfo& info)
 {
-    avcodec_register_all();// change this to only register need codec?
+    //avcodec_register_all();// change this to only register need codec?
 
     enum CODECID codec_id;
 
@@ -165,7 +175,7 @@ void AudioDecoderFfmpeg::setup(SoundInfo& info)
 void AudioDecoderFfmpeg::setup(const AudioInfo& info)
 {
     // Init the avdecoder-decoder
-    avcodec_register_all();// change this to only register need codec?
+    //avcodec_register_all();// change this to only register need codec?
 
     enum CODECID codec_id = AV_CODEC_ID_NONE;
 
@@ -456,7 +466,7 @@ AudioDecoderFfmpeg::decodeFrame(const std::uint8_t* input,
     //GNASH_REPORT_FUNCTION;
 
     //assert(inputSize);
-
+	int plane_size;
     size_t outSize = MAX_AUDIO_FRAME_SIZE;
 
     // TODO: make this a private member, to reuse (see NetStreamFfmpeg in 0.8.3)
@@ -480,7 +490,7 @@ AudioDecoderFfmpeg::decodeFrame(const std::uint8_t* input,
     // older ffmpeg versions didn't accept a const input..
     AVPacket pkt;
     int got_frm = 0;
-    av_init_packet(&pkt);
+    get_packet_defaults(&pkt);
     pkt.data = const_cast<uint8_t*>(input);
     pkt.size = inputSize;
     std::unique_ptr<AVFrame, FrameDeleter> frm(FRAMEALLOC(), FrameDeleter());
@@ -488,7 +498,26 @@ AudioDecoderFfmpeg::decodeFrame(const std::uint8_t* input,
         log_error(_("failed to allocate frame."));
         return nullptr;
     }
-    int tmp = avcodec_decode_audio4(_audioCodecCtx, frm.get(), &got_frm, &pkt);
+   
+#ifdef DREAMCAST
+	int tmp = avcodec_decode_audio4(_audioCodecCtx, frm.get(), &got_frm, &pkt);
+#else
+	int tmp;
+	avcodec_send_packet(_audioCodecCtx, &pkt);
+	tmp = avcodec_receive_frame(_audioCodecCtx,frm.get());
+	if (tmp == 0)
+		got_frm = 1;
+	if (tmp == AVERROR(EAGAIN))
+		tmp = 0;
+	if (tmp == 0)
+		tmp = avcodec_send_packet(_audioCodecCtx, &pkt);
+	if (tmp == AVERROR(EAGAIN))
+		tmp = 0;
+	if (!(tmp < 0))
+	{
+		 tmp = pkt.size;
+	}
+#endif
 
 #ifdef GNASH_DEBUG_AUDIO_DECODING
     const char* fmtname = av_get_sample_fmt_name(_audioCodecCtx->sample_fmt);
@@ -496,9 +525,8 @@ AudioDecoderFfmpeg::decodeFrame(const std::uint8_t* input,
         "returned %d | inputSize: %d",
         frm->nb_samples, got_frm, tmp, inputSize);
 #endif
-
-    int plane_size;
-    if (tmp >= 0 && got_frm) {
+		
+	if (tmp >= 0 && got_frm) {
         int data_size = av_samples_get_buffer_size( &plane_size,
             _audioCodecCtx->channels, frm->nb_samples,
             _audioCodecCtx->sample_fmt, 1);

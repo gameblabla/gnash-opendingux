@@ -30,7 +30,7 @@
 
 #include "StringPredicates.h"
 
-#if !defined(_WIN32) && !defined(__HAIKU__) && !defined(ANDROID)
+#if !defined(_WIN32) && !defined(__HAIKU__) && !defined(ANDROID) && !defined(DREAMCAST)
 #include <sys/shm.h>
 #else
 #ifdef _WIN32

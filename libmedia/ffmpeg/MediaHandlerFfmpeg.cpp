@@ -34,6 +34,10 @@
 #include "AudioInputFfmpeg.h"
 #include "IOChannel.h" 
 
+#if AV_VERSION_MAJOR < 3
+#define AV_INPUT_BUFFER_PADDING_SIZE FF_INPUT_BUFFER_PADDING_SIZE
+#endif
+
 namespace gnash { 
 namespace media {
 namespace ffmpeg {

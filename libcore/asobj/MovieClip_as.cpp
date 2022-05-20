@@ -1713,6 +1713,15 @@ movieclip_beginFill(const fn_call& fn)
     return as_value();
 }
 
+namespace patch
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+}
 
 /// Create a dynamic gradient fill.
 //
@@ -1822,7 +1831,7 @@ movieclip_beginGradientFill(const fn_call& fn)
     gradients.reserve(stops);
     for (size_t i = 0; i < stops; ++i) {
 
-        const ObjectURI& key = getURI(vm, std::to_string(i));
+        const ObjectURI& key = getURI(vm, patch::to_string(i));
 
         as_value colVal = getMember(*colors, key);
         std::uint32_t col = colVal.is_number() ? toInt(colVal, getVM(fn)) : 0;

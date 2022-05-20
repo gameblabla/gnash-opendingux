@@ -142,7 +142,9 @@ std::unique_ptr<ExternalInterface::invoke_t>
 ExternalInterface::ExternalEventCheck(int fd)
 {
 //    GNASH_REPORT_FUNCTION;
-    
+#ifdef DREAMCAST
+	return 0;
+#else
     std::unique_ptr<ExternalInterface::invoke_t> error;
 
     if (fd > 0) {
@@ -164,6 +166,7 @@ ExternalInterface::ExternalEventCheck(int fd)
     }
 
     return error;
+#endif
 }
 
 // Parse the XML Invoke message, which looks like this:
@@ -335,6 +338,7 @@ ExternalInterface::writeBrowser(int fd, const std::string &data)
 std::string
 ExternalInterface::readBrowser(int fd)
 {
+#ifndef DREAMCAST
     std::string empty;
     fd_set fdset;
     struct timeval timeout;
@@ -379,6 +383,9 @@ ExternalInterface::readBrowser(int fd)
     }
 
     return buf;
+#else
+	return nullptr;
+#endif
 }
 
 } // end of gnash namespace
